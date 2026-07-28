@@ -1,0 +1,31 @@
+# Python virtual environments
+venv/
+yolo-venv/
+.venv/
+
+# Python temporary files
+__pycache__/
+*.py[cod]
+*.log
+
+# Environment variables and secrets
+.env
+.env.*
+secrets/
+credentials/
+*.pem
+*.key
+
+# YOLO outputs and large models
+runs/
+outputs/
+*.pt
+*.onnx
+*_ncnn_model/
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
