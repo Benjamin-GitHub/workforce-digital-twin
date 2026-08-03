@@ -1,0 +1,80 @@
+Ultralytics 8.4.108 🚀 Python-3.13.5 torch-2.13.0+cu130 CPU (aarch64)
+YOLO26n summary (fused): 122 layers, 2,408,932 parameters, 0 gradients, 5.4 GFLOPs
+[34m[1mval: [0mFast image access ✅ (ping: 0.0±0.0 ms, read: 1939.2±559.2 MB/s, size: 38.8 KB)
+[K[34m[1mval: [0mScanning /media/rp5/My Passport/yolo-datasets/coco128/labels/train2017.cache... 126 images, 2 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 128/128 24.4Mit/s 0.0s
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 12% ━─────────── 1/8 4.3s/it 1.3s<30.4s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 25% ━━━───────── 2/8 2.8s/it 2.8s<16.5s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 37% ━━━━──────── 3/8 2.2s/it 4.3s<11.0s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 50% ━━━━━━────── 4/8 1.9s/it 5.8s<7.7s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 62% ━━━━━━━───── 5/8 1.7s/it 7.0s<5.0s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 75% ━━━━━━━━━─── 6/8 1.7s/it 8.8s<3.4s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 87% ━━━━━━━━━━── 7/8 1.7s/it 10.5s<1.7s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 8/8 1.5s/it 11.8s
+                   all        128        929      0.684      0.472      0.528      0.386
+                person         61        254      0.708      0.534      0.601      0.404
+               bicycle          3          6      0.353      0.167      0.169      0.149
+                   car         12         46      0.647       0.12      0.144     0.0952
+            motorcycle          4          5      0.513          1      0.962      0.702
+              airplane          5          6      0.818      0.833      0.861      0.725
+                   bus          5          7      0.484      0.571      0.639      0.566
+                 train          3          3          1      0.974      0.995      0.757
+                 truck          5         12      0.511       0.25      0.258       0.14
+                  boat          2          6      0.535      0.333      0.457      0.315
+         traffic light          4         14      0.487      0.143      0.145      0.131
+             stop sign          2          2          1          0      0.663      0.464
+                 bench          5          9      0.834      0.111       0.23       0.16
+                  bird          2         16      0.863      0.789       0.96      0.546
+                   cat          4          4      0.549          1      0.945      0.752
+                   dog          9          9      0.718      0.667      0.815      0.667
+                 horse          1          2          1      0.988      0.995      0.432
+              elephant          4         17      0.733      0.765      0.802      0.607
+                  bear          1          1      0.575          1      0.995      0.895
+                 zebra          2          4      0.836          1      0.995      0.964
+               giraffe          4          9      0.888       0.88      0.873      0.712
+              backpack          4          6          1      0.309      0.341      0.172
+              umbrella          4         18      0.877      0.396      0.573      0.292
+               handbag          9         19          1          0     0.0138    0.00979
+                   tie          6          7          1      0.515      0.615      0.494
+              suitcase          2          4      0.615       0.75      0.787      0.561
+               frisbee          5          5      0.682        0.6       0.63      0.526
+                  skis          1          1          1          0      0.142     0.0758
+             snowboard          2          7      0.795      0.714        0.8      0.543
+           sports ball          6          6      0.445      0.167       0.28     0.0518
+                  kite          2         10          1      0.168      0.365      0.147
+          baseball bat          4          4          1          0     0.0367     0.0083
+        baseball glove          4          7      0.345      0.286      0.201     0.0777
+            skateboard          3          5          1      0.585      0.595      0.406
+         tennis racket          5          7      0.397      0.286      0.188     0.0928
+                bottle          6         18      0.682       0.24      0.305      0.219
+            wine glass          5         16      0.726      0.125      0.189      0.123
+                   cup         10         36      0.819       0.25      0.295      0.211
+                  fork          6          6      0.532      0.167      0.214      0.199
+                 knife          7         16      0.747      0.375      0.429      0.257
+                 spoon          5         22      0.577     0.0663      0.173     0.0586
+                  bowl          9         28      0.664        0.5      0.564      0.406
+                banana          1          1          0          0      0.111     0.0995
+              sandwich          2          2       0.46          1      0.745      0.745
+                orange          1          4          1          0      0.845      0.473
+              broccoli          4         11      0.463      0.182      0.195      0.178
+                carrot          3         24      0.639      0.333      0.415      0.289
+               hot dog          1          2      0.646          1      0.663      0.663
+                 pizza          5          5      0.534        0.8      0.878      0.787
+                 donut          2         14      0.804      0.878      0.936      0.789
+                  cake          4          4      0.604          1      0.895       0.77
+                 chair          9         35      0.529      0.429      0.379       0.19
+                 couch          5          6      0.527      0.667      0.699      0.526
+          potted plant          9         14      0.627      0.286      0.491      0.319
+                   bed          3          3      0.853          1      0.995      0.536
+          dining table         10         13      0.478      0.615      0.617      0.439
+                toilet          2          2      0.548        0.5      0.545      0.535
+                    tv          2          2       0.47          1      0.995      0.846
+                laptop          2          3          1          0      0.483       0.36
+                 mouse          2          2          1          0          0          0
+                remote          5          8      0.528      0.375      0.459      0.328
+            cell phone          5          8          1          0     0.0265     0.0135
+             microwave          3          3      0.421      0.667      0.702      0.549
+                  oven          5          5      0.401        0.4      0.441      0.328
+                  sink          4          6      0.455      0.333      0.378      0.164
+          refrigerator          5          5      0.674        0.6      0.695      0.403
+                  book          6         29      0.626     0.0607      0.148     0.0434
+                 clock          8          9      0.685      0.726      0.797      0.587
+                  vase          2          2      0.262          1      0.448      0.427
+              scissors          1          1          1          0          0          0
+            teddy bear          6         21      0.651      0.476      0.627      0.377
+            toothbrush          2          5      0.723      0.536      0.678       0.51
+Speed: 0.6ms preprocess, 81.8ms inference, 0.0ms loss, 0.1ms postprocess per image
+Results saved to [1m/home/rp5/workforce-digital-twin/runs/detect/val-13[0m
+💡 Learn more at https://docs.ultralytics.com/modes/val

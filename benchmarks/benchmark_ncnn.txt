@@ -1,0 +1,17 @@
+WARNING ⚠️ Unable to automatically guess model task, assuming 'task=detect'. Explicitly define task for your model, i.e. 'task=detect', 'segment', 'classify', 'pose', 'obb' or 'semantic'.
+Ultralytics 8.4.108 🚀 Python-3.13.5 torch-2.13.0+cu130 CPU (aarch64)
+Loading yolo26n_ncnn_model for NCNN inference...
+Setting batch=1 input of shape (1, 3, 320, 320)
+[34m[1mval: [0mFast image access ✅ (ping: 0.0±0.0 ms, read: 1392.1±266.0 MB/s, size: 54.0 KB)
+[K[34m[1mval: [0mScanning /home/rp5/datasets/coco8/labels/val.cache... 4 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 4/4 798.9Kit/s 0.0s
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 75% ━━━━━━━━━─── 3/4 7.2it/s 0.1s<0.1s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 4/4 21.1it/s 0.2s
+                   all          4         17      0.819      0.519       0.65      0.413
+                person          3         10      0.427        0.2      0.217      0.138
+                   dog          1          1      0.879          1      0.995      0.398
+                 horse          1          2          1      0.915      0.995       0.58
+              elephant          1          2          1          0      0.695      0.366
+              umbrella          1          1      0.608          1      0.995      0.995
+          potted plant          1          1          1          0          0          0
+Speed: 0.6ms preprocess, 28.0ms inference, 0.0ms loss, 2.8ms postprocess per image
+Results saved to [1m/home/rp5/workforce-digital-twin/runs/detect/val-6[0m
+💡 Learn more at https://docs.ultralytics.com/modes/val

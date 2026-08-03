@@ -1,0 +1,16 @@
+[34m[1mval: [0mFast image access ✅ (ping: 0.0±0.0 ms, read: 2161.1±242.0 MB/s, size: 54.0 KB)
+[K[34m[1mval: [0mScanning /home/rp5/datasets/coco8/labels/val.cache... 4 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 4/4 671.1Kit/s 0.0s
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 25% ━━━───────── 1/4 2.3it/s 0.1s<1.3s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 50% ━━━━━━────── 2/4 3.6it/s 0.3s<0.6s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 75% ━━━━━━━━━─── 3/4 4.8it/s 0.4s<0.2s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 4/4 7.5it/s 0.5s
+                   all          4         17      0.706      0.617      0.702      0.483
+Speed: 0.8ms preprocess, 127.4ms inference, 0.0ms loss, 0.1ms postprocess per image
+Setup complete ✅ (4 CPUs, 7.9 GB RAM, 21.5/56.8 GB disk)
+
+Benchmarks complete for yolo26n.pt on coco8.yaml at imgsz=320 (2.57s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format    Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS  |
++==========================================================================================+
+| 1   PyTorch   ✅         5.3         0.4827                127.36                   7.85 |
++------------------------------------------------------------------------------------------+
+
+💡 Learn more at https://docs.ultralytics.com/modes/benchmark
