@@ -3,7 +3,7 @@ import cv2
 from ultralytics import YOLO
 
 STREAM_URL = "http://192.168.1.171:81/stream"
-MODEL_PATH = "yolo11n.pt"
+MODEL_PATH = "/home/rp5/workforce-digital-twin/models/pytorch/yolo26n.pt"
 PERSON_CLASS_ID = 0
 
 FRAME_INTERVAL = 3

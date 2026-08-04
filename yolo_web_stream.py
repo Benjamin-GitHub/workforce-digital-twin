@@ -13,7 +13,7 @@ CAMERA_URL = os.getenv(
 
 MODEL_PATH = os.getenv(
     "MODEL_PATH",
-    "yolo26n.pt",
+    "/home/rp5/workforce-digital-twin/models/pytorch/yolo26n.pt",
 )
 
 IMAGE_SIZE = int(os.getenv("IMAGE_SIZE", "320"))

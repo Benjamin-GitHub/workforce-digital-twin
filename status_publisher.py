@@ -28,18 +28,14 @@ def get_cpu_temperature() -> float | None:
         return None
 
 
-def get_ip_address() -> str:
-    """Find the main local IPv4 address without sending internet traffic."""
+def get_interface_ip(interface: str) -> str:
+    """Return the IPv4 address assigned to a network interface."""
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    for address in psutil.net_if_addrs().get(interface, []):
+        if address.family == socket.AF_INET:
+            return address.address
 
-    try:
-        sock.connect(("192.0.2.1", 80))
-        return sock.getsockname()[0]
-    except OSError:
-        return "Unavailable"
-    finally:
-        sock.close()
+    return "Unavailable"
 
 
 def format_uptime() -> str:
@@ -70,7 +66,8 @@ def collect_status() -> dict:
         "ram_usage": round(memory.percent, 1),
         "disk_usage": round(disk.percent, 1),
         "uptime": format_uptime(),
-        "ip": get_ip_address(),
+        "ethernet_ip": get_interface_ip("eth0"),
+        "wifi_ip": get_interface_ip("wlan0"),
         "timestamp": int(time.time()),
     }
 
