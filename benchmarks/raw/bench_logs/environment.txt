@@ -1,0 +1,30 @@
+Date:
+2026-08-04T15:37:24+01:00
+
+Kernel:
+Linux raspberrypi 6.18.39+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.18.39-1+rpt1 (2026-07-29) aarch64 GNU/Linux
+
+Operating system:
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+NAME="Debian GNU/Linux"
+VERSION_ID="13"
+VERSION="13 (trixie)"
+VERSION_CODENAME=trixie
+DEBIAN_VERSION_FULL=13.6
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+
+Python:
+Python 3.13.5
+
+Library versions:
+Ultralytics: 8.4.108
+PyTorch: 2.13.0+cu130
+
+CPU governor:
+ondemand
+
+temp=54.3'C
+throttled=0x0
