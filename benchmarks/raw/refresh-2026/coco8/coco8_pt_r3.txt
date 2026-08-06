@@ -1,0 +1,57 @@
+==========================================
+YOLO26n PyTorch refresh benchmark
+Dataset: coco8
+Dataset YAML: coco8.yaml
+Run: 3
+Started: 2026-08-05T14:16:38+01:00
+Model: models/pytorch/yolo26n.pt
+
+Starting system condition:
+temp=55.4'C
+throttled=0x0
+frequency(0)=2400023808
+
+Ultralytics 8.4.108 🚀 Python-3.13.5 torch-2.13.0+cu130 CPU (aarch64)
+YOLO26n summary (fused): 122 layers, 2,408,932 parameters, 0 gradients, 5.4 GFLOPs
+[34m[1mval: [0mFast image access ✅ (ping: 0.0±0.0 ms, read: 136.7±112.7 MB/s, size: 54.0 KB)
+[K[34m[1mval: [0mScanning /media/rp5/My Passport/yolo-datasets/coco8/labels/val.cache... 4 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 4/4 316.6Kit/s 0.0s
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 25% ━━━───────── 1/4 2.1it/s 0.1s<1.4s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 50% ━━━━━━────── 2/4 4.2it/s 0.3s<0.5s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 75% ━━━━━━━━━─── 3/4 5.6it/s 0.4s<0.2s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 4/4 8.2it/s 0.5s
+                   all          4         17      0.802       0.52      0.624      0.431
+                person          3         10      0.476        0.2      0.266       0.14
+                   dog          1          1      0.729          1      0.995      0.622
+                 horse          1          2          1      0.921      0.995      0.485
+              elephant          1          2          1          0      0.495      0.346
+              umbrella          1          1      0.609          1      0.995      0.995
+          potted plant          1          1          1          0          0          0
+Speed: 0.8ms preprocess, 114.5ms inference, 0.0ms loss, 0.2ms postprocess per image
+💡 Learn more at https://docs.ultralytics.com/modes/val
+	Command being timed: "yolo val model=models/pytorch/yolo26n.pt data=coco8.yaml task=detect split=val imgsz=320 batch=1 device=cpu workers=0 rect=False conf=0.001 iou=0.7 max_det=300 augment=False plots=False save_json=False project=results/validation/refresh-2026 name=coco8_pt_r3"
+	User time (seconds): 5.51
+	System time (seconds): 0.39
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:06.00
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 884720
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 42349
+	Voluntary context switches: 1767
+	Involuntary context switches: 150
+	Swaps: 0
+	File system inputs: 23072
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 16384
+	Exit status: 0
+
+YOLO exit status: 0
+Finished: 2026-08-05T14:16:44+01:00
+Finishing system condition:
+temp=57.6'C
+throttled=0x0
+frequency(0)=2400037120

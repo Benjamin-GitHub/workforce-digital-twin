@@ -1,0 +1,58 @@
+==========================================
+YOLO26n NCNN refresh benchmark
+Dataset: coco8
+Dataset YAML: coco8.yaml
+Run: 2
+Started: 2026-08-05T15:22:07+01:00
+Model: models/ncnn/yolo26n_ncnn_model
+
+Starting system condition:
+temp=53.8'C
+throttled=0x0
+frequency(0)=2400030464
+
+Ultralytics 8.4.108 🚀 Python-3.13.5 torch-2.13.0+cu130 CPU (aarch64)
+Loading models/ncnn/yolo26n_ncnn_model for NCNN inference...
+Setting batch=1 input of shape (1, 3, 320, 320)
+[34m[1mval: [0mFast image access ✅ (ping: 0.0±0.0 ms, read: 1833.1±572.3 MB/s, size: 54.0 KB)
+[K[34m[1mval: [0mScanning /media/rp5/My Passport/yolo-datasets/coco8/labels/val.cache... 4 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 4/4 762.6Kit/s 0.0s
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 50% ━━━━━━────── 2/4 3.9it/s 0.2s<0.5s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 4/4 19.6it/s 0.2s
+                   all          4         17      0.819      0.519       0.65      0.413
+                person          3         10      0.427        0.2      0.217      0.138
+                   dog          1          1      0.879          1      0.995      0.398
+                 horse          1          2          1      0.915      0.995       0.58
+              elephant          1          2          1          0      0.695      0.366
+              umbrella          1          1      0.608          1      0.995      0.995
+          potted plant          1          1          1          0          0          0
+Speed: 1.0ms preprocess, 41.8ms inference, 0.0ms loss, 1.6ms postprocess per image
+💡 Learn more at https://docs.ultralytics.com/modes/val
+	Command being timed: "yolo val model=models/ncnn/yolo26n_ncnn_model data=coco8.yaml task=detect split=val imgsz=320 batch=1 device=cpu workers=0 rect=False conf=0.001 iou=0.7 max_det=300 augment=False plots=False save_json=False project=results/validation/refresh-2026 name=coco8_ncnn_r2"
+	User time (seconds): 4.90
+	System time (seconds): 0.25
+	Percent of CPU this job got: 108%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:04.77
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 874416
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 41589
+	Voluntary context switches: 938
+	Involuntary context switches: 211
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 16384
+	Exit status: 0
+
+YOLO exit status: 0
+Finished: 2026-08-05T15:22:12+01:00
+Finishing system condition:
+temp=53.8'C
+throttled=0x0
+frequency(0)=2400027136

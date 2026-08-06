@@ -1,0 +1,11 @@
+{
+  "stream_url": "http://192.168.1.171:81/stream",
+  "requested_duration_seconds": 120,
+  "video_file": "benchmarks/live-video/recordings/raw/esp32_test_2min.mp4",
+  "started": "2026-08-06T02:26:22+01:00",
+  "finished": "2026-08-06T02:30:53+01:00",
+  "start_temperature": "temp=45.0'C",
+  "end_temperature": "temp=47.7'C",
+  "start_throttling": "throttled=0x0",
+  "end_throttling": "throttled=0x0"
+}

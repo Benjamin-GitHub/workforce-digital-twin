@@ -3,7 +3,7 @@ import cv2
 from ultralytics import YOLO
 
 STREAM_URL = "http://192.168.1.171:81/stream"
-MODEL_PATH = "/home/rp5/workforce-digital-twin/models/pytorch/yolo26n.pt"
+MODEL_PATH = "/home/rp5/workforce-digital-twin/models/ncnn/yolo26n_ppe_best_ncnn_model"
 PERSON_CLASS_ID = 0
 
 FRAME_INTERVAL = 3
@@ -51,7 +51,7 @@ while True:
     results = model.predict(
         source=frame,
         imgsz=320,
-        conf=0.40,
+        conf=0.25,
         #classes=[PERSON_CLASS_ID],
         device="cpu",
         verbose=False,
