@@ -1,0 +1,161 @@
+import numpy as np
+
+
+class ActivityClassifier:
+    def __init__(
+        self,
+        bending_angle_threshold=35.0,
+        walking_velocity_threshold=0.08,
+        idle_velocity_threshold=0.015,
+        idle_min_frames=15,
+    ):
+        self.bending_angle_threshold = bending_angle_threshold
+
+        self.walking_velocity_threshold = (
+            walking_velocity_threshold
+        )
+
+        self.idle_velocity_threshold = (
+            idle_velocity_threshold
+        )
+
+        self.idle_min_frames = idle_min_frames
+
+    def _normalised_body_velocity(self, window):
+        if len(window) < 2:
+            return 0.0
+
+        velocities = []
+
+        for previous, current in zip(
+            window[:-1],
+            window[1:]
+        ):
+            dx = (
+                current["body_center_x"]
+                - previous["body_center_x"]
+            )
+
+            dy = (
+                current["body_center_y"]
+                - previous["body_center_y"]
+            )
+
+            distance = np.sqrt(dx ** 2 + dy ** 2)
+
+            torso = current.get("torso_length", 1.0)
+
+            if torso > 0:
+                distance /= torso
+
+            velocities.append(distance)
+
+        if not velocities:
+            return 0.0
+
+        return float(np.mean(velocities))
+
+    def _mean_torso_angle(self, window):
+        values = [
+            f["torso_angle"]
+            for f in window
+            if f.get("torso_angle") is not None
+        ]
+
+        if not values:
+            return 0.0
+
+        return float(np.mean(values))
+
+    def _mean_knee_angle(self, window):
+        knee_angles = []
+
+        for frame in window:
+            if frame.get("left_knee_angle") is not None:
+                knee_angles.append(
+                    frame["left_knee_angle"]
+                )
+
+            if frame.get("right_knee_angle") is not None:
+                knee_angles.append(
+                    frame["right_knee_angle"]
+                )
+
+        if not knee_angles:
+            return None
+
+        return float(np.mean(knee_angles))
+
+    def classify(self, window):
+        if not window:
+            return {
+                "activity": "unknown",
+                "confidence": 0.0,
+            }
+
+        torso_angle = self._mean_torso_angle(window)
+
+        velocity = self._normalised_body_velocity(window)
+
+        knee_angle = self._mean_knee_angle(window)
+
+        # 1. BENDING
+        if torso_angle >= self.bending_angle_threshold:
+
+            confidence = min(
+                1.0,
+                torso_angle / 60.0
+            )
+
+            return {
+                "activity": "bending",
+                "confidence": confidence,
+                "torso_angle": torso_angle,
+                "velocity": velocity,
+            }
+
+        # 2. WALKING
+        if velocity >= self.walking_velocity_threshold:
+
+            confidence = min(
+                1.0,
+                velocity /
+                (self.walking_velocity_threshold * 3)
+            )
+
+            return {
+                "activity": "walking",
+                "confidence": confidence,
+                "torso_angle": torso_angle,
+                "velocity": velocity,
+            }
+
+        # 3. IDLE
+        if (
+            len(window) >= self.idle_min_frames
+            and velocity <= self.idle_velocity_threshold
+        ):
+            return {
+                "activity": "idle",
+                "confidence": 0.85,
+                "torso_angle": torso_angle,
+                "velocity": velocity,
+            }
+
+        # 4. STANDING
+        if knee_angle is None or knee_angle > 145:
+
+            return {
+                "activity": "standing",
+                "confidence": 0.75,
+                "torso_angle": torso_angle,
+                "velocity": velocity,
+            }
+
+        return {
+            "activity": "unknown",
+            "confidence": 0.3,
+            "torso_angle": torso_angle,
+            "velocity": velocity,
+        }
+

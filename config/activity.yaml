@@ -1,0 +1,23 @@
+pose:
+  imgsz: 320
+  confidence: 0.35
+
+temporal:
+  buffer_size: 20
+
+activity:
+  bending_angle_threshold: 35.0
+
+  walking_velocity_threshold: 0.08
+  walking_ankle_threshold: 0.06
+
+  idle_velocity_threshold: 0.015
+  idle_ankle_threshold: 0.02
+
+  idle_min_frames: 15
+
+  recent_window_size: 10
+
+smoothing:
+  window_size: 5
+  required_votes: 3
