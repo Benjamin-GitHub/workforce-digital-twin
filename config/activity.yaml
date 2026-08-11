@@ -1,9 +1,11 @@
 pose:
   imgsz: 320
   confidence: 0.35
+  keypoint_confidence: 0.30
 
 temporal:
   buffer_size: 20
+  track_timeout_seconds: 2.0
 
 activity:
   bending_angle_threshold: 35.0
@@ -21,3 +23,4 @@ activity:
 smoothing:
   window_size: 5
   required_votes: 3
+  transition_frames: 3

@@ -224,7 +224,7 @@ class ActivityClassifier:
         temporal pose features.
         """
         
-        window = window[-10:]
+        #window = window[-10:]
         
         if not window:
             return {

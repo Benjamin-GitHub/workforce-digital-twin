@@ -58,11 +58,23 @@ def torso_angle_from_vertical(shoulder_mid, hip_mid):
     return float(angle)
 
 
-def safe_point(keypoints, index):
+def safe_point(
+    keypoints,
+    index,
+    confidences=None,
+    min_confidence=0.30,
+):
     """
-    keypoints expected as shape:
+    Return a keypoint only when its coordinates
+    and confidence are valid.
+
+    keypoints expected shape:
     [17, 2]
+
+    confidences expected shape:
+    [17]
     """
+
     if index >= len(keypoints):
         return None
 
@@ -76,30 +88,110 @@ def safe_point(keypoints, index):
     if np.isnan(x) or np.isnan(y):
         return None
 
-    return np.array([float(x), float(y)])
+    # If confidence values are available,
+    # reject unreliable keypoints.
+    if confidences is not None:
+
+        if index >= len(confidences):
+            return None
+
+        confidence = confidences[index]
+
+        if confidence is None:
+            return None
+
+        if np.isnan(confidence):
+            return None
+
+        if confidence < min_confidence:
+            return None
+
+    return np.array([
+        float(x),
+        float(y),
+    ])
 
 
-def extract_pose_features(keypoints):
+def extract_pose_features(
+    keypoints,
+    confidences=None,
+    min_confidence=0.30,
+    ):
     """
     Extract useful geometric features from one person's pose.
 
     Returns dictionary or None if essential keypoints are missing.
     """
 
-    ls = safe_point(keypoints, LEFT_SHOULDER)
-    rs = safe_point(keypoints, RIGHT_SHOULDER)
+    ls = safe_point(
+        keypoints,
+        LEFT_SHOULDER,
+        confidences,
+        min_confidence,
+    )
 
-    lh = safe_point(keypoints, LEFT_HIP)
-    rh = safe_point(keypoints, RIGHT_HIP)
+    rs = safe_point(
+        keypoints,
+        RIGHT_SHOULDER,
+        confidences,
+        min_confidence,
+    )
 
-    lk = safe_point(keypoints, LEFT_KNEE)
-    rk = safe_point(keypoints, RIGHT_KNEE)
+    lh = safe_point(
+        keypoints,
+        LEFT_HIP,
+        confidences,
+        min_confidence,
+    )
 
-    la = safe_point(keypoints, LEFT_ANKLE)
-    ra = safe_point(keypoints, RIGHT_ANKLE)
+    rh = safe_point(
+        keypoints,
+        RIGHT_HIP,
+        confidences,
+        min_confidence,
+    )
 
-    lw = safe_point(keypoints, LEFT_WRIST)
-    rw = safe_point(keypoints, RIGHT_WRIST)
+    lk = safe_point(
+        keypoints,
+        LEFT_KNEE,
+        confidences,
+        min_confidence,
+    )
+
+    rk = safe_point(
+        keypoints,
+        RIGHT_KNEE,
+        confidences,
+        min_confidence,
+    )
+
+    la = safe_point(
+        keypoints,
+        LEFT_ANKLE,
+        confidences,
+        min_confidence,
+    )
+
+    ra = safe_point(
+        keypoints,
+        RIGHT_ANKLE,
+        confidences,
+        min_confidence,
+    )
+
+    lw = safe_point(
+        keypoints,
+        LEFT_WRIST,
+        confidences,
+        min_confidence,
+    )
+
+    rw = safe_point(
+        keypoints,
+        RIGHT_WRIST,
+        confidences,
+        min_confidence,
+    )
 
     essential = [ls, rs, lh, rh]
 

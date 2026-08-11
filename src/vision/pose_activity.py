@@ -106,10 +106,20 @@ def main():
 
     imgsz = pose_config.get("imgsz", 320)
     pose_conf = pose_config.get("confidence", 0.35)
+    
+    keypoint_conf = pose_config.get(
+        "keypoint_confidence",
+        0.30,
+    )
 
     buffer_size = temporal_config.get(
         "buffer_size",
         20,
+    )
+    
+    track_timeout_seconds = temporal_config.get(
+        "track_timeout_seconds",
+        2.0,
     )
 
     # --------------------------------------------------
@@ -195,6 +205,10 @@ def main():
             "required_votes",
             3,
         ),
+        transition_frames=smoothing_config.get(
+            "transition_frames",
+            3,
+        ),
     )
 
     # --------------------------------------------------
@@ -225,6 +239,11 @@ def main():
 
     print(
         f"Video: {width}x{height} @ {fps:.2f} FPS"
+    )
+    
+    track_timeout_frames = max(
+        1,
+        int(track_timeout_seconds * fps),
     )
 
     # --------------------------------------------------
@@ -292,8 +311,32 @@ def main():
     # Processing variables
     # --------------------------------------------------
 
+    last_seen = {}
     frame_number = 0
     start_time = time.time()
+    
+    def cleanup_stale_tracks():
+        stale_track_ids = []
+
+        for tracked_id, seen_frame in last_seen.items():
+
+            frames_missing = (
+                frame_number - seen_frame
+            )
+
+            if frames_missing > track_timeout_frames:
+                stale_track_ids.append(tracked_id)
+
+        for stale_id in stale_track_ids:
+
+            buffer.remove(stale_id)
+            smoother.remove(stale_id)
+
+            del last_seen[stale_id]
+
+            print(
+                f"Removed stale track ID={stale_id}"
+            )
 
     print()
     print("Starting activity recognition...")
@@ -326,6 +369,7 @@ def main():
             )
 
             if not results:
+                cleanup_stale_tracks()
                 writer.write(frame)
                 continue
 
@@ -335,14 +379,17 @@ def main():
             annotated = result.plot()
 
             if result.boxes is None:
+                cleanup_stale_tracks()
                 writer.write(annotated)
                 continue
 
             if result.keypoints is None:
+                cleanup_stale_tracks()
                 writer.write(annotated)
                 continue
 
             if result.boxes.id is None:
+                cleanup_stale_tracks()
                 writer.write(annotated)
                 continue
 
@@ -361,6 +408,15 @@ def main():
                 .cpu()
                 .numpy()
             )
+            
+            keypoint_confidences = None
+
+            if result.keypoints.conf is not None:
+                keypoint_confidences = (
+                    result.keypoints.conf
+                    .cpu()
+                    .numpy()
+                )
 
             track_ids = (
                 result.boxes.id
@@ -373,18 +429,32 @@ def main():
             # Process every tracked person
             # ------------------------------------------
 
+            if keypoint_confidences is None:
+                keypoint_confidences = [
+                    None
+                    for _ in range(len(keypoints))
+                ]
+
             for (
                 box,
                 person_keypoints,
+                person_keypoint_confidences,
                 track_id,
             ) in zip(
                 boxes,
                 keypoints,
+                keypoint_confidences,
                 track_ids,
             ):
 
+                # Remember the most recent frame
+                # where this track was detected.
+                last_seen[track_id] = frame_number
+
                 features = extract_pose_features(
-                    person_keypoints
+                    person_keypoints,
+                    confidences=person_keypoint_confidences,
+                    min_confidence=keypoint_conf,
                 )
 
                 if features is None:
@@ -417,14 +487,15 @@ def main():
                 # Smooth the activity state
                 # --------------------------------------
 
-                smoothed_activity = smoother.update(
-                    track_id,
-                    raw_activity,
-                )
-
                 confidence = state.get(
                     "confidence",
                     0.0,
+                )
+
+                smoothed_activity = smoother.update(
+                    track_id,
+                    raw_activity,
+                    confidence,
                 )
 
                 velocity = state.get(
@@ -496,6 +567,12 @@ def main():
                     torso_angle,
                     knee_angle,
                 ])
+                
+            # ------------------------------------------
+            # Remove stale track histories
+            # ------------------------------------------
+
+            cleanup_stale_tracks()
 
             # ------------------------------------------
             # Save annotated frame
