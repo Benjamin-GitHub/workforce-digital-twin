@@ -1,0 +1,78 @@
+{
+  "name": "controlled_ppe_pt_r3",
+  "model": "models/pytorch/yolo26n_ppe_best.pt",
+  "source": "benchmarks/live-video/recordings/processed/esp32_controlled_5min_11fps.mp4",
+  "imgsz": 320,
+  "conf": 0.25,
+  "iou": 0.7,
+  "vid_stride": 1,
+  "warmup_frames_excluded": 10,
+  "source_width": 640,
+  "source_height": 480,
+  "source_fps": 11.0,
+  "source_frames": 3301,
+  "source_duration_seconds": 300.09090909090907,
+  "processed_frames": 3301,
+  "measured_frames": 3291,
+  "total_processing_seconds": 279.32946329900005,
+  "processing_fps": 11.817586161566282,
+  "real_time_factor": 0.9308161454980312,
+  "mean_frame_wall_ms": 84.19729394287478,
+  "median_frame_wall_ms": 83.57233399874531,
+  "p95_frame_wall_ms": 90.45275050084456,
+  "mean_preprocess_ms": 1.343101732267045,
+  "mean_inference_ms": 81.43495348800491,
+  "median_inference_ms": 80.74772400141228,
+  "p95_inference_ms": 87.50799750123406,
+  "inference_sd_ms": 4.789596965620996,
+  "mean_postprocess_ms": 0.28295226280686925,
+  "peak_rss_mb": 794.875,
+  "start_temperature": "temp=56.0'C",
+  "end_temperature": "temp=64.8'C",
+  "start_throttled": "throttled=0x0",
+  "end_throttled": "throttled=0x0",
+  "python_version": "3.13.5",
+  "class_counts": {
+    "Person": 3414,
+    "vest": 2387,
+    "helmet": 1503,
+    "boots": 233,
+    "gloves": 168,
+    "none": 508,
+    "no_helmet": 55,
+    "no_gloves": 2
+  },
+  "mean_confidence_by_class": {
+    "Person": 0.7527145121484453,
+    "vest": 0.7670610454799642,
+    "helmet": 0.5254256063235734,
+    "boots": 0.3242382743583728,
+    "gloves": 0.41020855130184264,
+    "none": 0.5208507187253847,
+    "no_helmet": 0.3101436983455311,
+    "no_gloves": 0.41108356416225433
+  }
+}
+	Command being timed: "python benchmarks/live-video/scripts/benchmark_video.py --model models/pytorch/yolo26n_ppe_best.pt --source benchmarks/live-video/recordings/processed/esp32_controlled_5min_11fps.mp4 --name controlled_ppe_pt_r3 --output-dir results/controlled-video --imgsz 320 --conf 0.25 --iou 0.7"
+	User time (seconds): 660.78
+	System time (seconds): 9.43
+	Percent of CPU this job got: 237%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 4:42.78
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 901728
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 78882
+	Voluntary context switches: 374651
+	Involuntary context switches: 100903
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 544
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 16384
+	Exit status: 0

@@ -1,0 +1,82 @@
+WARNING ⚠️ Unable to automatically guess model task, assuming 'task=detect'. Explicitly define task for your model, i.e. 'task=detect', 'segment', 'classify', 'pose', 'obb' or 'semantic'.
+Loading models/ncnn/yolo26n_ppe_best_ncnn_model for NCNN inference...
+{
+  "name": "controlled_ppe_ncnn_r2",
+  "model": "models/ncnn/yolo26n_ppe_best_ncnn_model",
+  "source": "benchmarks/live-video/recordings/processed/esp32_controlled_5min_11fps.mp4",
+  "imgsz": 320,
+  "conf": 0.25,
+  "iou": 0.7,
+  "vid_stride": 1,
+  "warmup_frames_excluded": 10,
+  "source_width": 640,
+  "source_height": 480,
+  "source_fps": 11.0,
+  "source_frames": 3301,
+  "source_duration_seconds": 300.09090909090907,
+  "processed_frames": 3301,
+  "measured_frames": 3291,
+  "total_processing_seconds": 94.92585240099652,
+  "processing_fps": 34.7745099623182,
+  "real_time_factor": 0.31632365235109416,
+  "mean_frame_wall_ms": 28.29669877514445,
+  "median_frame_wall_ms": 21.299690000887495,
+  "p95_frame_wall_ms": 60.17220249850652,
+  "mean_preprocess_ms": 1.70915709297078,
+  "mean_inference_ms": 24.24852585933212,
+  "median_inference_ms": 17.192635001265444,
+  "p95_inference_ms": 55.785709500923986,
+  "inference_sd_ms": 18.289160268559012,
+  "mean_postprocess_ms": 1.1639552324929134,
+  "peak_rss_mb": 783.6875,
+  "start_temperature": "temp=54.3'C",
+  "end_temperature": "temp=66.4'C",
+  "start_throttled": "throttled=0x0",
+  "end_throttled": "throttled=0x0",
+  "python_version": "3.13.5",
+  "class_counts": {
+    "Person": 3269,
+    "vest": 2227,
+    "helmet": 1934,
+    "boots": 1070,
+    "gloves": 206,
+    "no_helmet": 96,
+    "none": 728,
+    "no_goggle": 12,
+    "no_gloves": 2
+  },
+  "mean_confidence_by_class": {
+    "Person": 0.7717645877944326,
+    "vest": 0.8161120095700494,
+    "helmet": 0.7380218348064245,
+    "boots": 0.3340612678884346,
+    "gloves": 0.40127237560679613,
+    "no_helmet": 0.30781809488932294,
+    "none": 0.506716550051511,
+    "no_goggle": 0.28594970703125,
+    "no_gloves": 0.32568359375
+  }
+}
+	Command being timed: "python benchmarks/live-video/scripts/benchmark_video.py --model models/ncnn/yolo26n_ppe_best_ncnn_model --source benchmarks/live-video/recordings/processed/esp32_controlled_5min_11fps.mp4 --name controlled_ppe_ncnn_r2 --output-dir results/controlled-video --imgsz 320 --conf 0.25 --iou 0.7"
+	User time (seconds): 291.62
+	System time (seconds): 3.14
+	Percent of CPU this job got: 299%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:38.27
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 901520
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 41302
+	Voluntary context switches: 304999
+	Involuntary context switches: 82201
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 576
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 16384
+	Exit status: 0

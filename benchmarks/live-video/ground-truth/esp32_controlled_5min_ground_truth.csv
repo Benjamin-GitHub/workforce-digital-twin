@@ -1,0 +1,22 @@
+start_time,end_time,start_sec,end_sec,activity,helmet,vest,gloves,boots
+00:00,00:05,0,5,Walking,1,1,1,1
+00:05,00:20,5,20,Idle,1,1,1,1
+00:21,00:40,21,40,Walking,1,1,1,1
+00:41,01:00,41,60,Bending - Short walk,1,1,1,1
+01:00,01:28,60,88,Material handling,1,1,1,1
+01:29,01:45,89,105,Carrying,1,1,1,1
+01:47,02:02,107,122,Standing / material handling,1,1,1,1
+02:05,02:13,125,133,Standing,0,1,1,1
+02:13,02:23,133,143,Walking / standing,0,1,1,1
+02:23,02:40,143,160,Standing / Walking,0,0,1,1
+02:40,02:49,160,169,Standing / Walking,1,0,1,1
+02:50,03:04,170,184,Bending / Carrying,0,0,0,1
+03:05,03:10,185,190,Standing,0,0,0,1
+03:10,03:27,190,207,Walking / Standing / Walking,0,0,0,1
+03:28,03:41,208,221,Mixed natural sequence,1,0,1,1
+03:42,03:53,222,233,Walking,1,1,1,1
+03:53,04:00,233,240,Material handling,1,1,1,1
+04:02,04:03,242,243,Bending,1,1,1,1
+04:03,04:35,243,275,Standing,1,1,1,1
+04:36,04:48,276,288,Idle,0,0,0,0
+04:48,05:00,288,300,Walking,0,0,0,0

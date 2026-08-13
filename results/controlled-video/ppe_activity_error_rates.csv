@@ -1,0 +1,105 @@
+backend,ppe_item,activity,labelled_frames,false_negatives,false_negative_rate,false_positives,false_positive_rate
+PyTorch,helmet,Bending,11,7,0.6363636363636364,0,0.0
+PyTorch,helmet,Bending - Short walk,209,150,0.7177033492822966,0,0.0
+PyTorch,helmet,Bending / Carrying,154,0,0.0,3,0.01948051948051948
+PyTorch,helmet,Carrying,176,40,0.22727272727272727,0,0.0
+PyTorch,helmet,Idle,297,5,0.016835016835016835,0,0.0
+PyTorch,helmet,Material handling,385,158,0.4103896103896104,0,0.0
+PyTorch,helmet,Mixed natural sequence,143,91,0.6363636363636364,0,0.0
+PyTorch,helmet,Standing,495,71,0.14343434343434344,2,0.00404040404040404
+PyTorch,helmet,Standing / Walking,286,82,0.2867132867132867,3,0.01048951048951049
+PyTorch,helmet,Standing / material handling,165,62,0.37575757575757573,0,0.0
+PyTorch,helmet,Walking,517,108,0.20889748549323017,0,0.0
+PyTorch,helmet,Walking / Standing / Walking,187,0,0.0,0,0.0
+PyTorch,helmet,Walking / standing,110,0,0.0,0,0.0
+PyTorch,vest,Bending,11,0,0.0,0,0.0
+PyTorch,vest,Bending - Short walk,209,20,0.09569377990430622,0,0.0
+PyTorch,vest,Bending / Carrying,154,0,0.0,4,0.025974025974025976
+PyTorch,vest,Carrying,176,3,0.017045454545454544,0,0.0
+PyTorch,vest,Idle,297,0,0.0,2,0.006734006734006734
+PyTorch,vest,Material handling,385,33,0.08571428571428572,0,0.0
+PyTorch,vest,Mixed natural sequence,143,0,0.0,13,0.09090909090909091
+PyTorch,vest,Standing,495,0,0.0,0,0.0
+PyTorch,vest,Standing / Walking,286,0,0.0,35,0.12237762237762238
+PyTorch,vest,Standing / material handling,165,0,0.0,0,0.0
+PyTorch,vest,Walking,517,7,0.013539651837524178,0,0.0
+PyTorch,vest,Walking / Standing / Walking,187,0,0.0,1,0.0053475935828877
+PyTorch,vest,Walking / standing,110,1,0.00909090909090909,0,0.0
+PyTorch,gloves,Bending,11,11,1.0,0,0.0
+PyTorch,gloves,Bending - Short walk,209,199,0.9521531100478469,0,0.0
+PyTorch,gloves,Bending / Carrying,154,0,0.0,0,0.0
+PyTorch,gloves,Carrying,176,170,0.9659090909090909,0,0.0
+PyTorch,gloves,Idle,297,165,0.5555555555555556,0,0.0
+PyTorch,gloves,Material handling,385,380,0.987012987012987,0,0.0
+PyTorch,gloves,Mixed natural sequence,143,143,1.0,0,0.0
+PyTorch,gloves,Standing,495,323,0.6525252525252525,0,0.0
+PyTorch,gloves,Standing / Walking,286,286,1.0,0,0.0
+PyTorch,gloves,Standing / material handling,165,165,1.0,0,0.0
+PyTorch,gloves,Walking,517,366,0.7079303675048356,0,0.0
+PyTorch,gloves,Walking / Standing / Walking,187,0,0.0,0,0.0
+PyTorch,gloves,Walking / standing,110,102,0.9272727272727272,0,0.0
+PyTorch,boots,Bending,11,8,0.7272727272727273,0,0.0
+PyTorch,boots,Bending - Short walk,209,209,1.0,0,0.0
+PyTorch,boots,Bending / Carrying,154,146,0.948051948051948,0,0.0
+PyTorch,boots,Carrying,176,164,0.9318181818181818,0,0.0
+PyTorch,boots,Idle,297,90,0.30303030303030304,1,0.003367003367003367
+PyTorch,boots,Material handling,385,369,0.9584415584415584,0,0.0
+PyTorch,boots,Mixed natural sequence,143,143,1.0,0,0.0
+PyTorch,boots,Standing,495,488,0.9858585858585859,0,0.0
+PyTorch,boots,Standing / Walking,286,279,0.9755244755244755,0,0.0
+PyTorch,boots,Standing / material handling,165,122,0.7393939393939394,0,0.0
+PyTorch,boots,Walking,517,369,0.7137330754352031,6,0.01160541586073501
+PyTorch,boots,Walking / Standing / Walking,187,187,1.0,0,0.0
+PyTorch,boots,Walking / standing,110,108,0.9818181818181818,0,0.0
+NCNN,helmet,Bending,11,2,0.18181818181818182,0,0.0
+NCNN,helmet,Bending - Short walk,209,81,0.3875598086124402,0,0.0
+NCNN,helmet,Bending / Carrying,154,0,0.0,3,0.01948051948051948
+NCNN,helmet,Carrying,176,4,0.022727272727272728,0,0.0
+NCNN,helmet,Idle,297,0,0.0,0,0.0
+NCNN,helmet,Material handling,385,68,0.17662337662337663,0,0.0
+NCNN,helmet,Mixed natural sequence,143,61,0.42657342657342656,0,0.0
+NCNN,helmet,Standing,495,7,0.014141414141414142,2,0.00404040404040404
+NCNN,helmet,Standing / Walking,286,47,0.16433566433566432,6,0.02097902097902098
+NCNN,helmet,Standing / material handling,165,0,0.0,0,0.0
+NCNN,helmet,Walking,517,13,0.025145067698259187,0,0.0
+NCNN,helmet,Walking / Standing / Walking,187,0,0.0,0,0.0
+NCNN,helmet,Walking / standing,110,0,0.0,4,0.03636363636363636
+NCNN,vest,Bending,11,0,0.0,0,0.0
+NCNN,vest,Bending - Short walk,209,15,0.07177033492822966,0,0.0
+NCNN,vest,Bending / Carrying,154,0,0.0,15,0.09740259740259741
+NCNN,vest,Carrying,176,0,0.0,0,0.0
+NCNN,vest,Idle,297,0,0.0,4,0.013468013468013467
+NCNN,vest,Material handling,385,23,0.05974025974025974,0,0.0
+NCNN,vest,Mixed natural sequence,143,0,0.0,22,0.15384615384615385
+NCNN,vest,Standing,495,0,0.0,0,0.0
+NCNN,vest,Standing / Walking,286,0,0.0,32,0.11188811188811189
+NCNN,vest,Standing / material handling,165,0,0.0,0,0.0
+NCNN,vest,Walking,517,7,0.013539651837524178,0,0.0
+NCNN,vest,Walking / Standing / Walking,187,0,0.0,2,0.0106951871657754
+NCNN,vest,Walking / standing,110,0,0.0,0,0.0
+NCNN,gloves,Bending,11,11,1.0,0,0.0
+NCNN,gloves,Bending - Short walk,209,194,0.9282296650717703,0,0.0
+NCNN,gloves,Bending / Carrying,154,0,0.0,0,0.0
+NCNN,gloves,Carrying,176,163,0.9261363636363636,0,0.0
+NCNN,gloves,Idle,297,165,0.5555555555555556,0,0.0
+NCNN,gloves,Material handling,385,379,0.9844155844155844,0,0.0
+NCNN,gloves,Mixed natural sequence,143,140,0.9790209790209791,0,0.0
+NCNN,gloves,Standing,495,330,0.6666666666666666,0,0.0
+NCNN,gloves,Standing / Walking,286,286,1.0,0,0.0
+NCNN,gloves,Standing / material handling,165,165,1.0,0,0.0
+NCNN,gloves,Walking,517,355,0.6866537717601547,0,0.0
+NCNN,gloves,Walking / Standing / Walking,187,0,0.0,0,0.0
+NCNN,gloves,Walking / standing,110,100,0.9090909090909091,0,0.0
+NCNN,boots,Bending,11,8,0.7272727272727273,0,0.0
+NCNN,boots,Bending - Short walk,209,183,0.8755980861244019,0,0.0
+NCNN,boots,Bending / Carrying,154,122,0.7922077922077922,0,0.0
+NCNN,boots,Carrying,176,143,0.8125,0,0.0
+NCNN,boots,Idle,297,21,0.0707070707070707,41,0.13804713804713806
+NCNN,boots,Material handling,385,325,0.8441558441558441,0,0.0
+NCNN,boots,Mixed natural sequence,143,141,0.986013986013986,0,0.0
+NCNN,boots,Standing,495,437,0.8828282828282829,0,0.0
+NCNN,boots,Standing / Walking,286,224,0.7832167832167832,0,0.0
+NCNN,boots,Standing / material handling,165,16,0.09696969696969697,0,0.0
+NCNN,boots,Walking,517,352,0.6808510638297872,34,0.06576402321083172
+NCNN,boots,Walking / Standing / Walking,187,162,0.8663101604278075,0,0.0
+NCNN,boots,Walking / standing,110,100,0.9090909090909091,0,0.0
