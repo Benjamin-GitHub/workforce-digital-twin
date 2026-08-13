@@ -1,0 +1,29 @@
+usage: benchmark_video.py [-h] --model MODEL --source SOURCE --name NAME
+                          --output-dir OUTPUT_DIR [--imgsz IMGSZ]
+                          [--conf CONF] [--iou IOU] [--vid-stride VID_STRIDE]
+                          [--warmup-frames WARMUP_FRAMES]
+benchmark_video.py: error: argument --iou: invalid float value: '0.7~'
+Command exited with non-zero status 2
+	Command being timed: "python benchmarks/live-video/scripts/benchmark_video.py --model models/ncnn/yolo26n_ppe_best_ncnn_model --source benchmarks/live-video/recordings/processed/esp32_controlled_5min_11fps.mp4 --name controlled_ppe_ncnn_r1 --output-dir results/controlled-video --imgsz 320 --conf 0.25 --iou 0.7~ show=True verbose=True"
+	User time (seconds): 3.19
+	System time (seconds): 0.15
+	Percent of CPU this job got: 114%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.92
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 688320
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 29670
+	Voluntary context switches: 18
+	Involuntary context switches: 200
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 16384
+	Exit status: 2

@@ -1,0 +1,27 @@
+{
+  "name": "pretrained_pt_pilot",
+  "model": "models/pytorch/yolo26n.pt",
+  "source": "http://192.168.1.171:81/stream",
+  "requested_duration_seconds": 15.0,
+  "actual_duration_seconds": 15.261110745999758,
+  "processed_frames": 103,
+  "processed_fps": 6.749181086114479,
+  "warmup_frames_excluded": 10,
+  "mean_frame_interval_ms": 132.76792504300204,
+  "median_frame_interval_ms": 126.87064900001133,
+  "p95_frame_interval_ms": 213.2116200000382,
+  "mean_preprocess_ms": 1.1532289139605352,
+  "mean_inference_ms": 100.36194405382693,
+  "median_inference_ms": 87.39629899991996,
+  "p95_inference_ms": 179.19575659998367,
+  "inference_sd_ms": 38.25958941284077,
+  "mean_postprocess_ms": 0.40209406454788,
+  "peak_rss_mb": 783.21875,
+  "start_temperature": "temp=48.3'C",
+  "end_temperature": "temp=53.2'C",
+  "start_throttled": "throttled=0x0",
+  "end_throttled": "throttled=0x0",
+  "class_counts": {
+    "chair": 86
+  }
+}
