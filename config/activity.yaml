@@ -13,6 +13,11 @@ activity:
   walking_velocity_threshold: 0.08
   walking_ankle_threshold: 0.06
 
+  carrying_wrist_hip_threshold: 0.50
+  carrying_max_torso_angle: 20.0
+  carrying_min_velocity: 0.05
+  carrying_max_wrist_motion: 0.18
+
   idle_velocity_threshold: 0.015
   idle_ankle_threshold: 0.02
 

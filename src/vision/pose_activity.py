@@ -167,6 +167,30 @@ def main():
                 0.06,
             ),
 
+        carrying_wrist_hip_threshold=
+            activity_config.get(
+                "carrying_wrist_hip_threshold",
+                0.50,
+            ),
+
+        carrying_max_torso_angle=
+            activity_config.get(
+                "carrying_max_torso_angle",
+                20.0,
+            ),
+
+        carrying_min_velocity=
+            activity_config.get(
+                "carrying_min_velocity",
+                0.05,
+            ),
+
+        carrying_max_wrist_motion=
+            activity_config.get(
+                "carrying_max_wrist_motion",
+                0.18,
+            ),
+
         idle_velocity_threshold=
             activity_config.get(
                 "idle_velocity_threshold",
@@ -297,12 +321,15 @@ def main():
     csv_writer.writerow([
         "timestamp",
         "frame",
+        "video_time_sec",
         "track_id",
         "raw_activity",
         "smoothed_activity",
         "confidence",
         "velocity",
         "ankle_motion",
+        "wrist_motion",
+        "wrist_hip_distance",
         "torso_angle",
         "knee_angle",
     ])
@@ -508,6 +535,15 @@ def main():
                     0.0,
                 )
 
+                wrist_motion = state.get(
+                    "wrist_motion",
+                    0.0,
+                )
+
+                wrist_hip_distance = state.get(
+                    "wrist_hip_distance"
+                )
+
                 torso_angle = state.get(
                     "torso_angle",
                     0.0,
@@ -539,6 +575,12 @@ def main():
                     else "None"
                 )
 
+                wrist_hip_text = (
+                    f"{wrist_hip_distance:.3f}"
+                    if wrist_hip_distance is not None
+                    else "None"
+                )
+
                 print(
                     f"frame={frame_number} "
                     f"ID={track_id} "
@@ -547,6 +589,8 @@ def main():
                     f"conf={confidence:.2f} "
                     f"velocity={velocity:.3f} "
                     f"ankle={ankle_motion:.3f} "
+                    f"wrist={wrist_motion:.3f} "
+                    f"wrist_hip={wrist_hip_text} "
                     f"torso={torso_angle:.1f} "
                     f"knee={knee_text}"
                 )
@@ -558,12 +602,15 @@ def main():
                 csv_writer.writerow([
                     time.time(),
                     frame_number,
+                    (frame_number - 1) / fps,
                     track_id,
                     raw_activity,
                     smoothed_activity,
                     confidence,
                     velocity,
                     ankle_motion,
+                    wrist_motion,
+                    wrist_hip_distance,
                     torso_angle,
                     knee_angle,
                 ])

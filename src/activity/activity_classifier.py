@@ -7,6 +7,10 @@ class ActivityClassifier:
         bending_angle_threshold=35.0,
         walking_velocity_threshold=0.08,
         walking_ankle_threshold=0.06,
+        carrying_wrist_hip_threshold=0.50,
+        carrying_max_torso_angle=20.0,
+        carrying_min_velocity=0.05,
+        carrying_max_wrist_motion=0.18,
         idle_velocity_threshold=0.015,
         idle_ankle_threshold=0.02,
         idle_min_frames=15,
@@ -20,6 +24,22 @@ class ActivityClassifier:
 
         self.walking_ankle_threshold = (
             walking_ankle_threshold
+        )
+
+        self.carrying_wrist_hip_threshold = (
+            carrying_wrist_hip_threshold
+        )
+
+        self.carrying_max_torso_angle = (
+            carrying_max_torso_angle
+        )
+
+        self.carrying_min_velocity = (
+            carrying_min_velocity
+        )
+
+        self.carrying_max_wrist_motion = (
+            carrying_max_wrist_motion
         )
 
         self.idle_velocity_threshold = (
@@ -173,6 +193,113 @@ class ActivityClassifier:
             np.mean(movements)
         )
 
+    def _wrist_motion(self, window):
+        """
+        Calculate average wrist movement between
+        consecutive frames, normalised by torso length.
+
+        High values indicate active upper-body/hand
+        movement, useful for material-handling inference.
+        """
+
+        if len(window) < 2:
+            return 0.0
+
+        movements = []
+
+        for previous, current in zip(
+            window[:-1],
+            window[1:]
+        ):
+            torso = current.get(
+                "torso_length",
+                1.0
+            )
+
+            if torso is None or torso <= 0:
+                continue
+
+            for side in (
+                "left",
+                "right",
+            ):
+                previous_x = previous.get(
+                    f"{side}_wrist_x"
+                )
+
+                previous_y = previous.get(
+                    f"{side}_wrist_y"
+                )
+
+                current_x = current.get(
+                    f"{side}_wrist_x"
+                )
+
+                current_y = current.get(
+                    f"{side}_wrist_y"
+                )
+
+                if any(
+                    value is None
+                    for value in (
+                        previous_x,
+                        previous_y,
+                        current_x,
+                        current_y,
+                    )
+                ):
+                    continue
+
+                dx = current_x - previous_x
+                dy = current_y - previous_y
+
+                movement = np.sqrt(
+                    dx ** 2 + dy ** 2
+                )
+
+                movement /= torso
+
+                movements.append(
+                    movement
+                )
+
+        if not movements:
+            return 0.0
+
+        return float(
+            np.mean(movements)
+        )
+
+    def _mean_wrist_hip_distance(
+        self,
+        window,
+    ):
+        """
+        Mean normalised distance of visible wrists
+        from the hip centre.
+        """
+
+        values = []
+
+        for frame in window:
+            for side in (
+                "left",
+                "right",
+            ):
+                value = frame.get(
+                    f"{side}_wrist_hip_distance"
+                )
+
+                if value is not None:
+                    values.append(value)
+
+        if not values:
+            return None
+
+        return float(
+            np.mean(values)
+        )
+
     def _mean_torso_angle(self, window):
         values = [
             frame["torso_angle"]
@@ -232,6 +359,8 @@ class ActivityClassifier:
                 "confidence": 0.0,
                 "velocity": 0.0,
                 "ankle_motion": 0.0,
+                "wrist_motion": 0.0,
+                "wrist_hip_distance": None,
                 "torso_angle": 0.0,
                 "knee_angle": None,
             }
@@ -266,6 +395,18 @@ class ActivityClassifier:
             )
         )
 
+        wrist_motion = (
+            self._wrist_motion(
+                recent_window
+            )
+        )
+
+        wrist_hip_distance = (
+            self._mean_wrist_hip_distance(
+                recent_window
+            )
+        )
+
         # ---------------------------------
         # 1. BENDING
         # ---------------------------------
@@ -285,11 +426,13 @@ class ActivityClassifier:
                 "torso_angle": torso_angle,
                 "velocity": velocity,
                 "ankle_motion": ankle_motion,
+                "wrist_motion": wrist_motion,
+                "wrist_hip_distance": wrist_hip_distance,
                 "knee_angle": knee_angle,
             }
 
         # ---------------------------------
-        # 2. WALKING
+        # 2. CARRYING
         # ---------------------------------
 
         walking_by_body = (
@@ -302,10 +445,72 @@ class ActivityClassifier:
             >= self.walking_ankle_threshold
         )
 
-        if (
+        locomotion_detected = (
             walking_by_body
             or walking_by_ankles
+        )
+
+        carrying_hand_position = (
+            wrist_hip_distance is not None
+            and wrist_hip_distance
+            >= self.carrying_wrist_hip_threshold
+        )
+
+        carrying_body_motion = (
+            velocity
+            >= self.carrying_min_velocity
+        )
+
+        carrying_stable_hands = (
+            wrist_motion
+            <= self.carrying_max_wrist_motion
+        )
+
+        carrying_upright_posture = (
+            torso_angle
+            <= self.carrying_max_torso_angle
+        )
+
+        if (
+            locomotion_detected
+            and carrying_body_motion
+            and carrying_hand_position
+            and carrying_stable_hands
+            and carrying_upright_posture
         ):
+            distance_score = (
+                wrist_hip_distance
+                / max(
+                    self.carrying_wrist_hip_threshold,
+                    1e-6,
+                )
+            )
+
+            confidence = min(
+                0.90,
+                0.60
+                + max(
+                    0.0,
+                    distance_score - 1.0,
+                ) * 0.30,
+            )
+
+            return {
+                "activity": "carrying",
+                "confidence": confidence,
+                "torso_angle": torso_angle,
+                "velocity": velocity,
+                "ankle_motion": ankle_motion,
+                "wrist_motion": wrist_motion,
+                "wrist_hip_distance": wrist_hip_distance,
+                "knee_angle": knee_angle,
+            }
+
+        # ---------------------------------
+        # 3. WALKING
+        # ---------------------------------
+
+        if locomotion_detected:
             body_score = (
                 velocity
                 / max(
@@ -343,11 +548,13 @@ class ActivityClassifier:
                 "torso_angle": torso_angle,
                 "velocity": velocity,
                 "ankle_motion": ankle_motion,
+                "wrist_motion": wrist_motion,
+                "wrist_hip_distance": wrist_hip_distance,
                 "knee_angle": knee_angle,
             }
 
         # ---------------------------------
-        # 3. IDLE
+        # 4. IDLE
         # ---------------------------------
 
         enough_frames = (
@@ -376,11 +583,13 @@ class ActivityClassifier:
                 "torso_angle": torso_angle,
                 "velocity": velocity,
                 "ankle_motion": ankle_motion,
+                "wrist_motion": wrist_motion,
+                "wrist_hip_distance": wrist_hip_distance,
                 "knee_angle": knee_angle,
             }
 
         # ---------------------------------
-        # 4. STANDING
+        # 5. STANDING
         # ---------------------------------
 
         if (
@@ -393,6 +602,8 @@ class ActivityClassifier:
                 "torso_angle": torso_angle,
                 "velocity": velocity,
                 "ankle_motion": ankle_motion,
+                "wrist_motion": wrist_motion,
+                "wrist_hip_distance": wrist_hip_distance,
                 "knee_angle": knee_angle,
             }
 
@@ -406,5 +617,7 @@ class ActivityClassifier:
             "torso_angle": torso_angle,
             "velocity": velocity,
             "ankle_motion": ankle_motion,
+            "wrist_motion": wrist_motion,
+            "wrist_hip_distance": wrist_hip_distance,
             "knee_angle": knee_angle,
         }

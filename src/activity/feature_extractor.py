@@ -238,11 +238,28 @@ def extract_pose_features(
     wrist_to_hip_left = None
     wrist_to_hip_right = None
 
+    left_wrist_x = None
+    left_wrist_y = None
+    right_wrist_x = None
+    right_wrist_y = None
+
     if lw is not None:
-        wrist_to_hip_left = distance(lw, hip_mid) / torso_length
+        wrist_to_hip_left = distance(
+            lw,
+            hip_mid
+        ) / torso_length
+
+        left_wrist_x = float(lw[0])
+        left_wrist_y = float(lw[1])
 
     if rw is not None:
-        wrist_to_hip_right = distance(rw, hip_mid) / torso_length
+        wrist_to_hip_right = distance(
+            rw,
+            hip_mid
+        ) / torso_length
+
+        right_wrist_x = float(rw[0])
+        right_wrist_y = float(rw[1])
 
     left_ankle_x = None
     left_ankle_y = None
@@ -277,6 +294,12 @@ def extract_pose_features(
 
         "left_wrist_hip_distance": wrist_to_hip_left,
         "right_wrist_hip_distance": wrist_to_hip_right,
+
+        "left_wrist_x": left_wrist_x,
+        "left_wrist_y": left_wrist_y,
+
+        "right_wrist_x": right_wrist_x,
+        "right_wrist_y": right_wrist_y,
 
         "left_ankle_x": left_ankle_x,
         "left_ankle_y": left_ankle_y,
