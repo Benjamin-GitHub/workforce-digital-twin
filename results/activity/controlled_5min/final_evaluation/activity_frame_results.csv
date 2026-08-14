@@ -1,0 +1,2036 @@
+frame,video_time_sec,segment_id,segment_description,ground_truth,prediction,correct,primary_track_present,raw_activity,smoothed_activity,semantic_activity
+1,0.000000,1,Walking,walking,unknown,0,1,unknown,unknown,unknown
+2,0.090909,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+3,0.181818,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+4,0.272727,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+5,0.363636,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+6,0.454545,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+7,0.545455,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+8,0.636364,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+9,0.727273,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+10,0.818182,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+11,0.909091,1,Walking,walking,carrying,0,1,standing,carrying,carrying
+12,1.000000,1,Walking,walking,carrying,0,1,standing,carrying,carrying
+13,1.090909,1,Walking,walking,carrying,0,1,standing,carrying,carrying
+14,1.181818,1,Walking,walking,carrying,0,1,standing,carrying,carrying
+15,1.272727,1,Walking,walking,standing,0,1,idle,standing,standing
+16,1.363636,1,Walking,walking,standing,0,1,idle,standing,standing
+17,1.454545,1,Walking,walking,standing,0,1,idle,standing,standing
+18,1.545455,1,Walking,walking,standing,0,1,idle,standing,standing
+19,1.636364,1,Walking,walking,idle,0,1,idle,idle,idle
+20,1.727273,1,Walking,walking,idle,0,1,idle,idle,idle
+21,1.818182,1,Walking,walking,idle,0,1,idle,idle,idle
+22,1.909091,1,Walking,walking,idle,0,1,idle,idle,idle
+23,2.000000,1,Walking,walking,idle,0,1,idle,idle,idle
+24,2.090909,1,Walking,walking,idle,0,1,standing,idle,idle
+25,2.181818,1,Walking,walking,idle,0,1,standing,idle,idle
+26,2.272727,1,Walking,walking,idle,0,1,standing,idle,idle
+27,2.363636,1,Walking,walking,idle,0,1,standing,idle,idle
+28,2.454545,1,Walking,walking,standing,0,1,standing,standing,standing
+29,2.545455,1,Walking,walking,standing,0,1,standing,standing,standing
+30,2.636364,1,Walking,walking,standing,0,1,standing,standing,standing
+31,2.727273,1,Walking,walking,standing,0,1,walking,standing,standing
+32,2.818182,1,Walking,walking,standing,0,1,carrying,standing,standing
+33,2.909091,1,Walking,walking,standing,0,1,carrying,standing,standing
+34,3.000000,1,Walking,walking,standing,0,1,carrying,standing,standing
+35,3.090909,1,Walking,walking,standing,0,1,carrying,standing,standing
+36,3.181818,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+37,3.272727,1,Walking,walking,carrying,0,1,carrying,carrying,carrying
+38,3.363636,1,Walking,walking,material_handling,0,1,walking,carrying,material_handling
+39,3.454545,1,Walking,walking,material_handling,0,1,walking,carrying,material_handling
+40,3.545455,1,Walking,walking,material_handling,0,1,walking,carrying,material_handling
+41,3.636364,1,Walking,walking,material_handling,0,1,walking,carrying,material_handling
+42,3.727273,1,Walking,walking,material_handling,0,1,walking,walking,material_handling
+43,3.818182,1,Walking,walking,material_handling,0,1,walking,walking,material_handling
+44,3.909091,1,Walking,walking,walking,1,1,walking,walking,walking
+45,4.000000,1,Walking,walking,walking,1,1,walking,walking,walking
+46,4.090909,1,Walking,walking,walking,1,1,walking,walking,walking
+47,4.181818,1,Walking,walking,walking,1,1,walking,walking,walking
+48,4.272727,1,Walking,walking,walking,1,1,walking,walking,walking
+49,4.363636,1,Walking,walking,walking,1,1,walking,walking,walking
+50,4.454545,1,Walking,walking,walking,1,1,walking,walking,walking
+51,4.545455,1,Walking,walking,walking,1,1,walking,walking,walking
+52,4.636364,1,Walking,walking,walking,1,1,walking,walking,walking
+53,4.727273,1,Walking,walking,walking,1,1,walking,walking,walking
+54,4.818182,1,Walking,walking,walking,1,1,walking,walking,walking
+55,4.909091,1,Walking,walking,walking,1,1,walking,walking,walking
+56,5.000000,2,Idle,idle,walking,0,1,walking,walking,walking
+57,5.090909,2,Idle,idle,walking,0,1,standing,walking,walking
+58,5.181818,2,Idle,idle,walking,0,1,standing,walking,walking
+59,5.272727,2,Idle,idle,walking,0,1,walking,walking,walking
+60,5.363636,2,Idle,idle,walking,0,1,walking,walking,walking
+61,5.454545,2,Idle,idle,walking,0,1,walking,walking,walking
+62,5.545455,2,Idle,idle,walking,0,1,walking,walking,walking
+63,5.636364,2,Idle,idle,walking,0,1,walking,walking,walking
+64,5.727273,2,Idle,idle,walking,0,1,standing,walking,walking
+65,5.818182,2,Idle,idle,walking,0,1,standing,walking,walking
+66,5.909091,2,Idle,idle,walking,0,1,standing,walking,walking
+67,6.000000,2,Idle,idle,walking,0,1,standing,walking,walking
+68,6.090909,2,Idle,idle,standing,0,1,standing,standing,standing
+69,6.181818,2,Idle,idle,standing,0,1,standing,standing,standing
+70,6.272727,2,Idle,idle,standing,0,1,standing,standing,standing
+71,6.363636,2,Idle,idle,standing,0,1,standing,standing,standing
+72,6.454545,2,Idle,idle,standing,0,1,standing,standing,standing
+73,6.545455,2,Idle,idle,standing,0,1,idle,standing,standing
+74,6.636364,2,Idle,idle,standing,0,1,idle,standing,standing
+75,6.727273,2,Idle,idle,standing,0,1,idle,standing,standing
+76,6.818182,2,Idle,idle,standing,0,1,idle,standing,standing
+77,6.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+78,7.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+79,7.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+80,7.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+81,7.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+82,7.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+83,7.454545,2,Idle,idle,idle,1,1,standing,idle,idle
+84,7.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+85,7.636364,2,Idle,idle,idle,1,1,standing,idle,idle
+86,7.727273,2,Idle,idle,idle,1,1,standing,idle,idle
+87,7.818182,2,Idle,idle,idle,1,1,standing,idle,idle
+88,7.909091,2,Idle,idle,standing,0,1,standing,standing,standing
+89,8.000000,2,Idle,idle,standing,0,1,standing,standing,standing
+90,8.090909,2,Idle,idle,standing,0,1,idle,standing,standing
+91,8.181818,2,Idle,idle,standing,0,1,idle,standing,standing
+92,8.272727,2,Idle,idle,standing,0,1,idle,standing,standing
+93,8.363636,2,Idle,idle,standing,0,1,idle,standing,standing
+94,8.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+95,8.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+96,8.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+97,8.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+98,8.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+99,8.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+100,9.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+101,9.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+102,9.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+103,9.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+104,9.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+105,9.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+106,9.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+107,9.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+108,9.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+109,9.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+110,9.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+111,10.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+112,10.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+113,10.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+114,10.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+115,10.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+116,10.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+117,10.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+118,10.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+119,10.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+120,10.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+121,10.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+122,11.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+123,11.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+124,11.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+125,11.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+126,11.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+127,11.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+128,11.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+129,11.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+130,11.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+131,11.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+132,11.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+133,12.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+134,12.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+135,12.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+136,12.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+137,12.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+138,12.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+139,12.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+140,12.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+141,12.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+142,12.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+143,12.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+144,13.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+145,13.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+146,13.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+147,13.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+148,13.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+149,13.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+150,13.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+151,13.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+152,13.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+153,13.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+154,13.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+155,14.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+156,14.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+157,14.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+158,14.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+159,14.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+160,14.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+161,14.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+162,14.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+163,14.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+164,14.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+165,14.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+166,15.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+167,15.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+168,15.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+169,15.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+170,15.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+171,15.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+172,15.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+173,15.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+174,15.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+175,15.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+176,15.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+177,16.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+178,16.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+179,16.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+180,16.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+181,16.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+182,16.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+183,16.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+184,16.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+185,16.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+186,16.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+187,16.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+188,17.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+189,17.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+190,17.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+191,17.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+192,17.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+193,17.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+194,17.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+195,17.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+196,17.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+197,17.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+198,17.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+199,18.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+200,18.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+201,18.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+202,18.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+203,18.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+204,18.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+205,18.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+206,18.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+207,18.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+208,18.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+209,18.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+210,19.000000,2,Idle,idle,idle,1,1,idle,idle,idle
+211,19.090909,2,Idle,idle,idle,1,1,idle,idle,idle
+212,19.181818,2,Idle,idle,idle,1,1,idle,idle,idle
+213,19.272727,2,Idle,idle,idle,1,1,idle,idle,idle
+214,19.363636,2,Idle,idle,idle,1,1,idle,idle,idle
+215,19.454545,2,Idle,idle,idle,1,1,idle,idle,idle
+216,19.545455,2,Idle,idle,idle,1,1,idle,idle,idle
+217,19.636364,2,Idle,idle,idle,1,1,idle,idle,idle
+218,19.727273,2,Idle,idle,idle,1,1,idle,idle,idle
+219,19.818182,2,Idle,idle,idle,1,1,idle,idle,idle
+220,19.909091,2,Idle,idle,idle,1,1,idle,idle,idle
+232,21.000000,3,Walking,walking,idle,0,1,idle,idle,idle
+233,21.090909,3,Walking,walking,idle,0,1,idle,idle,idle
+234,21.181818,3,Walking,walking,idle,0,1,idle,idle,idle
+235,21.272727,3,Walking,walking,idle,0,1,idle,idle,idle
+236,21.363636,3,Walking,walking,idle,0,1,idle,idle,idle
+237,21.454545,3,Walking,walking,idle,0,1,idle,idle,idle
+238,21.545455,3,Walking,walking,idle,0,1,idle,idle,idle
+239,21.636364,3,Walking,walking,idle,0,1,standing,idle,idle
+240,21.727273,3,Walking,walking,idle,0,1,standing,idle,idle
+241,21.818182,3,Walking,walking,idle,0,1,standing,idle,idle
+242,21.909091,3,Walking,walking,idle,0,1,standing,idle,idle
+243,22.000000,3,Walking,walking,standing,0,1,standing,standing,standing
+244,22.090909,3,Walking,walking,standing,0,1,standing,standing,standing
+245,22.181818,3,Walking,walking,standing,0,1,standing,standing,standing
+246,22.272727,3,Walking,walking,standing,0,1,standing,standing,standing
+247,22.363636,3,Walking,walking,standing,0,1,walking,standing,standing
+248,22.454545,3,Walking,walking,standing,0,1,walking,standing,standing
+249,22.545455,3,Walking,walking,standing,0,1,walking,standing,standing
+250,22.636364,3,Walking,walking,standing,0,1,walking,standing,standing
+251,22.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+252,22.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+253,22.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+254,23.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+255,23.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+256,23.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+257,23.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+258,23.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+259,23.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+260,23.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+261,23.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+262,23.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+263,23.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+264,23.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+265,24.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+266,24.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+267,24.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+268,24.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+269,24.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+270,24.454545,3,Walking,walking,walking,1,1,standing,walking,walking
+271,24.545455,3,Walking,walking,walking,1,1,standing,walking,walking
+272,24.636364,3,Walking,walking,walking,1,1,standing,walking,walking
+273,24.727273,3,Walking,walking,walking,1,1,standing,walking,walking
+274,24.818182,3,Walking,walking,standing,0,1,standing,standing,standing
+275,24.909091,3,Walking,walking,standing,0,1,standing,standing,standing
+276,25.000000,3,Walking,walking,standing,0,1,standing,standing,standing
+277,25.090909,3,Walking,walking,standing,0,1,standing,standing,standing
+278,25.181818,3,Walking,walking,standing,0,1,walking,standing,standing
+279,25.272727,3,Walking,walking,standing,0,1,walking,standing,standing
+280,25.363636,3,Walking,walking,standing,0,1,walking,standing,standing
+281,25.454545,3,Walking,walking,standing,0,1,walking,standing,standing
+282,25.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+283,25.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+284,25.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+285,25.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+286,25.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+287,26.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+288,26.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+289,26.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+290,26.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+291,26.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+292,26.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+293,26.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+294,26.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+295,26.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+296,26.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+297,26.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+298,27.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+299,27.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+300,27.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+301,27.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+302,27.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+303,27.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+304,27.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+305,27.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+306,27.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+307,27.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+308,27.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+309,28.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+310,28.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+311,28.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+312,28.272727,3,Walking,walking,walking,1,1,carrying,walking,walking
+313,28.363636,3,Walking,walking,walking,1,1,standing,walking,walking
+314,28.454545,3,Walking,walking,walking,1,1,standing,walking,walking
+315,28.545455,3,Walking,walking,walking,1,1,standing,walking,walking
+316,28.636364,3,Walking,walking,walking,1,1,standing,walking,walking
+317,28.727273,3,Walking,walking,standing,0,1,standing,standing,standing
+318,28.818182,3,Walking,walking,standing,0,1,walking,standing,standing
+319,28.909091,3,Walking,walking,standing,0,1,walking,standing,standing
+320,29.000000,3,Walking,walking,standing,0,1,walking,standing,standing
+321,29.090909,3,Walking,walking,standing,0,1,walking,standing,standing
+322,29.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+323,29.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+324,29.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+325,29.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+326,29.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+327,29.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+328,29.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+329,29.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+330,29.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+331,30.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+332,30.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+333,30.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+334,30.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+335,30.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+336,30.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+337,30.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+338,30.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+339,30.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+340,30.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+341,30.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+342,31.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+343,31.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+344,31.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+345,31.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+346,31.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+347,31.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+348,31.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+349,31.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+350,31.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+351,31.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+352,31.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+353,32.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+354,32.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+355,32.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+356,32.272727,3,Walking,walking,walking,1,1,standing,walking,walking
+357,32.363636,3,Walking,walking,walking,1,1,standing,walking,walking
+358,32.454545,3,Walking,walking,walking,1,1,standing,walking,walking
+359,32.545455,3,Walking,walking,walking,1,1,standing,walking,walking
+360,32.636364,3,Walking,walking,standing,0,1,standing,standing,standing
+361,32.727273,3,Walking,walking,standing,0,1,standing,standing,standing
+362,32.818182,3,Walking,walking,standing,0,1,standing,standing,standing
+363,32.909091,3,Walking,walking,standing,0,1,walking,standing,standing
+364,33.000000,3,Walking,walking,standing,0,1,walking,standing,standing
+365,33.090909,3,Walking,walking,standing,0,1,walking,standing,standing
+366,33.181818,3,Walking,walking,standing,0,1,walking,standing,standing
+367,33.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+368,33.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+369,33.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+370,33.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+371,33.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+372,33.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+373,33.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+374,33.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+375,34.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+376,34.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+377,34.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+378,34.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+379,34.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+380,34.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+381,34.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+382,34.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+383,34.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+384,34.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+385,34.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+386,35.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+387,35.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+388,35.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+389,35.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+390,35.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+391,35.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+392,35.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+393,35.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+394,35.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+395,35.818182,3,Walking,walking,walking,1,1,carrying,walking,walking
+396,35.909091,3,Walking,walking,walking,1,1,standing,walking,walking
+397,36.000000,3,Walking,walking,walking,1,1,standing,walking,walking
+398,36.090909,3,Walking,walking,walking,1,1,standing,walking,walking
+399,36.181818,3,Walking,walking,walking,1,1,standing,walking,walking
+400,36.272727,3,Walking,walking,standing,0,1,standing,standing,standing
+401,36.363636,3,Walking,walking,standing,0,1,standing,standing,standing
+402,36.454545,3,Walking,walking,standing,0,1,standing,standing,standing
+403,36.545455,3,Walking,walking,standing,0,1,walking,standing,standing
+404,36.636364,3,Walking,walking,standing,0,1,walking,standing,standing
+405,36.727273,3,Walking,walking,standing,0,1,walking,standing,standing
+406,36.818182,3,Walking,walking,standing,0,1,walking,standing,standing
+407,36.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+408,37.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+409,37.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+410,37.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+411,37.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+412,37.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+413,37.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+414,37.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+415,37.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+416,37.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+417,37.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+418,37.909091,3,Walking,walking,walking,1,1,walking,walking,walking
+419,38.000000,3,Walking,walking,walking,1,1,walking,walking,walking
+420,38.090909,3,Walking,walking,walking,1,1,walking,walking,walking
+421,38.181818,3,Walking,walking,walking,1,1,walking,walking,walking
+422,38.272727,3,Walking,walking,walking,1,1,walking,walking,walking
+423,38.363636,3,Walking,walking,walking,1,1,walking,walking,walking
+424,38.454545,3,Walking,walking,walking,1,1,walking,walking,walking
+425,38.545455,3,Walking,walking,walking,1,1,walking,walking,walking
+426,38.636364,3,Walking,walking,walking,1,1,walking,walking,walking
+427,38.727273,3,Walking,walking,walking,1,1,walking,walking,walking
+428,38.818182,3,Walking,walking,walking,1,1,walking,walking,walking
+429,38.909091,3,Walking,walking,walking,1,1,standing,walking,walking
+430,39.000000,3,Walking,walking,walking,1,1,standing,walking,walking
+431,39.090909,3,Walking,walking,walking,1,1,standing,walking,walking
+432,39.181818,3,Walking,walking,walking,1,1,standing,walking,walking
+433,39.272727,3,Walking,walking,standing,0,1,standing,standing,standing
+434,39.363636,3,Walking,walking,standing,0,1,standing,standing,standing
+435,39.454545,3,Walking,walking,standing,0,1,standing,standing,standing
+436,39.545455,3,Walking,walking,standing,0,1,standing,standing,standing
+437,39.636364,3,Walking,walking,standing,0,1,standing,standing,standing
+438,39.727273,3,Walking,walking,standing,0,1,walking,standing,standing
+439,39.818182,3,Walking,walking,standing,0,1,walking,standing,standing
+440,39.909091,3,Walking,walking,standing,0,1,walking,standing,standing
+661,60.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+662,60.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+663,60.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+664,60.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+665,60.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+666,60.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+667,60.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+668,60.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+669,60.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+670,60.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+671,60.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+672,61.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+673,61.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+674,61.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+675,61.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+676,61.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+677,61.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+678,61.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+679,61.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+680,61.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+681,61.818182,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,standing,standing,standing
+682,61.909091,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,standing,standing,standing
+683,62.000000,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,standing,standing,standing
+684,62.090909,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,standing,standing,standing
+685,62.181818,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,carrying,standing,standing
+686,62.272727,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,carrying,standing,standing
+687,62.363636,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,walking,standing,standing
+688,62.454545,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,walking,standing,standing
+689,62.545455,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,walking,standing,standing
+690,62.636364,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,walking,standing,standing
+691,62.727273,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,unknown,walking,walking
+692,62.818182,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+693,62.909091,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,bending,walking,walking
+694,63.000000,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,bending,walking,walking
+695,63.090909,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,bending,walking,walking
+696,63.181818,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,bending,walking,walking
+697,63.272727,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+698,63.363636,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,walking,bending,bending
+699,63.454545,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,walking,bending,bending
+700,63.545455,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,walking,bending,bending
+701,63.636364,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,unknown,bending,bending
+702,63.727273,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,unknown,walking,walking
+703,63.818182,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,unknown,walking,walking
+704,63.909091,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,standing,walking,walking
+705,64.000000,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,standing,walking,walking
+706,64.090909,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,standing,walking,walking
+707,64.181818,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,standing,walking,walking
+708,64.272727,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,standing,standing,standing
+709,64.363636,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,standing,standing,standing
+710,64.454545,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,standing,standing,standing
+711,64.545455,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,standing,standing,standing
+712,64.636364,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,standing,standing,standing
+713,64.727273,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,idle,standing,standing
+714,64.818182,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,idle,standing,standing
+715,64.909091,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,idle,standing,standing
+716,65.000000,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,idle,standing,standing
+717,65.090909,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+718,65.181818,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+719,65.272727,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+720,65.363636,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+721,65.454545,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+722,65.545455,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+723,65.636364,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+724,65.727273,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+725,65.818182,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+726,65.909091,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+727,66.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,idle,material_handling
+728,66.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,idle,material_handling
+729,66.181818,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+730,66.272727,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+731,66.363636,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,standing,idle,idle
+732,66.454545,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,standing,idle,idle
+733,66.545455,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,standing,idle,idle
+734,66.636364,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,standing,idle,idle
+735,66.727273,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,unknown,standing,standing
+736,66.818182,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,walking,standing,standing
+737,66.909091,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,bending,standing,standing
+738,67.000000,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,bending,standing,standing
+739,67.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,standing,material_handling
+740,67.181818,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,bending,standing,standing
+741,67.272727,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+742,67.363636,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+743,67.454545,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+744,67.545455,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+745,67.636364,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+746,67.727273,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+747,67.818182,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+748,67.909091,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+749,68.000000,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+750,68.090909,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,walking,bending,bending
+751,68.181818,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,walking,bending,bending
+752,68.272727,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,unknown,bending,bending
+753,68.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,bending,material_handling
+754,68.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,bending,material_handling
+755,68.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,bending,material_handling
+756,68.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,bending,material_handling
+757,68.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+758,68.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,standing,material_handling
+759,68.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+760,69.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+761,69.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+762,69.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+763,69.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+764,69.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+765,69.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+766,69.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+767,69.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+768,69.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+769,69.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+770,69.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+771,70.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+772,70.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+773,70.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+774,70.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+775,70.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+776,70.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+777,70.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+778,70.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+779,70.727273,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+780,70.818182,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+781,70.909091,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,bending,walking,walking
+782,71.000000,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,bending,walking,walking
+783,71.090909,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,bending,walking,walking
+784,71.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,walking,material_handling
+785,71.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+786,71.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+787,71.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+788,71.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+789,71.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+790,71.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+791,71.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+792,71.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+793,72.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+794,72.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+795,72.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+796,72.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+797,72.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+798,72.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+799,72.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,carrying,bending,material_handling
+800,72.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+801,72.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+802,72.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+803,72.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+804,73.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,walking,material_handling
+805,73.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,standing,material_handling
+806,73.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,standing,material_handling
+807,73.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,standing,material_handling
+808,73.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,idle,material_handling
+809,73.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,idle,material_handling
+810,73.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,idle,material_handling
+811,73.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,idle,material_handling
+812,73.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,idle,material_handling
+813,73.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,idle,idle,material_handling
+814,73.909091,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+815,74.000000,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+816,74.090909,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+817,74.181818,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,standing,idle,idle
+818,74.272727,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,standing,idle,idle
+819,74.363636,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,walking,idle,idle
+820,74.454545,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,walking,idle,idle
+821,74.545455,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,walking,idle,idle
+822,74.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,idle,material_handling
+823,74.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+824,74.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+825,74.909091,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+826,75.000000,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+827,75.090909,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+828,75.181818,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+829,75.272727,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+830,75.363636,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+831,75.454545,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,bending,walking,walking
+832,75.545455,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,bending,walking,walking
+833,75.636364,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,bending,walking,walking
+834,75.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,walking,material_handling
+835,75.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+836,75.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+837,76.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+838,76.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+839,76.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+840,76.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+841,76.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+842,76.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+843,76.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+844,76.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,carrying,walking,material_handling
+845,76.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+846,76.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+847,76.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+848,77.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,walking,material_handling
+849,77.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+850,77.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+851,77.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+852,77.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+853,77.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+854,77.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+855,77.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+856,77.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+857,77.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+858,77.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+859,78.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+860,78.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+861,78.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+862,78.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+863,78.363636,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+864,78.454545,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+865,78.545455,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+866,78.636364,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+867,78.727273,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+868,78.818182,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+869,78.909091,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+870,79.000000,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+871,79.090909,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+872,79.181818,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+873,79.272727,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+874,79.363636,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+875,79.454545,4,Material handling - bending/picking up boxes,material_handling,__missing__,0,0,,,
+876,79.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+877,79.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+878,79.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+879,79.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+880,79.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+881,80.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,walking,material_handling
+882,80.090909,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+883,80.181818,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+884,80.272727,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,walking,walking,walking
+885,80.363636,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,standing,walking,walking
+886,80.454545,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,standing,walking,walking
+887,80.545455,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,standing,walking,walking
+888,80.636364,4,Material handling - bending/picking up boxes,material_handling,walking,0,1,idle,walking,walking
+889,80.727273,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,idle,standing,standing
+890,80.818182,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,idle,standing,standing
+891,80.909091,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,idle,standing,standing
+892,81.000000,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+893,81.090909,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+894,81.181818,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+895,81.272727,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+896,81.363636,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+897,81.454545,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+898,81.545455,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+899,81.636364,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+900,81.727273,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+901,81.818182,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,idle,idle,idle
+902,81.909091,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,standing,idle,idle
+903,82.000000,4,Material handling - bending/picking up boxes,material_handling,idle,0,1,standing,idle,idle
+904,82.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,idle,material_handling
+905,82.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,idle,material_handling
+906,82.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+907,82.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+908,82.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+909,82.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+910,82.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+911,82.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+912,82.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+913,82.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+914,83.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+915,83.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+916,83.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+917,83.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+918,83.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,standing,material_handling
+919,83.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,standing,material_handling
+920,83.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,standing,material_handling
+921,83.636364,4,Material handling - bending/picking up boxes,material_handling,standing,0,1,bending,standing,standing
+922,83.727273,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+923,83.818182,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+924,83.909091,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+925,84.000000,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+926,84.090909,4,Material handling - bending/picking up boxes,material_handling,bending,0,1,bending,bending,bending
+927,84.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+928,84.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+929,84.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+930,84.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+931,84.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+932,84.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+933,84.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+934,84.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,bending,material_handling
+935,84.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,bending,material_handling
+936,85.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,bending,material_handling
+937,85.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,bending,material_handling
+938,85.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,bending,material_handling
+939,85.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+940,85.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+941,85.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+942,85.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+943,85.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+944,85.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+945,85.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+946,85.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+947,86.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+948,86.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+949,86.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+950,86.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+951,86.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+952,86.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+953,86.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+954,86.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,standing,standing,material_handling
+955,86.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+956,86.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+957,86.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+958,87.000000,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,walking,standing,material_handling
+959,87.090909,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,walking,material_handling
+960,87.181818,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,walking,material_handling
+961,87.272727,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,walking,material_handling
+962,87.363636,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,walking,material_handling
+963,87.454545,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+964,87.545455,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+965,87.636364,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+966,87.727273,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+967,87.818182,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+968,87.909091,4,Material handling - bending/picking up boxes,material_handling,material_handling,1,1,bending,bending,material_handling
+980,89.000000,5,Carrying,carrying,material_handling,0,1,carrying,walking,material_handling
+981,89.090909,5,Carrying,carrying,material_handling,0,1,carrying,walking,material_handling
+982,89.181818,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+983,89.272727,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+984,89.363636,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+985,89.454545,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+986,89.545455,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+987,89.636364,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+988,89.727273,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+989,89.818182,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+990,89.909091,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+991,90.000000,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+992,90.090909,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+993,90.181818,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+994,90.272727,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+995,90.363636,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+996,90.454545,5,Carrying,carrying,material_handling,0,1,carrying,carrying,material_handling
+997,90.545455,5,Carrying,carrying,material_handling,0,1,standing,carrying,material_handling
+998,90.636364,5,Carrying,carrying,material_handling,0,1,standing,carrying,material_handling
+999,90.727273,5,Carrying,carrying,material_handling,0,1,standing,carrying,material_handling
+1000,90.818182,5,Carrying,carrying,carrying,1,1,standing,carrying,carrying
+1001,90.909091,5,Carrying,carrying,standing,0,1,standing,standing,standing
+1002,91.000000,5,Carrying,carrying,standing,0,1,standing,standing,standing
+1003,91.090909,5,Carrying,carrying,standing,0,1,standing,standing,standing
+1004,91.181818,5,Carrying,carrying,standing,0,1,standing,standing,standing
+1005,91.272727,5,Carrying,carrying,standing,0,1,carrying,standing,standing
+1006,91.363636,5,Carrying,carrying,standing,0,1,carrying,standing,standing
+1007,91.454545,5,Carrying,carrying,standing,0,1,carrying,standing,standing
+1008,91.545455,5,Carrying,carrying,standing,0,1,carrying,standing,standing
+1009,91.636364,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1010,91.727273,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1011,91.818182,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1012,91.909091,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1013,92.000000,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1014,92.090909,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1015,92.181818,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1016,92.272727,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1017,92.363636,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1018,92.454545,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1019,92.545455,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1020,92.636364,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1021,92.727273,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1022,92.818182,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1023,92.909091,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1024,93.000000,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1025,93.090909,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1026,93.181818,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1027,93.272727,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1028,93.363636,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1029,93.454545,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1030,93.545455,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1031,93.636364,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1032,93.727273,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1033,93.818182,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1034,93.909091,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1035,94.000000,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1036,94.090909,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1037,94.181818,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1038,94.272727,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1039,94.363636,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1040,94.454545,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1041,94.545455,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1042,94.636364,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1043,94.727273,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1044,94.818182,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1045,94.909091,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1046,95.000000,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1047,95.090909,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1048,95.181818,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1049,95.272727,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1050,95.363636,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1051,95.454545,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1052,95.545455,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1053,95.636364,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1054,95.727273,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1055,95.818182,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1056,95.909091,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1057,96.000000,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1058,96.090909,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1059,96.181818,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1060,96.272727,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1061,96.363636,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1062,96.454545,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1063,96.545455,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1064,96.636364,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1065,96.727273,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1066,96.818182,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1067,96.909091,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1068,97.000000,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1069,97.090909,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1070,97.181818,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1071,97.272727,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1072,97.363636,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1073,97.454545,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1074,97.545455,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1075,97.636364,5,Carrying,carrying,carrying,1,1,standing,carrying,carrying
+1076,97.727273,5,Carrying,carrying,carrying,1,1,standing,carrying,carrying
+1077,97.818182,5,Carrying,carrying,carrying,1,1,standing,carrying,carrying
+1078,97.909091,5,Carrying,carrying,carrying,1,1,standing,carrying,carrying
+1079,98.000000,5,Carrying,carrying,standing,0,1,standing,standing,standing
+1080,98.090909,5,Carrying,carrying,standing,0,1,standing,standing,standing
+1081,98.181818,5,Carrying,carrying,standing,0,1,walking,standing,standing
+1082,98.272727,5,Carrying,carrying,standing,0,1,walking,standing,standing
+1083,98.363636,5,Carrying,carrying,standing,0,1,walking,standing,standing
+1084,98.454545,5,Carrying,carrying,standing,0,1,walking,standing,standing
+1085,98.545455,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1086,98.636364,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1087,98.727273,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1088,98.818182,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1089,98.909091,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1090,99.000000,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1091,99.090909,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1092,99.181818,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1093,99.272727,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1094,99.363636,5,Carrying,carrying,walking,0,1,carrying,walking,walking
+1095,99.454545,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1096,99.545455,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1097,99.636364,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1098,99.727273,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1099,99.818182,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1100,99.909091,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1101,100.000000,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1102,100.090909,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1103,100.181818,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1104,100.272727,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1105,100.363636,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1106,100.454545,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1107,100.545455,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1108,100.636364,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1109,100.727273,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1110,100.818182,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1111,100.909091,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1112,101.000000,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1113,101.090909,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1114,101.181818,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1115,101.272727,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1116,101.363636,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1117,101.454545,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1118,101.545455,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1119,101.636364,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1120,101.727273,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1121,101.818182,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1122,101.909091,5,Carrying,carrying,walking,0,1,walking,walking,walking
+1123,102.000000,5,Carrying,carrying,walking,0,1,standing,walking,walking
+1124,102.090909,5,Carrying,carrying,walking,0,1,standing,walking,walking
+1125,102.181818,5,Carrying,carrying,walking,0,1,standing,walking,walking
+1126,102.272727,5,Carrying,carrying,walking,0,1,standing,walking,walking
+1127,102.363636,5,Carrying,carrying,standing,0,1,standing,standing,standing
+1128,102.454545,5,Carrying,carrying,standing,0,1,carrying,standing,standing
+1129,102.545455,5,Carrying,carrying,standing,0,1,carrying,standing,standing
+1130,102.636364,5,Carrying,carrying,standing,0,1,carrying,standing,standing
+1131,102.727273,5,Carrying,carrying,standing,0,1,carrying,standing,standing
+1132,102.818182,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1133,102.909091,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1134,103.000000,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1135,103.090909,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1136,103.181818,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1137,103.272727,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1138,103.363636,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1139,103.454545,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1140,103.545455,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1141,103.636364,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1142,103.727273,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1143,103.818182,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1144,103.909091,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1145,104.000000,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1146,104.090909,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1147,104.181818,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1148,104.272727,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1149,104.363636,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1150,104.454545,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1151,104.545455,5,Carrying,carrying,carrying,1,1,carrying,carrying,carrying
+1152,104.636364,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1153,104.727273,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1154,104.818182,5,Carrying,carrying,carrying,1,1,walking,carrying,carrying
+1155,104.909091,5,Carrying,carrying,carrying,1,1,bending,carrying,carrying
+1167,106.000000,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,bending,material_handling
+1168,106.090909,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,bending,material_handling
+1169,106.181818,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,unknown,bending,material_handling
+1170,106.272727,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1171,106.363636,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1172,106.454545,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,unknown,walking,material_handling
+1173,106.545455,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1174,106.636364,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1175,106.727273,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1176,106.818182,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1177,106.909091,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1178,107.000000,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1179,107.090909,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1180,107.181818,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1181,107.272727,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1182,107.363636,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1183,107.454545,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1184,107.545455,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,carrying,walking,material_handling
+1185,107.636364,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,carrying,walking,material_handling
+1186,107.727273,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1187,107.818182,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,walking,walking,material_handling
+1188,107.909091,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,walking,material_handling
+1189,108.000000,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,walking,material_handling
+1190,108.090909,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,walking,material_handling
+1191,108.181818,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,walking,material_handling
+1192,108.272727,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1193,108.363636,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1194,108.454545,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1195,108.545455,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1196,108.636364,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1197,108.727273,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1198,108.818182,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1199,108.909091,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1200,109.000000,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1201,109.090909,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1202,109.181818,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1203,109.272727,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1204,109.363636,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1205,109.454545,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1206,109.545455,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1207,109.636364,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1208,109.727273,6,Material handling - standing/manual handling,material_handling,standing,0,1,standing,standing,standing
+1209,109.818182,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,standing,material_handling
+1210,109.909091,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,standing,material_handling
+1211,110.000000,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,standing,material_handling
+1212,110.090909,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,standing,material_handling
+1213,110.181818,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1214,110.272727,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1215,110.363636,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1216,110.454545,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1217,110.545455,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1218,110.636364,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1219,110.727273,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1220,110.818182,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1221,110.909091,6,Material handling - standing/manual handling,material_handling,idle,0,1,standing,idle,idle
+1222,111.000000,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1223,111.090909,6,Material handling - standing/manual handling,material_handling,idle,0,1,standing,idle,idle
+1224,111.181818,6,Material handling - standing/manual handling,material_handling,idle,0,1,standing,idle,idle
+1225,111.272727,6,Material handling - standing/manual handling,material_handling,idle,0,1,standing,idle,idle
+1226,111.363636,6,Material handling - standing/manual handling,material_handling,standing,0,1,idle,standing,standing
+1227,111.454545,6,Material handling - standing/manual handling,material_handling,standing,0,1,idle,standing,standing
+1228,111.545455,6,Material handling - standing/manual handling,material_handling,standing,0,1,idle,standing,standing
+1229,111.636364,6,Material handling - standing/manual handling,material_handling,standing,0,1,idle,standing,standing
+1230,111.727273,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1231,111.818182,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1232,111.909091,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1233,112.000000,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1234,112.090909,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1235,112.181818,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1236,112.272727,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1237,112.363636,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1238,112.454545,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1239,112.545455,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1240,112.636364,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1241,112.727273,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1242,112.818182,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1243,112.909091,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1244,113.000000,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1245,113.090909,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1246,113.181818,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1247,113.272727,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1248,113.363636,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1249,113.454545,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1250,113.545455,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1251,113.636364,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1252,113.727273,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1253,113.818182,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1254,113.909091,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1255,114.000000,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1256,114.090909,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1257,114.181818,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1258,114.272727,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1259,114.363636,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1260,114.454545,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1261,114.545455,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1262,114.636364,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1263,114.727273,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1264,114.818182,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1265,114.909091,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1266,115.000000,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1267,115.090909,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1268,115.181818,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1269,115.272727,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1270,115.363636,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1271,115.454545,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1272,115.545455,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1273,115.636364,6,Material handling - standing/manual handling,material_handling,idle,0,1,idle,idle,idle
+1274,115.727273,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1275,115.818182,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1276,115.909091,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1277,116.000000,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1278,116.090909,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1279,116.181818,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1280,116.272727,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1281,116.363636,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,idle,material_handling
+1282,116.454545,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,idle,material_handling
+1283,116.545455,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1284,116.636364,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1285,116.727273,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1286,116.818182,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1287,116.909091,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,idle,material_handling
+1288,117.000000,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,idle,material_handling
+1289,117.090909,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,idle,material_handling
+1290,117.181818,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,idle,material_handling
+1291,117.272727,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1292,117.363636,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1293,117.454545,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1294,117.545455,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1295,117.636364,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1296,117.727273,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1297,117.818182,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1298,117.909091,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1299,118.000000,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1300,118.090909,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1301,118.181818,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1302,118.272727,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1303,118.363636,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1304,118.454545,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1305,118.545455,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1306,118.636364,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1307,118.727273,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1308,118.818182,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1309,118.909091,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,standing,material_handling
+1310,119.000000,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,standing,material_handling
+1311,119.090909,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,standing,material_handling
+1312,119.181818,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,standing,material_handling
+1313,119.272727,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,standing,material_handling
+1314,119.363636,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1315,119.454545,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1316,119.545455,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1317,119.636364,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1318,119.727273,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,idle,idle,material_handling
+1319,119.818182,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,idle,material_handling
+1320,119.909091,6,Material handling - standing/manual handling,material_handling,material_handling,1,1,standing,idle,material_handling
+1376,125.000000,7,Standing,standing,carrying,0,1,walking,carrying,carrying
+1377,125.090909,7,Standing,standing,walking,0,1,walking,walking,walking
+1378,125.181818,7,Standing,standing,walking,0,1,walking,walking,walking
+1379,125.272727,7,Standing,standing,walking,0,1,walking,walking,walking
+1380,125.363636,7,Standing,standing,walking,0,1,walking,walking,walking
+1381,125.454545,7,Standing,standing,walking,0,1,walking,walking,walking
+1382,125.545455,7,Standing,standing,walking,0,1,walking,walking,walking
+1383,125.636364,7,Standing,standing,walking,0,1,walking,walking,walking
+1384,125.727273,7,Standing,standing,walking,0,1,walking,walking,walking
+1385,125.818182,7,Standing,standing,walking,0,1,walking,walking,walking
+1386,125.909091,7,Standing,standing,walking,0,1,walking,walking,walking
+1387,126.000000,7,Standing,standing,walking,0,1,walking,walking,walking
+1388,126.090909,7,Standing,standing,walking,0,1,walking,walking,walking
+1389,126.181818,7,Standing,standing,walking,0,1,walking,walking,walking
+1390,126.272727,7,Standing,standing,walking,0,1,walking,walking,walking
+1391,126.363636,7,Standing,standing,walking,0,1,walking,walking,walking
+1392,126.454545,7,Standing,standing,walking,0,1,walking,walking,walking
+1393,126.545455,7,Standing,standing,walking,0,1,walking,walking,walking
+1394,126.636364,7,Standing,standing,walking,0,1,walking,walking,walking
+1395,126.727273,7,Standing,standing,walking,0,1,walking,walking,walking
+1396,126.818182,7,Standing,standing,walking,0,1,walking,walking,walking
+1397,126.909091,7,Standing,standing,walking,0,1,walking,walking,walking
+1398,127.000000,7,Standing,standing,walking,0,1,walking,walking,walking
+1399,127.090909,7,Standing,standing,walking,0,1,walking,walking,walking
+1400,127.181818,7,Standing,standing,walking,0,1,walking,walking,walking
+1401,127.272727,7,Standing,standing,walking,0,1,walking,walking,walking
+1402,127.363636,7,Standing,standing,walking,0,1,walking,walking,walking
+1403,127.454545,7,Standing,standing,walking,0,1,walking,walking,walking
+1404,127.545455,7,Standing,standing,walking,0,1,walking,walking,walking
+1405,127.636364,7,Standing,standing,walking,0,1,walking,walking,walking
+1406,127.727273,7,Standing,standing,walking,0,1,walking,walking,walking
+1407,127.818182,7,Standing,standing,walking,0,1,walking,walking,walking
+1408,127.909091,7,Standing,standing,walking,0,1,walking,walking,walking
+1409,128.000000,7,Standing,standing,walking,0,1,walking,walking,walking
+1410,128.090909,7,Standing,standing,walking,0,1,walking,walking,walking
+1411,128.181818,7,Standing,standing,walking,0,1,standing,walking,walking
+1412,128.272727,7,Standing,standing,walking,0,1,standing,walking,walking
+1413,128.363636,7,Standing,standing,walking,0,1,standing,walking,walking
+1414,128.454545,7,Standing,standing,walking,0,1,standing,walking,walking
+1415,128.545455,7,Standing,standing,standing,1,1,standing,standing,standing
+1416,128.636364,7,Standing,standing,standing,1,1,standing,standing,standing
+1417,128.727273,7,Standing,standing,standing,1,1,standing,standing,standing
+1418,128.818182,7,Standing,standing,standing,1,1,standing,standing,standing
+1419,128.909091,7,Standing,standing,standing,1,1,standing,standing,standing
+1420,129.000000,7,Standing,standing,standing,1,1,standing,standing,standing
+1421,129.090909,7,Standing,standing,standing,1,1,standing,standing,standing
+1422,129.181818,7,Standing,standing,standing,1,1,standing,standing,standing
+1423,129.272727,7,Standing,standing,standing,1,1,standing,standing,standing
+1424,129.363636,7,Standing,standing,standing,1,1,standing,standing,standing
+1425,129.454545,7,Standing,standing,standing,1,1,standing,standing,standing
+1426,129.545455,7,Standing,standing,standing,1,1,standing,standing,standing
+1427,129.636364,7,Standing,standing,standing,1,1,standing,standing,standing
+1428,129.727273,7,Standing,standing,standing,1,1,standing,standing,standing
+1429,129.818182,7,Standing,standing,standing,1,1,standing,standing,standing
+1430,129.909091,7,Standing,standing,standing,1,1,standing,standing,standing
+1431,130.000000,7,Standing,standing,standing,1,1,standing,standing,standing
+1432,130.090909,7,Standing,standing,standing,1,1,standing,standing,standing
+1433,130.181818,7,Standing,standing,standing,1,1,standing,standing,standing
+1434,130.272727,7,Standing,standing,standing,1,1,standing,standing,standing
+1435,130.363636,7,Standing,standing,standing,1,1,standing,standing,standing
+1436,130.454545,7,Standing,standing,standing,1,1,standing,standing,standing
+1437,130.545455,7,Standing,standing,standing,1,1,standing,standing,standing
+1438,130.636364,7,Standing,standing,standing,1,1,standing,standing,standing
+1439,130.727273,7,Standing,standing,standing,1,1,standing,standing,standing
+1440,130.818182,7,Standing,standing,standing,1,1,standing,standing,standing
+1441,130.909091,7,Standing,standing,standing,1,1,standing,standing,standing
+1442,131.000000,7,Standing,standing,standing,1,1,standing,standing,standing
+1443,131.090909,7,Standing,standing,standing,1,1,standing,standing,standing
+1444,131.181818,7,Standing,standing,standing,1,1,standing,standing,standing
+1445,131.272727,7,Standing,standing,standing,1,1,standing,standing,standing
+1446,131.363636,7,Standing,standing,standing,1,1,idle,standing,standing
+1447,131.454545,7,Standing,standing,standing,1,1,idle,standing,standing
+1448,131.545455,7,Standing,standing,standing,1,1,idle,standing,standing
+1449,131.636364,7,Standing,standing,standing,1,1,idle,standing,standing
+1450,131.727273,7,Standing,standing,idle,0,1,idle,idle,idle
+1451,131.818182,7,Standing,standing,idle,0,1,idle,idle,idle
+1452,131.909091,7,Standing,standing,idle,0,1,standing,idle,idle
+1453,132.000000,7,Standing,standing,idle,0,1,standing,idle,idle
+1454,132.090909,7,Standing,standing,idle,0,1,standing,idle,idle
+1455,132.181818,7,Standing,standing,idle,0,1,standing,idle,idle
+1456,132.272727,7,Standing,standing,standing,1,1,standing,standing,standing
+1457,132.363636,7,Standing,standing,standing,1,1,standing,standing,standing
+1458,132.454545,7,Standing,standing,standing,1,1,walking,standing,standing
+1459,132.545455,7,Standing,standing,standing,1,1,walking,standing,standing
+1460,132.636364,7,Standing,standing,standing,1,1,walking,standing,standing
+1461,132.727273,7,Standing,standing,standing,1,1,walking,standing,standing
+1462,132.818182,7,Standing,standing,walking,0,1,walking,walking,walking
+1463,132.909091,7,Standing,standing,walking,0,1,walking,walking,walking
+2036,185.000000,8,Standing,standing,standing,1,1,standing,standing,standing
+2037,185.090909,8,Standing,standing,standing,1,1,walking,standing,standing
+2038,185.181818,8,Standing,standing,standing,1,1,walking,standing,standing
+2039,185.272727,8,Standing,standing,standing,1,1,walking,standing,standing
+2040,185.363636,8,Standing,standing,standing,1,1,walking,standing,standing
+2041,185.454545,8,Standing,standing,walking,0,1,walking,walking,walking
+2042,185.545455,8,Standing,standing,walking,0,1,walking,walking,walking
+2043,185.636364,8,Standing,standing,walking,0,1,walking,walking,walking
+2044,185.727273,8,Standing,standing,walking,0,1,walking,walking,walking
+2045,185.818182,8,Standing,standing,walking,0,1,walking,walking,walking
+2046,185.909091,8,Standing,standing,walking,0,1,walking,walking,walking
+2047,186.000000,8,Standing,standing,walking,0,1,walking,walking,walking
+2048,186.090909,8,Standing,standing,walking,0,1,walking,walking,walking
+2049,186.181818,8,Standing,standing,walking,0,1,carrying,walking,walking
+2050,186.272727,8,Standing,standing,walking,0,1,standing,walking,walking
+2051,186.363636,8,Standing,standing,walking,0,1,walking,walking,walking
+2052,186.454545,8,Standing,standing,walking,0,1,walking,walking,walking
+2053,186.545455,8,Standing,standing,walking,0,1,standing,walking,walking
+2054,186.636364,8,Standing,standing,walking,0,1,standing,walking,walking
+2055,186.727273,8,Standing,standing,walking,0,1,standing,walking,walking
+2056,186.818182,8,Standing,standing,standing,1,1,standing,standing,standing
+2057,186.909091,8,Standing,standing,standing,1,1,standing,standing,standing
+2058,187.000000,8,Standing,standing,standing,1,1,standing,standing,standing
+2059,187.090909,8,Standing,standing,standing,1,1,standing,standing,standing
+2060,187.181818,8,Standing,standing,standing,1,1,standing,standing,standing
+2061,187.272727,8,Standing,standing,standing,1,1,idle,standing,standing
+2062,187.363636,8,Standing,standing,standing,1,1,idle,standing,standing
+2063,187.454545,8,Standing,standing,standing,1,1,idle,standing,standing
+2064,187.545455,8,Standing,standing,standing,1,1,idle,standing,standing
+2065,187.636364,8,Standing,standing,idle,0,1,idle,idle,idle
+2066,187.727273,8,Standing,standing,idle,0,1,idle,idle,idle
+2067,187.818182,8,Standing,standing,idle,0,1,idle,idle,idle
+2068,187.909091,8,Standing,standing,idle,0,1,idle,idle,idle
+2069,188.000000,8,Standing,standing,idle,0,1,idle,idle,idle
+2070,188.090909,8,Standing,standing,idle,0,1,idle,idle,idle
+2071,188.181818,8,Standing,standing,idle,0,1,idle,idle,idle
+2072,188.272727,8,Standing,standing,idle,0,1,idle,idle,idle
+2073,188.363636,8,Standing,standing,idle,0,1,idle,idle,idle
+2074,188.454545,8,Standing,standing,idle,0,1,idle,idle,idle
+2075,188.545455,8,Standing,standing,idle,0,1,idle,idle,idle
+2076,188.636364,8,Standing,standing,idle,0,1,idle,idle,idle
+2077,188.727273,8,Standing,standing,idle,0,1,idle,idle,idle
+2078,188.818182,8,Standing,standing,idle,0,1,idle,idle,idle
+2079,188.909091,8,Standing,standing,idle,0,1,idle,idle,idle
+2080,189.000000,8,Standing,standing,idle,0,1,idle,idle,idle
+2081,189.090909,8,Standing,standing,idle,0,1,idle,idle,idle
+2082,189.181818,8,Standing,standing,idle,0,1,idle,idle,idle
+2083,189.272727,8,Standing,standing,idle,0,1,idle,idle,idle
+2084,189.363636,8,Standing,standing,idle,0,1,standing,idle,idle
+2085,189.454545,8,Standing,standing,idle,0,1,standing,idle,idle
+2086,189.545455,8,Standing,standing,idle,0,1,standing,idle,idle
+2087,189.636364,8,Standing,standing,idle,0,1,standing,idle,idle
+2088,189.727273,8,Standing,standing,standing,1,1,standing,standing,standing
+2089,189.818182,8,Standing,standing,standing,1,1,standing,standing,standing
+2090,189.909091,8,Standing,standing,standing,1,1,standing,standing,standing
+2443,222.000000,9,Walking,walking,material_handling,0,1,standing,standing,material_handling
+2444,222.090909,9,Walking,walking,material_handling,0,1,standing,standing,material_handling
+2445,222.181818,9,Walking,walking,material_handling,0,1,standing,standing,material_handling
+2446,222.272727,9,Walking,walking,material_handling,0,1,standing,standing,material_handling
+2447,222.363636,9,Walking,walking,material_handling,0,1,standing,standing,material_handling
+2448,222.454545,9,Walking,walking,material_handling,0,1,standing,standing,material_handling
+2449,222.545455,9,Walking,walking,material_handling,0,1,carrying,standing,material_handling
+2450,222.636364,9,Walking,walking,material_handling,0,1,carrying,standing,material_handling
+2451,222.727273,9,Walking,walking,material_handling,0,1,carrying,standing,material_handling
+2452,222.818182,9,Walking,walking,material_handling,0,1,standing,standing,material_handling
+2453,222.909091,9,Walking,walking,material_handling,0,1,carrying,carrying,material_handling
+2454,223.000000,9,Walking,walking,__missing__,0,0,,,
+2455,223.090909,9,Walking,walking,__missing__,0,0,,,
+2456,223.181818,9,Walking,walking,__missing__,0,0,,,
+2457,223.272727,9,Walking,walking,__missing__,0,0,,,
+2458,223.363636,9,Walking,walking,__missing__,0,0,,,
+2459,223.454545,9,Walking,walking,material_handling,0,1,walking,carrying,material_handling
+2460,223.545455,9,Walking,walking,material_handling,0,1,walking,carrying,material_handling
+2461,223.636364,9,Walking,walking,material_handling,0,1,walking,carrying,material_handling
+2462,223.727273,9,Walking,walking,material_handling,0,1,walking,carrying,material_handling
+2463,223.818182,9,Walking,walking,material_handling,0,1,standing,walking,material_handling
+2464,223.909091,9,Walking,walking,material_handling,0,1,standing,walking,material_handling
+2465,224.000000,9,Walking,walking,material_handling,0,1,walking,walking,material_handling
+2466,224.090909,9,Walking,walking,material_handling,0,1,walking,walking,material_handling
+2467,224.181818,9,Walking,walking,material_handling,0,1,walking,walking,material_handling
+2468,224.272727,9,Walking,walking,material_handling,0,1,walking,walking,material_handling
+2469,224.363636,9,Walking,walking,material_handling,0,1,walking,walking,material_handling
+2470,224.454545,9,Walking,walking,material_handling,0,1,walking,walking,material_handling
+2471,224.545455,9,Walking,walking,material_handling,0,1,walking,walking,material_handling
+2472,224.636364,9,Walking,walking,material_handling,0,1,walking,walking,material_handling
+2473,224.727273,9,Walking,walking,walking,1,1,carrying,walking,walking
+2474,224.818182,9,Walking,walking,walking,1,1,carrying,walking,walking
+2475,224.909091,9,Walking,walking,walking,1,1,carrying,walking,walking
+2476,225.000000,9,Walking,walking,walking,1,1,carrying,walking,walking
+2477,225.090909,9,Walking,walking,carrying,0,1,carrying,carrying,carrying
+2478,225.181818,9,Walking,walking,carrying,0,1,carrying,carrying,carrying
+2479,225.272727,9,Walking,walking,carrying,0,1,carrying,carrying,carrying
+2480,225.363636,9,Walking,walking,carrying,0,1,carrying,carrying,carrying
+2481,225.454545,9,Walking,walking,carrying,0,1,carrying,carrying,carrying
+2482,225.545455,9,Walking,walking,carrying,0,1,carrying,carrying,carrying
+2483,225.636364,9,Walking,walking,carrying,0,1,walking,carrying,carrying
+2484,225.727273,9,Walking,walking,carrying,0,1,walking,carrying,carrying
+2485,225.818182,9,Walking,walking,carrying,0,1,carrying,carrying,carrying
+2486,225.909091,9,Walking,walking,carrying,0,1,carrying,carrying,carrying
+2487,226.000000,9,Walking,walking,carrying,0,1,walking,carrying,carrying
+2488,226.090909,9,Walking,walking,carrying,0,1,carrying,carrying,carrying
+2489,226.181818,9,Walking,walking,carrying,0,1,standing,carrying,carrying
+2490,226.272727,9,Walking,walking,carrying,0,1,standing,carrying,carrying
+2491,226.363636,9,Walking,walking,carrying,0,1,standing,carrying,carrying
+2492,226.454545,9,Walking,walking,carrying,0,1,standing,carrying,carrying
+2493,226.545455,9,Walking,walking,standing,0,1,standing,standing,standing
+2494,226.636364,9,Walking,walking,standing,0,1,standing,standing,standing
+2495,226.727273,9,Walking,walking,standing,0,1,standing,standing,standing
+2496,226.818182,9,Walking,walking,standing,0,1,standing,standing,standing
+2497,226.909091,9,Walking,walking,standing,0,1,standing,standing,standing
+2498,227.000000,9,Walking,walking,standing,0,1,standing,standing,standing
+2499,227.090909,9,Walking,walking,standing,0,1,standing,standing,standing
+2500,227.181818,9,Walking,walking,standing,0,1,standing,standing,standing
+2501,227.272727,9,Walking,walking,standing,0,1,standing,standing,standing
+2502,227.363636,9,Walking,walking,standing,0,1,standing,standing,standing
+2503,227.454545,9,Walking,walking,standing,0,1,standing,standing,standing
+2504,227.545455,9,Walking,walking,standing,0,1,standing,standing,standing
+2505,227.636364,9,Walking,walking,standing,0,1,standing,standing,standing
+2506,227.727273,9,Walking,walking,standing,0,1,standing,standing,standing
+2507,227.818182,9,Walking,walking,standing,0,1,standing,standing,standing
+2508,227.909091,9,Walking,walking,standing,0,1,walking,standing,standing
+2509,228.000000,9,Walking,walking,standing,0,1,walking,standing,standing
+2510,228.090909,9,Walking,walking,standing,0,1,walking,standing,standing
+2511,228.181818,9,Walking,walking,standing,0,1,walking,standing,standing
+2512,228.272727,9,Walking,walking,walking,1,1,walking,walking,walking
+2513,228.363636,9,Walking,walking,walking,1,1,walking,walking,walking
+2514,228.454545,9,Walking,walking,walking,1,1,walking,walking,walking
+2515,228.545455,9,Walking,walking,walking,1,1,walking,walking,walking
+2516,228.636364,9,Walking,walking,walking,1,1,walking,walking,walking
+2517,228.727273,9,Walking,walking,walking,1,1,walking,walking,walking
+2518,228.818182,9,Walking,walking,walking,1,1,carrying,walking,walking
+2519,228.909091,9,Walking,walking,walking,1,1,carrying,walking,walking
+2520,229.000000,9,Walking,walking,walking,1,1,walking,walking,walking
+2521,229.090909,9,Walking,walking,walking,1,1,walking,walking,walking
+2522,229.181818,9,Walking,walking,walking,1,1,walking,walking,walking
+2523,229.272727,9,Walking,walking,walking,1,1,walking,walking,walking
+2524,229.363636,9,Walking,walking,walking,1,1,walking,walking,walking
+2525,229.454545,9,Walking,walking,walking,1,1,walking,walking,walking
+2526,229.545455,9,Walking,walking,walking,1,1,walking,walking,walking
+2527,229.636364,9,Walking,walking,walking,1,1,walking,walking,walking
+2528,229.727273,9,Walking,walking,walking,1,1,walking,walking,walking
+2529,229.818182,9,Walking,walking,walking,1,1,walking,walking,walking
+2530,229.909091,9,Walking,walking,walking,1,1,walking,walking,walking
+2531,230.000000,9,Walking,walking,walking,1,1,walking,walking,walking
+2532,230.090909,9,Walking,walking,walking,1,1,walking,walking,walking
+2533,230.181818,9,Walking,walking,walking,1,1,walking,walking,walking
+2534,230.272727,9,Walking,walking,walking,1,1,walking,walking,walking
+2535,230.363636,9,Walking,walking,walking,1,1,walking,walking,walking
+2536,230.454545,9,Walking,walking,walking,1,1,walking,walking,walking
+2537,230.545455,9,Walking,walking,walking,1,1,walking,walking,walking
+2538,230.636364,9,Walking,walking,walking,1,1,walking,walking,walking
+2539,230.727273,9,Walking,walking,walking,1,1,walking,walking,walking
+2540,230.818182,9,Walking,walking,walking,1,1,walking,walking,walking
+2541,230.909091,9,Walking,walking,walking,1,1,walking,walking,walking
+2542,231.000000,9,Walking,walking,walking,1,1,walking,walking,walking
+2543,231.090909,9,Walking,walking,walking,1,1,walking,walking,walking
+2544,231.181818,9,Walking,walking,walking,1,1,walking,walking,walking
+2545,231.272727,9,Walking,walking,walking,1,1,walking,walking,walking
+2546,231.363636,9,Walking,walking,walking,1,1,walking,walking,walking
+2547,231.454545,9,Walking,walking,walking,1,1,standing,walking,walking
+2548,231.545455,9,Walking,walking,walking,1,1,standing,walking,walking
+2549,231.636364,9,Walking,walking,walking,1,1,standing,walking,walking
+2550,231.727273,9,Walking,walking,walking,1,1,standing,walking,walking
+2551,231.818182,9,Walking,walking,standing,0,1,standing,standing,standing
+2552,231.909091,9,Walking,walking,standing,0,1,standing,standing,standing
+2553,232.000000,9,Walking,walking,standing,0,1,walking,standing,standing
+2554,232.090909,9,Walking,walking,standing,0,1,walking,standing,standing
+2555,232.181818,9,Walking,walking,standing,0,1,walking,standing,standing
+2556,232.272727,9,Walking,walking,standing,0,1,walking,standing,standing
+2557,232.363636,9,Walking,walking,walking,1,1,walking,walking,walking
+2558,232.454545,9,Walking,walking,walking,1,1,walking,walking,walking
+2559,232.545455,9,Walking,walking,walking,1,1,walking,walking,walking
+2560,232.636364,9,Walking,walking,walking,1,1,walking,walking,walking
+2561,232.727273,9,Walking,walking,walking,1,1,walking,walking,walking
+2562,232.818182,9,Walking,walking,walking,1,1,walking,walking,walking
+2563,232.909091,9,Walking,walking,walking,1,1,walking,walking,walking
+2564,233.000000,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2565,233.090909,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2566,233.181818,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2567,233.272727,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2568,233.363636,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2569,233.454545,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2570,233.545455,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2571,233.636364,10,Material handling,material_handling,carrying,0,1,carrying,carrying,carrying
+2572,233.727273,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2573,233.818182,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2574,233.909091,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2575,234.000000,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2576,234.090909,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2577,234.181818,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2578,234.272727,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2579,234.363636,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2580,234.454545,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2581,234.545455,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2582,234.636364,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2583,234.727273,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2584,234.818182,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2585,234.909091,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2586,235.000000,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2587,235.090909,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2588,235.181818,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2589,235.272727,10,Material handling,material_handling,carrying,0,1,carrying,carrying,carrying
+2590,235.363636,10,Material handling,material_handling,carrying,0,1,carrying,carrying,carrying
+2591,235.454545,10,Material handling,material_handling,carrying,0,1,carrying,carrying,carrying
+2592,235.545455,10,Material handling,material_handling,carrying,0,1,carrying,carrying,carrying
+2593,235.636364,10,Material handling,material_handling,carrying,0,1,carrying,carrying,carrying
+2594,235.727273,10,Material handling,material_handling,carrying,0,1,carrying,carrying,carrying
+2595,235.818182,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2596,235.909091,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2597,236.000000,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2598,236.090909,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2599,236.181818,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2600,236.272727,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2601,236.363636,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2602,236.454545,10,Material handling,material_handling,walking,0,1,walking,walking,walking
+2603,236.545455,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2604,236.636364,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2605,236.727273,10,Material handling,material_handling,walking,0,1,carrying,walking,walking
+2606,236.818182,10,Material handling,material_handling,carrying,0,1,carrying,carrying,carrying
+2607,236.909091,10,Material handling,material_handling,carrying,0,1,carrying,carrying,carrying
+2608,237.000000,10,Material handling,material_handling,carrying,0,1,carrying,carrying,carrying
+2609,237.090909,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2610,237.181818,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2611,237.272727,10,Material handling,material_handling,carrying,0,1,walking,carrying,carrying
+2612,237.363636,10,Material handling,material_handling,carrying,0,1,bending,carrying,carrying
+2613,237.454545,10,Material handling,material_handling,walking,0,1,bending,walking,walking
+2614,237.545455,10,Material handling,material_handling,walking,0,1,bending,walking,walking
+2615,237.636364,10,Material handling,material_handling,material_handling,1,1,bending,walking,material_handling
+2616,237.727273,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2617,237.818182,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2618,237.909091,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2619,238.000000,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2620,238.090909,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2621,238.181818,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2622,238.272727,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2623,238.363636,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2624,238.454545,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2625,238.545455,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2626,238.636364,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2627,238.727273,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2628,238.818182,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2629,238.909091,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2630,239.000000,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2631,239.090909,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2632,239.181818,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2633,239.272727,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2634,239.363636,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2635,239.454545,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2636,239.545455,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2637,239.636364,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2638,239.727273,10,Material handling,material_handling,material_handling,1,1,bending,bending,material_handling
+2639,239.818182,10,Material handling,material_handling,material_handling,1,1,walking,bending,material_handling
+2640,239.909091,10,Material handling,material_handling,material_handling,1,1,walking,bending,material_handling
+2663,242.000000,11,Bending,bending,material_handling,0,1,bending,bending,material_handling
+2664,242.090909,11,Bending,bending,material_handling,0,1,bending,bending,material_handling
+2665,242.181818,11,Bending,bending,material_handling,0,1,bending,bending,material_handling
+2666,242.272727,11,Bending,bending,material_handling,0,1,bending,bending,material_handling
+2667,242.363636,11,Bending,bending,material_handling,0,1,bending,bending,material_handling
+2668,242.454545,11,Bending,bending,material_handling,0,1,bending,bending,material_handling
+2669,242.545455,11,Bending,bending,material_handling,0,1,bending,bending,material_handling
+2670,242.636364,11,Bending,bending,material_handling,0,1,bending,bending,material_handling
+2671,242.727273,11,Bending,bending,material_handling,0,1,walking,bending,material_handling
+2672,242.818182,11,Bending,bending,material_handling,0,1,standing,bending,material_handling
+2673,242.909091,11,Bending,bending,material_handling,0,1,standing,bending,material_handling
+2674,243.000000,12,Standing,standing,material_handling,0,1,standing,bending,material_handling
+2675,243.090909,12,Standing,standing,material_handling,0,1,standing,bending,material_handling
+2676,243.181818,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2677,243.272727,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2678,243.363636,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2679,243.454545,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2680,243.545455,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2681,243.636364,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2682,243.727273,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2683,243.818182,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2684,243.909091,12,Standing,standing,material_handling,0,1,walking,standing,material_handling
+2685,244.000000,12,Standing,standing,material_handling,0,1,carrying,standing,material_handling
+2686,244.090909,12,Standing,standing,material_handling,0,1,carrying,standing,material_handling
+2687,244.181818,12,Standing,standing,material_handling,0,1,walking,standing,material_handling
+2688,244.272727,12,Standing,standing,material_handling,0,1,walking,standing,material_handling
+2689,244.363636,12,Standing,standing,material_handling,0,1,walking,standing,material_handling
+2690,244.454545,12,Standing,standing,material_handling,0,1,walking,walking,material_handling
+2691,244.545455,12,Standing,standing,material_handling,0,1,walking,walking,material_handling
+2692,244.636364,12,Standing,standing,material_handling,0,1,walking,walking,material_handling
+2693,244.727273,12,Standing,standing,material_handling,0,1,walking,walking,material_handling
+2694,244.818182,12,Standing,standing,material_handling,0,1,walking,walking,material_handling
+2695,244.909091,12,Standing,standing,material_handling,0,1,walking,walking,material_handling
+2696,245.000000,12,Standing,standing,material_handling,0,1,carrying,walking,material_handling
+2697,245.090909,12,Standing,standing,material_handling,0,1,carrying,walking,material_handling
+2698,245.181818,12,Standing,standing,material_handling,0,1,walking,walking,material_handling
+2699,245.272727,12,Standing,standing,material_handling,0,1,walking,walking,material_handling
+2700,245.363636,12,Standing,standing,walking,0,1,standing,walking,walking
+2701,245.454545,12,Standing,standing,walking,0,1,standing,walking,walking
+2702,245.545455,12,Standing,standing,walking,0,1,standing,walking,walking
+2703,245.636364,12,Standing,standing,walking,0,1,standing,walking,walking
+2704,245.727273,12,Standing,standing,standing,1,1,standing,standing,standing
+2705,245.818182,12,Standing,standing,standing,1,1,standing,standing,standing
+2706,245.909091,12,Standing,standing,standing,1,1,standing,standing,standing
+2707,246.000000,12,Standing,standing,standing,1,1,standing,standing,standing
+2708,246.090909,12,Standing,standing,standing,1,1,standing,standing,standing
+2709,246.181818,12,Standing,standing,standing,1,1,standing,standing,standing
+2710,246.272727,12,Standing,standing,standing,1,1,idle,standing,standing
+2711,246.363636,12,Standing,standing,standing,1,1,standing,standing,standing
+2712,246.454545,12,Standing,standing,standing,1,1,standing,standing,standing
+2713,246.545455,12,Standing,standing,standing,1,1,standing,standing,standing
+2714,246.636364,12,Standing,standing,standing,1,1,standing,standing,standing
+2715,246.727273,12,Standing,standing,standing,1,1,walking,standing,standing
+2716,246.818182,12,Standing,standing,standing,1,1,walking,standing,standing
+2717,246.909091,12,Standing,standing,standing,1,1,walking,standing,standing
+2718,247.000000,12,Standing,standing,standing,1,1,walking,standing,standing
+2719,247.090909,12,Standing,standing,walking,0,1,walking,walking,walking
+2720,247.181818,12,Standing,standing,walking,0,1,walking,walking,walking
+2721,247.272727,12,Standing,standing,walking,0,1,walking,walking,walking
+2722,247.363636,12,Standing,standing,walking,0,1,walking,walking,walking
+2723,247.454545,12,Standing,standing,walking,0,1,walking,walking,walking
+2724,247.545455,12,Standing,standing,walking,0,1,walking,walking,walking
+2725,247.636364,12,Standing,standing,walking,0,1,walking,walking,walking
+2726,247.727273,12,Standing,standing,walking,0,1,walking,walking,walking
+2727,247.818182,12,Standing,standing,walking,0,1,walking,walking,walking
+2728,247.909091,12,Standing,standing,walking,0,1,walking,walking,walking
+2729,248.000000,12,Standing,standing,walking,0,1,walking,walking,walking
+2730,248.090909,12,Standing,standing,walking,0,1,standing,walking,walking
+2731,248.181818,12,Standing,standing,walking,0,1,standing,walking,walking
+2732,248.272727,12,Standing,standing,walking,0,1,standing,walking,walking
+2733,248.363636,12,Standing,standing,walking,0,1,standing,walking,walking
+2734,248.454545,12,Standing,standing,standing,1,1,standing,standing,standing
+2735,248.545455,12,Standing,standing,standing,1,1,standing,standing,standing
+2736,248.636364,12,Standing,standing,standing,1,1,standing,standing,standing
+2737,248.727273,12,Standing,standing,standing,1,1,standing,standing,standing
+2738,248.818182,12,Standing,standing,standing,1,1,standing,standing,standing
+2739,248.909091,12,Standing,standing,standing,1,1,standing,standing,standing
+2740,249.000000,12,Standing,standing,standing,1,1,standing,standing,standing
+2741,249.090909,12,Standing,standing,standing,1,1,standing,standing,standing
+2742,249.181818,12,Standing,standing,standing,1,1,idle,standing,standing
+2743,249.272727,12,Standing,standing,standing,1,1,idle,standing,standing
+2744,249.363636,12,Standing,standing,standing,1,1,idle,standing,standing
+2745,249.454545,12,Standing,standing,standing,1,1,idle,standing,standing
+2746,249.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2747,249.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2748,249.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2749,249.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2750,249.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2751,250.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2752,250.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2753,250.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2754,250.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2755,250.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2756,250.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2757,250.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2758,250.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2759,250.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2760,250.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2761,250.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2762,251.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2763,251.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2764,251.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2765,251.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2766,251.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2767,251.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2768,251.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2769,251.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2770,251.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2771,251.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2772,251.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2773,252.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2774,252.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2775,252.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2776,252.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2777,252.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2778,252.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2779,252.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2780,252.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2781,252.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2782,252.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2783,252.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2784,253.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2785,253.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2786,253.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2787,253.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2788,253.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2789,253.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2790,253.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2791,253.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2792,253.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2793,253.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2794,253.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2795,254.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2796,254.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2797,254.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2798,254.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2799,254.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2800,254.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2801,254.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2802,254.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2803,254.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2804,254.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2805,254.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2806,255.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2807,255.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2808,255.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2809,255.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2810,255.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2811,255.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2812,255.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2813,255.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2814,255.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2815,255.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2816,255.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2817,256.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2818,256.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2819,256.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2820,256.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2821,256.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2822,256.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2823,256.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2824,256.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2825,256.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2826,256.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2827,256.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2828,257.000000,12,Standing,standing,idle,0,1,standing,idle,idle
+2829,257.090909,12,Standing,standing,idle,0,1,standing,idle,idle
+2830,257.181818,12,Standing,standing,idle,0,1,standing,idle,idle
+2831,257.272727,12,Standing,standing,idle,0,1,standing,idle,idle
+2832,257.363636,12,Standing,standing,standing,1,1,standing,standing,standing
+2833,257.454545,12,Standing,standing,standing,1,1,standing,standing,standing
+2834,257.545455,12,Standing,standing,standing,1,1,standing,standing,standing
+2835,257.636364,12,Standing,standing,standing,1,1,standing,standing,standing
+2836,257.727273,12,Standing,standing,standing,1,1,standing,standing,standing
+2837,257.818182,12,Standing,standing,standing,1,1,idle,standing,standing
+2838,257.909091,12,Standing,standing,standing,1,1,idle,standing,standing
+2839,258.000000,12,Standing,standing,standing,1,1,idle,standing,standing
+2840,258.090909,12,Standing,standing,standing,1,1,idle,standing,standing
+2841,258.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2842,258.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2843,258.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2844,258.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2845,258.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2846,258.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2847,258.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2848,258.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2849,258.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2850,259.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2851,259.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2852,259.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2853,259.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2854,259.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2855,259.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2856,259.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2857,259.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2858,259.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2859,259.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2860,259.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2861,260.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2862,260.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2863,260.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2864,260.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2865,260.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2866,260.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2867,260.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2868,260.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2869,260.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2870,260.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2871,260.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2872,261.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2873,261.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2874,261.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2875,261.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2876,261.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2877,261.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2878,261.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2879,261.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2880,261.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2881,261.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2882,261.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2883,262.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2884,262.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2885,262.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2886,262.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2887,262.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2888,262.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2889,262.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2890,262.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2891,262.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2892,262.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2893,262.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2894,263.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2895,263.090909,12,Standing,standing,idle,0,1,standing,idle,idle
+2896,263.181818,12,Standing,standing,idle,0,1,standing,idle,idle
+2897,263.272727,12,Standing,standing,idle,0,1,standing,idle,idle
+2898,263.363636,12,Standing,standing,idle,0,1,standing,idle,idle
+2899,263.454545,12,Standing,standing,standing,1,1,standing,standing,standing
+2900,263.545455,12,Standing,standing,standing,1,1,standing,standing,standing
+2901,263.636364,12,Standing,standing,standing,1,1,standing,standing,standing
+2902,263.727273,12,Standing,standing,standing,1,1,standing,standing,standing
+2903,263.818182,12,Standing,standing,standing,1,1,standing,standing,standing
+2904,263.909091,12,Standing,standing,standing,1,1,idle,standing,standing
+2905,264.000000,12,Standing,standing,standing,1,1,idle,standing,standing
+2906,264.090909,12,Standing,standing,standing,1,1,idle,standing,standing
+2907,264.181818,12,Standing,standing,standing,1,1,idle,standing,standing
+2908,264.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2909,264.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2910,264.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2911,264.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2912,264.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2913,264.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2914,264.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2915,264.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2916,265.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2917,265.090909,12,Standing,standing,material_handling,0,1,standing,idle,material_handling
+2918,265.181818,12,Standing,standing,material_handling,0,1,standing,idle,material_handling
+2919,265.272727,12,Standing,standing,material_handling,0,1,standing,idle,material_handling
+2920,265.363636,12,Standing,standing,material_handling,0,1,standing,idle,material_handling
+2921,265.454545,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2922,265.545455,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2923,265.636364,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2924,265.727273,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2925,265.818182,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2926,265.909091,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2927,266.000000,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2928,266.090909,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2929,266.181818,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2930,266.272727,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2931,266.363636,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2932,266.454545,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2933,266.545455,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2934,266.636364,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2935,266.727273,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2936,266.818182,12,Standing,standing,material_handling,0,1,standing,standing,material_handling
+2937,266.909091,12,Standing,standing,material_handling,0,1,idle,standing,material_handling
+2938,267.000000,12,Standing,standing,material_handling,0,1,idle,standing,material_handling
+2939,267.090909,12,Standing,standing,material_handling,0,1,idle,standing,material_handling
+2940,267.181818,12,Standing,standing,standing,1,1,idle,standing,standing
+2941,267.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2942,267.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2943,267.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2944,267.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2945,267.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2946,267.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2947,267.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2948,267.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2949,268.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2950,268.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2951,268.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2952,268.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2953,268.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2954,268.454545,12,Standing,standing,idle,0,1,idle,idle,idle
+2955,268.545455,12,Standing,standing,idle,0,1,idle,idle,idle
+2956,268.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2957,268.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2958,268.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2959,268.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2960,269.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2961,269.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2962,269.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2963,269.272727,12,Standing,standing,idle,0,1,idle,idle,idle
+2964,269.363636,12,Standing,standing,idle,0,1,idle,idle,idle
+2965,269.454545,12,Standing,standing,idle,0,1,standing,idle,idle
+2966,269.545455,12,Standing,standing,idle,0,1,standing,idle,idle
+2967,269.636364,12,Standing,standing,idle,0,1,standing,idle,idle
+2968,269.727273,12,Standing,standing,idle,0,1,standing,idle,idle
+2969,269.818182,12,Standing,standing,standing,1,1,standing,standing,standing
+2970,269.909091,12,Standing,standing,standing,1,1,standing,standing,standing
+2971,270.000000,12,Standing,standing,standing,1,1,standing,standing,standing
+2972,270.090909,12,Standing,standing,standing,1,1,standing,standing,standing
+2973,270.181818,12,Standing,standing,standing,1,1,standing,standing,standing
+2974,270.272727,12,Standing,standing,standing,1,1,standing,standing,standing
+2975,270.363636,12,Standing,standing,standing,1,1,standing,standing,standing
+2976,270.454545,12,Standing,standing,standing,1,1,walking,standing,standing
+2977,270.545455,12,Standing,standing,standing,1,1,walking,standing,standing
+2978,270.636364,12,Standing,standing,standing,1,1,walking,standing,standing
+2979,270.727273,12,Standing,standing,standing,1,1,walking,standing,standing
+2980,270.818182,12,Standing,standing,walking,0,1,walking,walking,walking
+2981,270.909091,12,Standing,standing,walking,0,1,standing,walking,walking
+2982,271.000000,12,Standing,standing,walking,0,1,standing,walking,walking
+2983,271.090909,12,Standing,standing,walking,0,1,standing,walking,walking
+2984,271.181818,12,Standing,standing,walking,0,1,standing,walking,walking
+2985,271.272727,12,Standing,standing,standing,1,1,idle,standing,standing
+2986,271.363636,12,Standing,standing,standing,1,1,idle,standing,standing
+2987,271.454545,12,Standing,standing,standing,1,1,idle,standing,standing
+2988,271.545455,12,Standing,standing,standing,1,1,idle,standing,standing
+2989,271.636364,12,Standing,standing,idle,0,1,idle,idle,idle
+2990,271.727273,12,Standing,standing,idle,0,1,idle,idle,idle
+2991,271.818182,12,Standing,standing,idle,0,1,idle,idle,idle
+2992,271.909091,12,Standing,standing,idle,0,1,idle,idle,idle
+2993,272.000000,12,Standing,standing,idle,0,1,idle,idle,idle
+2994,272.090909,12,Standing,standing,idle,0,1,idle,idle,idle
+2995,272.181818,12,Standing,standing,idle,0,1,idle,idle,idle
+2996,272.272727,12,Standing,standing,idle,0,1,standing,idle,idle
+2997,272.363636,12,Standing,standing,idle,0,1,standing,idle,idle
+2998,272.454545,12,Standing,standing,idle,0,1,standing,idle,idle
+2999,272.545455,12,Standing,standing,idle,0,1,standing,idle,idle
+3000,272.636364,12,Standing,standing,standing,1,1,standing,standing,standing
+3001,272.727273,12,Standing,standing,standing,1,1,standing,standing,standing
+3002,272.818182,12,Standing,standing,standing,1,1,walking,standing,standing
+3003,272.909091,12,Standing,standing,standing,1,1,walking,standing,standing
+3004,273.000000,12,Standing,standing,standing,1,1,carrying,standing,standing
+3005,273.090909,12,Standing,standing,standing,1,1,walking,standing,standing
+3006,273.181818,12,Standing,standing,standing,1,1,walking,standing,standing
+3007,273.272727,12,Standing,standing,walking,0,1,walking,walking,walking
+3008,273.363636,12,Standing,standing,walking,0,1,walking,walking,walking
+3009,273.454545,12,Standing,standing,walking,0,1,walking,walking,walking
+3010,273.545455,12,Standing,standing,walking,0,1,carrying,walking,walking
+3011,273.636364,12,Standing,standing,walking,0,1,carrying,walking,walking
+3012,273.727273,12,Standing,standing,walking,0,1,carrying,walking,walking
+3013,273.818182,12,Standing,standing,walking,0,1,carrying,walking,walking
+3014,273.909091,12,Standing,standing,carrying,0,1,carrying,carrying,carrying
+3015,274.000000,12,Standing,standing,carrying,0,1,walking,carrying,carrying
+3016,274.090909,12,Standing,standing,carrying,0,1,walking,carrying,carrying
+3017,274.181818,12,Standing,standing,carrying,0,1,standing,carrying,carrying
+3018,274.272727,12,Standing,standing,carrying,0,1,walking,carrying,carrying
+3019,274.363636,12,Standing,standing,carrying,0,1,standing,carrying,carrying
+3020,274.454545,12,Standing,standing,carrying,0,1,standing,carrying,carrying
+3021,274.545455,12,Standing,standing,carrying,0,1,standing,carrying,carrying
+3022,274.636364,12,Standing,standing,standing,1,1,standing,standing,standing
+3023,274.727273,12,Standing,standing,standing,1,1,standing,standing,standing
+3024,274.818182,12,Standing,standing,standing,1,1,standing,standing,standing
+3025,274.909091,12,Standing,standing,standing,1,1,standing,standing,standing
+3037,276.000000,13,Idle,idle,walking,0,1,walking,walking,walking
+3038,276.090909,13,Idle,idle,walking,0,1,walking,walking,walking
+3039,276.181818,13,Idle,idle,walking,0,1,walking,walking,walking
+3040,276.272727,13,Idle,idle,walking,0,1,walking,walking,walking
+3041,276.363636,13,Idle,idle,walking,0,1,walking,walking,walking
+3042,276.454545,13,Idle,idle,walking,0,1,walking,walking,walking
+3043,276.545455,13,Idle,idle,walking,0,1,standing,walking,walking
+3044,276.636364,13,Idle,idle,walking,0,1,standing,walking,walking
+3045,276.727273,13,Idle,idle,walking,0,1,standing,walking,walking
+3046,276.818182,13,Idle,idle,walking,0,1,standing,walking,walking
+3047,276.909091,13,Idle,idle,standing,0,1,standing,standing,standing
+3048,277.000000,13,Idle,idle,standing,0,1,standing,standing,standing
+3049,277.090909,13,Idle,idle,standing,0,1,standing,standing,standing
+3050,277.181818,13,Idle,idle,standing,0,1,standing,standing,standing
+3051,277.272727,13,Idle,idle,standing,0,1,standing,standing,standing
+3052,277.363636,13,Idle,idle,standing,0,1,standing,standing,standing
+3053,277.454545,13,Idle,idle,standing,0,1,standing,standing,standing
+3054,277.545455,13,Idle,idle,standing,0,1,standing,standing,standing
+3055,277.636364,13,Idle,idle,standing,0,1,standing,standing,standing
+3056,277.727273,13,Idle,idle,standing,0,1,standing,standing,standing
+3057,277.818182,13,Idle,idle,standing,0,1,carrying,standing,standing
+3058,277.909091,13,Idle,idle,standing,0,1,carrying,standing,standing
+3059,278.000000,13,Idle,idle,standing,0,1,carrying,standing,standing
+3060,278.090909,13,Idle,idle,standing,0,1,carrying,standing,standing
+3061,278.181818,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3062,278.272727,13,Idle,idle,carrying,0,1,walking,carrying,carrying
+3063,278.363636,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3064,278.454545,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3065,278.545455,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3066,278.636364,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3067,278.727273,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3068,278.818182,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3069,278.909091,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3070,279.000000,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3071,279.090909,13,Idle,idle,carrying,0,1,walking,carrying,carrying
+3072,279.181818,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3073,279.272727,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3074,279.363636,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3075,279.454545,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3076,279.545455,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3077,279.636364,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3078,279.727273,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3079,279.818182,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3080,279.909091,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3081,280.000000,13,Idle,idle,carrying,0,1,carrying,carrying,carrying
+3082,280.090909,13,Idle,idle,carrying,0,1,walking,carrying,carrying
+3083,280.181818,13,Idle,idle,carrying,0,1,walking,carrying,carrying
+3084,280.272727,13,Idle,idle,carrying,0,1,walking,carrying,carrying
+3085,280.363636,13,Idle,idle,carrying,0,1,standing,carrying,carrying
+3086,280.454545,13,Idle,idle,walking,0,1,standing,walking,walking
+3087,280.545455,13,Idle,idle,walking,0,1,standing,walking,walking
+3088,280.636364,13,Idle,idle,walking,0,1,standing,walking,walking
+3089,280.727273,13,Idle,idle,standing,0,1,standing,standing,standing
+3090,280.818182,13,Idle,idle,standing,0,1,standing,standing,standing
+3091,280.909091,13,Idle,idle,standing,0,1,standing,standing,standing
+3092,281.000000,13,Idle,idle,standing,0,1,standing,standing,standing
+3093,281.090909,13,Idle,idle,standing,0,1,standing,standing,standing
+3094,281.181818,13,Idle,idle,standing,0,1,idle,standing,standing
+3095,281.272727,13,Idle,idle,standing,0,1,idle,standing,standing
+3096,281.363636,13,Idle,idle,standing,0,1,idle,standing,standing
+3097,281.454545,13,Idle,idle,standing,0,1,idle,standing,standing
+3098,281.545455,13,Idle,idle,idle,1,1,standing,idle,idle
+3099,281.636364,13,Idle,idle,idle,1,1,standing,idle,idle
+3100,281.727273,13,Idle,idle,idle,1,1,idle,idle,idle
+3101,281.818182,13,Idle,idle,idle,1,1,idle,idle,idle
+3102,281.909091,13,Idle,idle,idle,1,1,idle,idle,idle
+3103,282.000000,13,Idle,idle,idle,1,1,idle,idle,idle
+3104,282.090909,13,Idle,idle,idle,1,1,idle,idle,idle
+3105,282.181818,13,Idle,idle,idle,1,1,idle,idle,idle
+3106,282.272727,13,Idle,idle,idle,1,1,idle,idle,idle
+3107,282.363636,13,Idle,idle,idle,1,1,idle,idle,idle
+3108,282.454545,13,Idle,idle,idle,1,1,idle,idle,idle
+3109,282.545455,13,Idle,idle,idle,1,1,idle,idle,idle
+3110,282.636364,13,Idle,idle,idle,1,1,idle,idle,idle
+3111,282.727273,13,Idle,idle,idle,1,1,idle,idle,idle
+3112,282.818182,13,Idle,idle,idle,1,1,idle,idle,idle
+3113,282.909091,13,Idle,idle,idle,1,1,idle,idle,idle
+3114,283.000000,13,Idle,idle,idle,1,1,idle,idle,idle
+3115,283.090909,13,Idle,idle,idle,1,1,idle,idle,idle
+3116,283.181818,13,Idle,idle,idle,1,1,idle,idle,idle
+3117,283.272727,13,Idle,idle,idle,1,1,idle,idle,idle
+3118,283.363636,13,Idle,idle,idle,1,1,idle,idle,idle
+3119,283.454545,13,Idle,idle,idle,1,1,idle,idle,idle
+3120,283.545455,13,Idle,idle,idle,1,1,idle,idle,idle
+3121,283.636364,13,Idle,idle,idle,1,1,idle,idle,idle
+3122,283.727273,13,Idle,idle,idle,1,1,idle,idle,idle
+3123,283.818182,13,Idle,idle,idle,1,1,idle,idle,idle
+3124,283.909091,13,Idle,idle,idle,1,1,idle,idle,idle
+3125,284.000000,13,Idle,idle,idle,1,1,idle,idle,idle
+3126,284.090909,13,Idle,idle,idle,1,1,idle,idle,idle
+3127,284.181818,13,Idle,idle,idle,1,1,idle,idle,idle
+3128,284.272727,13,Idle,idle,idle,1,1,idle,idle,idle
+3129,284.363636,13,Idle,idle,idle,1,1,idle,idle,idle
+3130,284.454545,13,Idle,idle,idle,1,1,idle,idle,idle
+3131,284.545455,13,Idle,idle,idle,1,1,idle,idle,idle
+3132,284.636364,13,Idle,idle,idle,1,1,idle,idle,idle
+3133,284.727273,13,Idle,idle,idle,1,1,idle,idle,idle
+3134,284.818182,13,Idle,idle,idle,1,1,idle,idle,idle
+3135,284.909091,13,Idle,idle,idle,1,1,idle,idle,idle
+3136,285.000000,13,Idle,idle,idle,1,1,idle,idle,idle
+3137,285.090909,13,Idle,idle,idle,1,1,idle,idle,idle
+3138,285.181818,13,Idle,idle,idle,1,1,idle,idle,idle
+3139,285.272727,13,Idle,idle,idle,1,1,idle,idle,idle
+3140,285.363636,13,Idle,idle,idle,1,1,idle,idle,idle
+3141,285.454545,13,Idle,idle,idle,1,1,idle,idle,idle
+3142,285.545455,13,Idle,idle,idle,1,1,idle,idle,idle
+3143,285.636364,13,Idle,idle,idle,1,1,idle,idle,idle
+3144,285.727273,13,Idle,idle,idle,1,1,idle,idle,idle
+3145,285.818182,13,Idle,idle,idle,1,1,idle,idle,idle
+3146,285.909091,13,Idle,idle,idle,1,1,idle,idle,idle
+3147,286.000000,13,Idle,idle,idle,1,1,idle,idle,idle
+3148,286.090909,13,Idle,idle,idle,1,1,idle,idle,idle
+3149,286.181818,13,Idle,idle,idle,1,1,idle,idle,idle
+3150,286.272727,13,Idle,idle,idle,1,1,idle,idle,idle
+3151,286.363636,13,Idle,idle,idle,1,1,idle,idle,idle
+3152,286.454545,13,Idle,idle,idle,1,1,idle,idle,idle
+3153,286.545455,13,Idle,idle,idle,1,1,standing,idle,idle
+3154,286.636364,13,Idle,idle,idle,1,1,standing,idle,idle
+3155,286.727273,13,Idle,idle,idle,1,1,standing,idle,idle
+3156,286.818182,13,Idle,idle,idle,1,1,standing,idle,idle
+3157,286.909091,13,Idle,idle,standing,0,1,standing,standing,standing
+3158,287.000000,13,Idle,idle,standing,0,1,standing,standing,standing
+3159,287.090909,13,Idle,idle,standing,0,1,standing,standing,standing
+3160,287.181818,13,Idle,idle,standing,0,1,idle,standing,standing
+3161,287.272727,13,Idle,idle,standing,0,1,idle,standing,standing
+3162,287.363636,13,Idle,idle,standing,0,1,idle,standing,standing
+3163,287.454545,13,Idle,idle,standing,0,1,idle,standing,standing
+3164,287.545455,13,Idle,idle,idle,1,1,idle,idle,idle
+3165,287.636364,13,Idle,idle,idle,1,1,idle,idle,idle
+3166,287.727273,13,Idle,idle,idle,1,1,idle,idle,idle
+3167,287.818182,13,Idle,idle,idle,1,1,idle,idle,idle
+3168,287.909091,13,Idle,idle,idle,1,1,idle,idle,idle
+3169,288.000000,14,Walking,walking,idle,0,1,idle,idle,idle
+3170,288.090909,14,Walking,walking,idle,0,1,idle,idle,idle
+3171,288.181818,14,Walking,walking,idle,0,1,idle,idle,idle
+3172,288.272727,14,Walking,walking,idle,0,1,idle,idle,idle
+3173,288.363636,14,Walking,walking,idle,0,1,standing,idle,idle
+3174,288.454545,14,Walking,walking,idle,0,1,standing,idle,idle
+3175,288.545455,14,Walking,walking,idle,0,1,standing,idle,idle
+3176,288.636364,14,Walking,walking,idle,0,1,standing,idle,idle
+3177,288.727273,14,Walking,walking,standing,0,1,walking,standing,standing
+3178,288.818182,14,Walking,walking,standing,0,1,walking,standing,standing
+3179,288.909091,14,Walking,walking,standing,0,1,walking,standing,standing
+3180,289.000000,14,Walking,walking,standing,0,1,walking,standing,standing
+3181,289.090909,14,Walking,walking,walking,1,1,walking,walking,walking
+3182,289.181818,14,Walking,walking,walking,1,1,walking,walking,walking
+3183,289.272727,14,Walking,walking,walking,1,1,walking,walking,walking
+3184,289.363636,14,Walking,walking,walking,1,1,walking,walking,walking
+3185,289.454545,14,Walking,walking,walking,1,1,walking,walking,walking
+3186,289.545455,14,Walking,walking,walking,1,1,walking,walking,walking
+3187,289.636364,14,Walking,walking,walking,1,1,walking,walking,walking
+3188,289.727273,14,Walking,walking,walking,1,1,walking,walking,walking
+3189,289.818182,14,Walking,walking,walking,1,1,walking,walking,walking
+3190,289.909091,14,Walking,walking,walking,1,1,walking,walking,walking
+3191,290.000000,14,Walking,walking,walking,1,1,walking,walking,walking
+3192,290.090909,14,Walking,walking,walking,1,1,walking,walking,walking
+3193,290.181818,14,Walking,walking,walking,1,1,walking,walking,walking
+3194,290.272727,14,Walking,walking,walking,1,1,walking,walking,walking
+3195,290.363636,14,Walking,walking,walking,1,1,walking,walking,walking
+3196,290.454545,14,Walking,walking,walking,1,1,walking,walking,walking
+3197,290.545455,14,Walking,walking,walking,1,1,walking,walking,walking
+3198,290.636364,14,Walking,walking,walking,1,1,walking,walking,walking
+3199,290.727273,14,Walking,walking,walking,1,1,walking,walking,walking
+3200,290.818182,14,Walking,walking,walking,1,1,walking,walking,walking
+3201,290.909091,14,Walking,walking,walking,1,1,walking,walking,walking
+3202,291.000000,14,Walking,walking,walking,1,1,walking,walking,walking
+3203,291.090909,14,Walking,walking,walking,1,1,walking,walking,walking
+3204,291.181818,14,Walking,walking,walking,1,1,walking,walking,walking
+3205,291.272727,14,Walking,walking,walking,1,1,walking,walking,walking
+3206,291.363636,14,Walking,walking,walking,1,1,walking,walking,walking
+3207,291.454545,14,Walking,walking,walking,1,1,walking,walking,walking
+3208,291.545455,14,Walking,walking,walking,1,1,walking,walking,walking
+3209,291.636364,14,Walking,walking,walking,1,1,carrying,walking,walking
+3210,291.727273,14,Walking,walking,walking,1,1,walking,walking,walking
+3211,291.818182,14,Walking,walking,walking,1,1,walking,walking,walking
+3212,291.909091,14,Walking,walking,walking,1,1,walking,walking,walking
+3213,292.000000,14,Walking,walking,walking,1,1,walking,walking,walking
+3214,292.090909,14,Walking,walking,walking,1,1,walking,walking,walking
+3215,292.181818,14,Walking,walking,walking,1,1,walking,walking,walking
+3216,292.272727,14,Walking,walking,walking,1,1,walking,walking,walking
+3217,292.363636,14,Walking,walking,walking,1,1,walking,walking,walking
+3218,292.454545,14,Walking,walking,walking,1,1,walking,walking,walking
+3219,292.545455,14,Walking,walking,walking,1,1,walking,walking,walking
+3220,292.636364,14,Walking,walking,walking,1,1,walking,walking,walking
+3221,292.727273,14,Walking,walking,walking,1,1,walking,walking,walking
+3222,292.818182,14,Walking,walking,walking,1,1,walking,walking,walking
+3223,292.909091,14,Walking,walking,walking,1,1,walking,walking,walking
+3224,293.000000,14,Walking,walking,walking,1,1,walking,walking,walking
+3225,293.090909,14,Walking,walking,walking,1,1,walking,walking,walking
+3226,293.181818,14,Walking,walking,walking,1,1,walking,walking,walking
+3227,293.272727,14,Walking,walking,walking,1,1,walking,walking,walking
+3228,293.363636,14,Walking,walking,walking,1,1,walking,walking,walking
+3229,293.454545,14,Walking,walking,walking,1,1,walking,walking,walking
+3230,293.545455,14,Walking,walking,walking,1,1,walking,walking,walking
+3231,293.636364,14,Walking,walking,walking,1,1,walking,walking,walking
+3232,293.727273,14,Walking,walking,walking,1,1,walking,walking,walking
+3233,293.818182,14,Walking,walking,walking,1,1,walking,walking,walking
+3234,293.909091,14,Walking,walking,walking,1,1,walking,walking,walking
+3235,294.000000,14,Walking,walking,walking,1,1,walking,walking,walking
+3236,294.090909,14,Walking,walking,walking,1,1,carrying,walking,walking
+3237,294.181818,14,Walking,walking,walking,1,1,standing,walking,walking
+3238,294.272727,14,Walking,walking,walking,1,1,standing,walking,walking
+3239,294.363636,14,Walking,walking,walking,1,1,standing,walking,walking
+3240,294.454545,14,Walking,walking,walking,1,1,standing,walking,walking
+3241,294.545455,14,Walking,walking,standing,0,1,standing,standing,standing
+3242,294.636364,14,Walking,walking,standing,0,1,carrying,standing,standing
+3243,294.727273,14,Walking,walking,standing,0,1,carrying,standing,standing
+3244,294.818182,14,Walking,walking,standing,0,1,carrying,standing,standing
+3245,294.909091,14,Walking,walking,standing,0,1,walking,standing,standing
+3246,295.000000,14,Walking,walking,carrying,0,1,walking,carrying,carrying
+3247,295.090909,14,Walking,walking,carrying,0,1,walking,carrying,carrying
+3248,295.181818,14,Walking,walking,carrying,0,1,walking,carrying,carrying
+3249,295.272727,14,Walking,walking,walking,1,1,walking,walking,walking
+3250,295.363636,14,Walking,walking,walking,1,1,walking,walking,walking
+3251,295.454545,14,Walking,walking,walking,1,1,walking,walking,walking
+3252,295.545455,14,Walking,walking,walking,1,1,walking,walking,walking
+3253,295.636364,14,Walking,walking,walking,1,1,walking,walking,walking
+3254,295.727273,14,Walking,walking,walking,1,1,walking,walking,walking
+3255,295.818182,14,Walking,walking,walking,1,1,walking,walking,walking
+3256,295.909091,14,Walking,walking,walking,1,1,walking,walking,walking
+3257,296.000000,14,Walking,walking,walking,1,1,walking,walking,walking
+3258,296.090909,14,Walking,walking,walking,1,1,walking,walking,walking
+3259,296.181818,14,Walking,walking,walking,1,1,walking,walking,walking
+3260,296.272727,14,Walking,walking,walking,1,1,walking,walking,walking
+3261,296.363636,14,Walking,walking,walking,1,1,walking,walking,walking
+3262,296.454545,14,Walking,walking,walking,1,1,walking,walking,walking
+3263,296.545455,14,Walking,walking,walking,1,1,walking,walking,walking
+3264,296.636364,14,Walking,walking,walking,1,1,walking,walking,walking
+3265,296.727273,14,Walking,walking,walking,1,1,walking,walking,walking
+3266,296.818182,14,Walking,walking,walking,1,1,walking,walking,walking
+3267,296.909091,14,Walking,walking,walking,1,1,standing,walking,walking
+3268,297.000000,14,Walking,walking,walking,1,1,standing,walking,walking
+3269,297.090909,14,Walking,walking,walking,1,1,standing,walking,walking
+3270,297.181818,14,Walking,walking,walking,1,1,standing,walking,walking
+3271,297.272727,14,Walking,walking,standing,0,1,idle,standing,standing
+3272,297.363636,14,Walking,walking,standing,0,1,idle,standing,standing
+3273,297.454545,14,Walking,walking,standing,0,1,idle,standing,standing
+3274,297.545455,14,Walking,walking,standing,0,1,idle,standing,standing
+3275,297.636364,14,Walking,walking,idle,0,1,idle,idle,idle
+3276,297.727273,14,Walking,walking,idle,0,1,idle,idle,idle
+3277,297.818182,14,Walking,walking,idle,0,1,idle,idle,idle
+3278,297.909091,14,Walking,walking,idle,0,1,idle,idle,idle
+3279,298.000000,14,Walking,walking,idle,0,1,idle,idle,idle
+3280,298.090909,14,Walking,walking,idle,0,1,idle,idle,idle
+3281,298.181818,14,Walking,walking,idle,0,1,idle,idle,idle
+3282,298.272727,14,Walking,walking,idle,0,1,idle,idle,idle
+3283,298.363636,14,Walking,walking,idle,0,1,idle,idle,idle
+3284,298.454545,14,Walking,walking,idle,0,1,idle,idle,idle
+3285,298.545455,14,Walking,walking,idle,0,1,idle,idle,idle
+3286,298.636364,14,Walking,walking,idle,0,1,idle,idle,idle
+3287,298.727273,14,Walking,walking,idle,0,1,idle,idle,idle
+3288,298.818182,14,Walking,walking,idle,0,1,idle,idle,idle
+3289,298.909091,14,Walking,walking,idle,0,1,idle,idle,idle
+3290,299.000000,14,Walking,walking,idle,0,1,idle,idle,idle
+3291,299.090909,14,Walking,walking,idle,0,1,idle,idle,idle
+3292,299.181818,14,Walking,walking,idle,0,1,idle,idle,idle
+3293,299.272727,14,Walking,walking,idle,0,1,idle,idle,idle
+3294,299.363636,14,Walking,walking,idle,0,1,idle,idle,idle
+3295,299.454545,14,Walking,walking,idle,0,1,idle,idle,idle
+3296,299.545455,14,Walking,walking,idle,0,1,idle,idle,idle
+3297,299.636364,14,Walking,walking,idle,0,1,idle,idle,idle
+3298,299.727273,14,Walking,walking,idle,0,1,idle,idle,idle
+3299,299.818182,14,Walking,walking,idle,0,1,idle,idle,idle
+3300,299.909091,14,Walking,walking,idle,0,1,idle,idle,idle

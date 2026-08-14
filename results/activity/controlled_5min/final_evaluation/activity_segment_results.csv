@@ -1,0 +1,15 @@
+segment_id,description,ground_truth,start_sec,end_sec,duration_sec,frames,correct_frames,accuracy,missing_primary_track_frames
+1,Walking,walking,0.0,5.0,5.0,55,12,0.21818181818181817,0
+2,Idle,idle,5.0,20.0,15.0,165,138,0.8363636363636363,0
+3,Walking,walking,21.0,40.0,19.0,209,155,0.7416267942583732,0
+4,Material handling - bending/picking up boxes,material_handling,60.0,88.0,28.0,308,176,0.5714285714285714,13
+5,Carrying,carrying,89.0,105.0,16.0,176,105,0.5965909090909091,0
+6,Material handling - standing/manual handling,material_handling,106.0,120.0,14.0,154,84,0.5454545454545454,0
+7,Standing,standing,125.0,133.0,8.0,88,41,0.4659090909090909,0
+8,Standing,standing,185.0,190.0,5.0,55,17,0.3090909090909091,0
+9,Walking,walking,222.0,233.0,11.0,121,50,0.4132231404958678,5
+10,Material handling,material_handling,233.0,240.0,7.0,77,26,0.33766233766233766,0
+11,Bending,bending,242.0,243.0,1.0,11,0,0.0,0
+12,Standing,standing,243.0,275.0,32.0,352,72,0.20454545454545456,0
+13,Idle,idle,276.0,288.0,12.0,132,64,0.48484848484848486,0
+14,Walking,walking,288.0,300.0,12.0,132,82,0.6212121212121212,0

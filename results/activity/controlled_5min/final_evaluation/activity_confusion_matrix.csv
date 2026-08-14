@@ -1,0 +1,7 @@
+ground_truth,walking,standing,idle,bending,carrying,material_handling,missing_or_other
+walking,299,93,54,0,34,31,6
+standing,86,130,221,0,9,49,0
+idle,25,45,202,0,25,0,0
+bending,0,0,0,0,0,11,0
+carrying,32,19,0,0,105,20,0
+material_handling,62,46,88,22,22,286,13

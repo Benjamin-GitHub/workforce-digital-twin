@@ -1,0 +1,41 @@
+ACTIVITY RECOGNITION EVALUATION SUMMARY
+========================================================================
+
+Input CSV: results/activity/controlled_5min/activity_final.csv
+Prediction column: semantic_activity
+Primary track ID: 1
+FPS: 11.000
+
+Evaluation protocol
+------------------------------------------------------------------------
+Clean single-activity intervals only.
+Ground-truth intervals are half-open [start_sec, end_sec).
+Frame 1 is t=0; frame time = (frame - 1) / FPS.
+Missing primary-track frames are counted as incorrect.
+Composite/mixed ground-truth intervals are excluded.
+
+Overall results
+------------------------------------------------------------------------
+Evaluated GT frames: 2035
+Missing primary-track frames: 18
+Primary-track coverage: 99.12%
+Strict frame accuracy: 50.22%
+Macro-F1: 42.43%
+Balanced accuracy: 44.14%
+Boundary-tolerant accuracy (±0.50s excluded): 50.77%
+Boundary-tolerant evaluated frames: 1881
+
+Per-class results
+------------------------------------------------------------------------
+walking              P= 59.33%  R= 57.83%  F1= 58.57%  support=517
+standing             P= 39.04%  R= 26.26%  F1= 31.40%  support=495
+idle                 P= 35.75%  R= 68.01%  F1= 46.87%  support=297
+bending              P=  0.00%  R=  0.00%  F1=  0.00%  support=11
+carrying             P= 53.85%  R= 59.66%  F1= 56.60%  support=176
+material_handling    P= 72.04%  R= 53.06%  F1= 61.11%  support=539
+
+Notes
+------------------------------------------------------------------------
+Bending has very limited clean support (1 second in the current ground truth), so its metric should be interpreted cautiously.
+Material handling is evaluated as the final semantic activity; the lower-level raw/smoothed activities remain available in the frame-results CSV for diagnostic comparison.
+This script intentionally does not force composite/mixed intervals into a single ground-truth class.
