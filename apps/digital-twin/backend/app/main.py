@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 
 from .models import (
     ActivityState,
@@ -16,6 +17,14 @@ from .websocket_manager import websocket_manager
 app = FastAPI(
     title="Workforce Digital Twin API",
     version="0.1.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
 )
 
 Base.metadata.create_all(bind=engine)
@@ -92,14 +101,26 @@ def worker_history(
 
 @app.post("/workers", response_model=WorkerState)
 async def update_worker(worker: WorkerState):
+    previous_worker = worker_state_manager.get_worker(
+        worker.worker_id
+    )
+
     saved_worker = worker_state_manager.set_worker(worker)
 
-    save_worker_event(saved_worker)
+    activity_changed = (
+        previous_worker is None
+        or previous_worker.activity.display_activity
+        != saved_worker.activity.display_activity
+    )
+
+    if activity_changed:
+        save_worker_event(saved_worker)
 
     await websocket_manager.broadcast(
         {
             "type": "worker_update",
             "worker": saved_worker.model_dump(mode="json"),
+            "activity_changed": activity_changed,
         }
     )
 
@@ -136,4 +157,3 @@ def create_demo_worker():
     )
 
     worker_state_manager.set_worker(demo_worker)
-
