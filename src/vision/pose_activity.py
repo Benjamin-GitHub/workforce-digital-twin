@@ -276,10 +276,6 @@ def main():
             "max_walking_ratio",
             0.75,
         ),
-        min_completed_bending_cycles=material_config.get(
-            "min_completed_bending_cycles",
-            1,
-        ),
         stationary_max_velocity=material_config.get(
             "stationary_max_velocity",
             0.05,
@@ -659,7 +655,6 @@ def main():
                         "standing_idle_ratio": 0.0,
                         "mean_wrist_motion": 0.0,
                         "mean_wrist_hip_distance": 0.0,
-                        "completed_bending_cycles": 0,
                     }
 
                 material_handling = material_state[
@@ -755,7 +750,6 @@ def main():
                     int(material_state["stationary_detected"]),
                     material_state["standing_idle_ratio"],
                     material_state["mean_wrist_hip_distance"],
-                    material_state["completed_bending_cycles"],
                 ])
                 
             # ------------------------------------------
