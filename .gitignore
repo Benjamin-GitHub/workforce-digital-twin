@@ -29,3 +29,4 @@ outputs/
 
 # Operating system files
 .DS_Store
+apps/digital-twin/backend/data/
