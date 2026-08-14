@@ -13,6 +13,9 @@ from src.activity.temporal_buffer import TemporalPoseBuffer
 from src.activity.feature_extractor import extract_pose_features
 from src.activity.activity_classifier import ActivityClassifier
 from src.activity.state_smoother import StateSmoother
+from src.activity.material_handling_detector import (
+    MaterialHandlingDetector,
+)
 
 
 def load_config(path):
@@ -103,6 +106,10 @@ def main():
     temporal_config = config.get("temporal", {})
     activity_config = config.get("activity", {})
     smoothing_config = config.get("smoothing", {})
+    material_config = config.get(
+        "material_handling",
+        {},
+    )
 
     imgsz = pose_config.get("imgsz", 320)
     pose_conf = pose_config.get("confidence", 0.35)
@@ -236,6 +243,68 @@ def main():
     )
 
     # --------------------------------------------------
+    # Material-handling detector
+    # --------------------------------------------------
+
+    material_enabled = material_config.get(
+        "enabled",
+        True,
+    )
+
+    material_detector = MaterialHandlingDetector(
+        window_size=material_config.get(
+            "window_size",
+            33,
+        ),
+        min_frames=material_config.get(
+            "min_frames",
+            20,
+        ),
+        min_wrist_motion=material_config.get(
+            "min_wrist_motion",
+            0.10,
+        ),
+        min_bending_ratio=material_config.get(
+            "min_bending_ratio",
+            0.12,
+        ),
+        min_active_state_ratio=material_config.get(
+            "min_active_state_ratio",
+            0.35,
+        ),
+        max_walking_ratio=material_config.get(
+            "max_walking_ratio",
+            0.75,
+        ),
+        min_completed_bending_cycles=material_config.get(
+            "min_completed_bending_cycles",
+            1,
+        ),
+        stationary_max_velocity=material_config.get(
+            "stationary_max_velocity",
+            0.05,
+        ),
+        stationary_min_wrist_motion=material_config.get(
+            "stationary_min_wrist_motion",
+            0.05,
+        ),
+        stationary_min_wrist_hip_distance=
+            material_config.get(
+                "stationary_min_wrist_hip_distance",
+                0.50,
+            ),
+        stationary_min_standing_idle_ratio=
+            material_config.get(
+                "stationary_min_standing_idle_ratio",
+                0.60,
+            ),
+        stationary_max_bending_ratio=material_config.get(
+            "stationary_max_bending_ratio",
+            0.10,
+        ),
+    )
+
+    # --------------------------------------------------
     # Open video source
     # --------------------------------------------------
 
@@ -325,6 +394,9 @@ def main():
         "track_id",
         "raw_activity",
         "smoothed_activity",
+        "semantic_activity",
+        "material_handling",
+        "material_confidence",
         "confidence",
         "velocity",
         "ankle_motion",
@@ -332,6 +404,14 @@ def main():
         "wrist_hip_distance",
         "torso_angle",
         "knee_angle",
+        "mh_bending_ratio",
+        "mh_walking_ratio",
+        "mh_active_ratio",
+        "mh_wrist_motion",
+        "mh_pickup",
+        "mh_stationary",
+        "mh_standing_idle_ratio",
+        "mh_wrist_hip_distance",
     ])
 
     # --------------------------------------------------
@@ -358,6 +438,7 @@ def main():
 
             buffer.remove(stale_id)
             smoother.remove(stale_id)
+            material_detector.remove(stale_id)
 
             del last_seen[stale_id]
 
@@ -554,15 +635,62 @@ def main():
                 )
 
                 # --------------------------------------
-                # Draw SMOOTHED activity label
+                # Higher-level semantic activity
+                # --------------------------------------
+
+                if material_enabled:
+                    material_state = material_detector.update(
+                        track_id=track_id,
+                        activity=raw_activity,
+                        wrist_motion=wrist_motion,
+                        wrist_hip_distance=wrist_hip_distance,
+                        torso_angle=torso_angle,
+                        velocity=velocity,
+                    )
+                else:
+                    material_state = {
+                        "detected": False,
+                        "pickup_detected": False,
+                        "stationary_detected": False,
+                        "confidence": 0.0,
+                        "bending_ratio": 0.0,
+                        "walking_ratio": 0.0,
+                        "active_state_ratio": 0.0,
+                        "standing_idle_ratio": 0.0,
+                        "mean_wrist_motion": 0.0,
+                        "mean_wrist_hip_distance": 0.0,
+                        "completed_bending_cycles": 0,
+                    }
+
+                material_handling = material_state[
+                    "detected"
+                ]
+
+                material_confidence = material_state[
+                    "confidence"
+                ]
+
+                if material_handling:
+                    semantic_activity = "material_handling"
+                else:
+                    semantic_activity = smoothed_activity
+
+                display_activity = semantic_activity
+
+                # --------------------------------------
+                # Draw semantic activity label
                 # --------------------------------------
 
                 draw_activity(
                     annotated,
                     box,
                     track_id,
-                    smoothed_activity,
-                    confidence,
+                    display_activity,
+                    (
+                        material_confidence
+                        if material_handling
+                        else confidence
+                    ),
                 )
 
                 # --------------------------------------
@@ -586,6 +714,9 @@ def main():
                     f"ID={track_id} "
                     f"raw={raw_activity} "
                     f"smooth={smoothed_activity} "
+                    f"semantic={semantic_activity} "
+                    f"mh={int(material_handling)} "
+                    f"mh_conf={material_confidence:.2f} "
                     f"conf={confidence:.2f} "
                     f"velocity={velocity:.3f} "
                     f"ankle={ankle_motion:.3f} "
@@ -606,6 +737,9 @@ def main():
                     track_id,
                     raw_activity,
                     smoothed_activity,
+                    semantic_activity,
+                    int(material_handling),
+                    material_confidence,
                     confidence,
                     velocity,
                     ankle_motion,
@@ -613,6 +747,15 @@ def main():
                     wrist_hip_distance,
                     torso_angle,
                     knee_angle,
+                    material_state["bending_ratio"],
+                    material_state["walking_ratio"],
+                    material_state["active_state_ratio"],
+                    material_state["mean_wrist_motion"],
+                    int(material_state["pickup_detected"]),
+                    int(material_state["stationary_detected"]),
+                    material_state["standing_idle_ratio"],
+                    material_state["mean_wrist_hip_distance"],
+                    material_state["completed_bending_cycles"],
                 ])
                 
             # ------------------------------------------

@@ -29,3 +29,20 @@ smoothing:
   window_size: 5
   required_votes: 3
   transition_frames: 3
+
+material_handling:
+  enabled: true
+
+  window_size: 33
+  min_frames: 20
+
+  min_wrist_motion: 0.10
+  min_bending_ratio: 0.12
+  min_active_state_ratio: 0.35
+  max_walking_ratio: 0.75
+  
+  stationary_max_velocity: 0.05
+  stationary_min_wrist_motion: 0.05
+  stationary_min_wrist_hip_distance: 0.50
+  stationary_min_standing_idle_ratio: 0.60
+  stationary_max_bending_ratio: 0.10
