@@ -16,6 +16,7 @@ from src.activity.state_smoother import StateSmoother
 from src.activity.material_handling_detector import (
     MaterialHandlingDetector,
 )
+from src.digital_twin.publisher import WorkerStatePublisher, build_worker_state
 
 
 def load_config(path):
@@ -94,7 +95,31 @@ def main():
         help="Show live OpenCV window",
     )
 
+    parser.add_argument(
+        "--publish-digital-twin",
+        action="store_true",
+        help="Publish live activity states to the Digital Twin API (disabled by default)",
+    )
+
+    parser.add_argument(
+        "--digital-twin-api-url",
+        default="http://127.0.0.1:8000",
+        help="Digital Twin FastAPI base URL (default: %(default)s)",
+    )
+
+    parser.add_argument("--worker-id", default="worker01")
+    parser.add_argument("--camera-id", default="raspberry_pi_pose_01")
+    parser.add_argument(
+        "--digital-twin-publish-interval",
+        type=float,
+        default=1.0,
+        help="Minimum seconds between queued worker updates (default: %(default)s)",
+    )
+
     args = parser.parse_args()
+
+    if args.digital_twin_publish_interval <= 0:
+        parser.error("--digital-twin-publish-interval must be positive")
 
     # --------------------------------------------------
     # Load configuration
@@ -417,6 +442,16 @@ def main():
     last_seen = {}
     frame_number = 0
     start_time = time.time()
+    digital_twin_publisher = None
+    if args.publish_digital_twin:
+        digital_twin_publisher = WorkerStatePublisher(
+            api_url=args.digital_twin_api_url,
+            interval=args.digital_twin_publish_interval,
+        )
+        print(
+            "Digital Twin publishing enabled: "
+            f"{args.digital_twin_api_url.rstrip('/')}/workers"
+        )
     
     def cleanup_stale_tracks():
         stale_track_ids = []
@@ -751,6 +786,30 @@ def main():
                     material_state["standing_idle_ratio"],
                     material_state["mean_wrist_hip_distance"],
                 ])
+
+                # Queue only the newest state; HTTP runs outside the inference loop.
+                if digital_twin_publisher is not None:
+                    activity_confidence = (
+                        material_confidence
+                        if material_handling
+                        else confidence
+                    )
+                    runtime_seconds = time.time() - start_time
+                    processing_fps = (
+                        frame_number / runtime_seconds
+                        if runtime_seconds > 0
+                        else None
+                    )
+                    digital_twin_publisher.submit(
+                        build_worker_state(
+                            worker_id=args.worker_id,
+                            track_id=track_id,
+                            camera_id=args.camera_id,
+                            activity=display_activity,
+                            confidence=activity_confidence,
+                            fps=processing_fps,
+                        )
+                    )
                 
             # ------------------------------------------
             # Remove stale track histories
@@ -796,6 +855,8 @@ def main():
         cap.release()
         writer.release()
         csv_file.close()
+        if digital_twin_publisher is not None:
+            digital_twin_publisher.close()
         cv2.destroyAllWindows()
 
     # --------------------------------------------------
