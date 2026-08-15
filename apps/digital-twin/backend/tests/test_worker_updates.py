@@ -3,14 +3,16 @@ import unittest
 from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
-from app.main import get_worker_pose, update_worker
+from app.main import get_stgcn_sequence_diagnostic, get_worker_pose, update_worker
 from app.models import ActivityState, PoseKeypoint, PoseState, WorkerState
 from app.state import worker_state_manager
+from app.stgcn import temporal_pose_buffer
 
 
 class WorkerUpdateTests(unittest.TestCase):
     def setUp(self):
         worker_state_manager._workers.clear()
+        temporal_pose_buffer.clear()
 
     @staticmethod
     def worker(activity: str) -> WorkerState:
@@ -50,6 +52,30 @@ class WorkerUpdateTests(unittest.TestCase):
 
         self.assertEqual(save_event.call_count, 1)
         self.assertEqual(get_worker_pose("transition-test").frame_number, 12)
+        self.assertEqual(
+            temporal_pose_buffer.diagnostic("transition-test").frames_collected, 1
+        )
+
+    @patch("app.main.websocket_manager.broadcast", new_callable=AsyncMock)
+    @patch("app.main.save_worker_event")
+    def test_diagnostic_endpoint_reports_ready_shape(self, _save_event, _broadcast):
+        worker = self.worker("walking")
+        for frame_number in range(32):
+            worker.pose = PoseState(
+                frame_number=frame_number,
+                captured_at=datetime.now(timezone.utc),
+                image_width=640,
+                image_height=480,
+                keypoints=[
+                    PoseKeypoint(x=i, y=i + 1, confidence=0.9)
+                    for i in range(17)
+                ],
+            )
+            asyncio.run(update_worker(worker))
+
+        diagnostic = get_stgcn_sequence_diagnostic("transition-test")
+        self.assertTrue(diagnostic.ready)
+        self.assertEqual(diagnostic.tensor_shape, [1, 3, 32, 17, 1])
 
 
 if __name__ == "__main__":

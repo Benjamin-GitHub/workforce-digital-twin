@@ -13,6 +13,7 @@ from .database import Base, engine
 from .db_models import WorkerEvent
 from .history import get_worker_history, save_worker_event
 from .websocket_manager import websocket_manager
+from .stgcn import temporal_pose_buffer
 
 app = FastAPI(
     title="Workforce Digital Twin API",
@@ -88,6 +89,13 @@ def get_worker_pose(worker_id: str):
     return worker.pose
 
 
+@app.get("/workers/{worker_id}/stgcn-sequence")
+def get_stgcn_sequence_diagnostic(worker_id: str):
+    if worker_state_manager.get_worker(worker_id) is None:
+        raise HTTPException(status_code=404, detail=f"Worker '{worker_id}' not found")
+    return temporal_pose_buffer.diagnostic(worker_id)
+
+
 @app.get("/workers/{worker_id}/history")
 def worker_history(
     worker_id: str,
@@ -119,6 +127,9 @@ async def update_worker(worker: WorkerState):
     )
 
     saved_worker = worker_state_manager.set_worker(worker)
+
+    if saved_worker.pose is not None:
+        temporal_pose_buffer.add(saved_worker.worker_id, saved_worker.pose)
 
     activity_changed = (
         previous_worker is None
