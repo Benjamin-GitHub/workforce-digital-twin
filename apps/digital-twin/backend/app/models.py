@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
@@ -33,6 +33,39 @@ class EdgeState(BaseModel):
     throttled: bool = False
 
 
+class Vector3(BaseModel):
+    x: float
+    y: float
+    z: float
+
+
+class MobileLocation(BaseModel):
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    accuracy_m: Optional[float] = Field(default=None, ge=0.0)
+    gps_enabled: bool = False
+    permission_state: str = "unknown"
+    zone: Optional[str] = None
+
+
+class MobileTelemetry(BaseModel):
+    worker_id: str
+    device_id: str
+    mqtt_client_id: Optional[str] = None
+    source: Literal["android"] = "android"
+    timestamp: datetime
+    received_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    last_seen: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    connection_state: Literal["connected", "stale", "disconnected"] = "connected"
+    age_s: float = Field(default=0.0, ge=0.0)
+    accelerometer: Vector3
+    gyroscope: Vector3
+    location: MobileLocation = Field(default_factory=MobileLocation)
+    battery_level: Optional[float] = Field(default=None, ge=0.0, le=100.0)
+    association_method: Literal["manual_pairing", "configured"] = "configured"
+    association_confidence: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+
+
 class PoseKeypoint(BaseModel):
     """One COCO keypoint in original image-space pixel coordinates."""
 
@@ -63,3 +96,4 @@ class WorkerState(BaseModel):
     activity: ActivityState = Field(default_factory=ActivityState)
     edge: EdgeState = Field(default_factory=EdgeState)
     pose: Optional[PoseState] = None
+    mobile: Optional[MobileTelemetry] = None

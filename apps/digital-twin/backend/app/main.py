@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -14,11 +15,29 @@ from .db_models import WorkerEvent
 from .history import get_worker_history, save_worker_event
 from .websocket_manager import websocket_manager
 from .stgcn import stgcn_service, temporal_pose_buffer
+from .mqtt_mobile import MobileMqttSubscriber
 
 app = FastAPI(
     title="Workforce Digital Twin API",
     version="0.1.0",
 )
+main_loop = None
+
+
+def accept_mobile_telemetry(mobile):
+    worker = worker_state_manager.set_mobile(mobile.worker_id, mobile)
+    if main_loop is not None:
+        asyncio.run_coroutine_threadsafe(
+            websocket_manager.broadcast({
+                "type": "worker_update",
+                "worker": worker.model_dump(mode="json"),
+                "activity_changed": False,
+            }),
+            main_loop,
+        )
+
+
+mobile_mqtt_subscriber = MobileMqttSubscriber(accept_mobile_telemetry)
 
 app.add_middleware(
     CORSMiddleware,
@@ -94,6 +113,14 @@ def get_worker_pose(worker_id: str):
     return worker.pose
 
 
+@app.get("/workers/{worker_id}/mobile")
+def get_worker_mobile(worker_id: str):
+    worker = worker_state_manager.get_worker(worker_id)
+    if worker is None or worker.mobile is None:
+        raise HTTPException(status_code=404, detail=f"Worker '{worker_id}' has no mobile telemetry")
+    return worker.mobile
+
+
 @app.get("/workers/{worker_id}/stgcn-sequence")
 def get_stgcn_sequence_diagnostic(worker_id: str):
     if worker_state_manager.get_worker(worker_id) is None:
@@ -146,6 +173,7 @@ async def update_worker(worker: WorkerState):
     if previous_worker is not None:
         worker.activity.stgcn = previous_worker.activity.stgcn
         worker.activity.stgcn_confidence = previous_worker.activity.stgcn_confidence
+        worker.mobile = previous_worker.mobile
 
     saved_worker = worker_state_manager.set_worker(worker)
 
@@ -181,6 +209,18 @@ async def update_worker(worker: WorkerState):
 @app.on_event("startup")
 def load_stgcn_model():
     stgcn_service.load()
+
+
+@app.on_event("startup")
+async def start_mobile_mqtt():
+    global main_loop
+    main_loop = asyncio.get_running_loop()
+    mobile_mqtt_subscriber.start()
+
+
+@app.on_event("shutdown")
+def stop_mobile_mqtt():
+    mobile_mqtt_subscriber.stop()
 
 
 @app.on_event("startup")

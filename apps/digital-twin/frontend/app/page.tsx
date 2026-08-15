@@ -8,6 +8,14 @@ type Worker = {
   ppe: Record<"helmet" | "vest" | "gloves" | "boots", boolean | null>;
   activity: { baseline: string; baseline_confidence: number; stgcn: string; stgcn_confidence: number; display_activity: string };
   edge: { fps: number | null; cpu_temperature: number | null; throttled: boolean };
+  mobile?: {
+    device_id: string; mqtt_client_id: string | null; timestamp: string; last_seen: string;
+    connection_state: "connected" | "stale" | "disconnected"; age_s: number;
+    accelerometer: { x: number; y: number; z: number };
+    gyroscope: { x: number; y: number; z: number };
+    location: { latitude: number | null; longitude: number | null; accuracy_m: number | null; gps_enabled: boolean; permission_state: string; zone: string | null };
+    battery_level: number | null; association_method: string; association_confidence: number | null;
+  } | null;
 };
 type HistoryEvent = { id: number; worker_id: string; timestamp: string; activity: string; activity_confidence: number; track_id: number | null; camera_id: string | null };
 type ModelStatus = { loaded: boolean; device: string | null; window_size: number; error: string | null };
@@ -16,17 +24,28 @@ type Connection = "connecting" | "connected" | "disconnected";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? API_URL.replace(/^http/, "ws") + "/ws";
 const STALE_SECONDS = Number(process.env.NEXT_PUBLIC_STALE_SECONDS ?? 10);
+const MOBILE_STALE_SECONDS = Number(process.env.NEXT_PUBLIC_MOBILE_STALE_SECONDS ?? 5);
+const MOBILE_DISCONNECTED_SECONDS = Number(process.env.NEXT_PUBLIC_MOBILE_DISCONNECTED_SECONDS ?? 30);
 const activityColors: Record<string, string> = { walking: "#35d49a", carrying: "#f5a55b", material_handling: "#a985ed", bending: "#ef7272", standing: "#65a8f5", idle: "#82908c", unknown: "#82908c" };
 const label = (value?: string) => (value ?? "unknown").replaceAll("_", " ");
 const percent = (value?: number) => `${Math.round((value ?? 0) * 100)}%`;
 const clock = (value: string) => new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(new Date(value));
 const duration = (seconds: number) => seconds < 60 ? `${Math.max(0, Math.round(seconds))}s` : `${Math.floor(seconds / 60)}m ${Math.round(seconds % 60)}s`;
+const vector = (value?: { x: number; y: number; z: number }) => value ? `${value.x.toFixed(2)}, ${value.y.toFixed(2)}, ${value.z.toFixed(2)}` : "—";
 
 function freshness(worker: Worker, now: number) {
   const seconds = Math.max(0, (now - new Date(worker.timestamp).getTime()) / 1000);
   if (!worker.tracking.online) return { state: "offline", text: "Offline" };
   if (seconds > STALE_SECONDS) return { state: "stale", text: `Stale · ${duration(seconds)} ago` };
   return { state: "online", text: seconds < 1 ? "Updated now" : `${duration(seconds)} ago` };
+}
+
+function mobileConnection(worker: Worker | undefined, now: number) {
+  if (!worker?.mobile) return "not paired";
+  const age = Math.max(0, (now - new Date(worker.mobile.last_seen).getTime()) / 1000);
+  if (age > MOBILE_DISCONNECTED_SECONDS) return "disconnected";
+  if (age > MOBILE_STALE_SECONDS) return "stale";
+  return "connected";
 }
 
 function WorkerAvatar({ worker, stale }: { worker: Worker; stale: boolean }) {
@@ -85,6 +104,15 @@ export default function Home() {
       <div className="recognizer-heading"><span>ACTIVITY RECOGNISERS</span>{worker && worker.activity.baseline !== worker.activity.stgcn && <b>DISAGREEMENT</b>}</div><div className="recognizer-grid"><div><span>FROZEN BASELINE</span><strong>{label(worker?.activity.baseline)}</strong><div className="meter"><i style={{ width: percent(worker?.activity.baseline_confidence) }} /></div><small>{percent(worker?.activity.baseline_confidence)} confidence</small></div><div><span>ST-GCN</span><strong>{label(worker?.activity.stgcn)}</strong><div className="meter purple"><i style={{ width: percent(worker?.activity.stgcn_confidence) }} /></div><small>{percent(worker?.activity.stgcn_confidence)} confidence</small></div></div>
       <div className="model-row"><div><span>MODEL STATUS</span><strong>{model?.loaded ? "Loaded / ready" : "Unavailable"}</strong></div><div><span>DEVICE</span><strong>{model?.device?.toUpperCase() ?? "—"}</strong></div><div><span>WINDOW</span><strong>{model?.window_size ? `${model.window_size} frames` : "—"}</strong></div></div>
       <div className="telemetry"><div className="telemetry-main"><span>EDGE FRAME RATE</span><strong>{worker?.edge.fps != null ? worker.edge.fps.toFixed(1) : "—"}<small> FPS</small></strong></div><div><span>CPU TEMP</span><strong>{worker?.edge.cpu_temperature != null ? `${worker.edge.cpu_temperature.toFixed(1)}°C` : "—"}</strong></div><div><span>THROTTLED</span><strong className={worker?.edge.throttled ? "bad" : "good"}>{worker ? (worker.edge.throttled ? "YES" : "NO") : "—"}</strong></div></div>
+      <div className="recognizer-heading"><span>ANDROID SENSOR SOURCE</span><b>{mobileConnection(worker, now).toUpperCase()}</b></div>
+      <div className="mobile-grid">
+        <div><span>DEVICE</span><strong>{worker?.mobile ? `${worker.mobile.device_id.slice(0, 8)}…` : "—"}</strong><small>{worker?.mobile?.mqtt_client_id ?? "No MQTT client"}</small></div>
+        <div><span>ASSOCIATION</span><strong>{label(worker?.mobile?.association_method)}</strong><small>{worker?.mobile?.association_confidence != null ? `${percent(worker.mobile.association_confidence)} confidence` : "Explicit configuration"}</small></div>
+        <div><span>ACCEL X/Y/Z</span><strong>{vector(worker?.mobile?.accelerometer)}</strong><small>m/s²</small></div>
+        <div><span>GYRO X/Y/Z</span><strong>{vector(worker?.mobile?.gyroscope)}</strong><small>rad/s</small></div>
+        <div><span>GPS / ZONE</span><strong>{worker?.mobile?.location.latitude != null && worker.mobile.location.longitude != null ? `${worker.mobile.location.latitude.toFixed(5)}, ${worker.mobile.location.longitude.toFixed(5)}` : "No fix"}</strong><small>{worker?.mobile?.location.accuracy_m != null ? `±${worker.mobile.location.accuracy_m.toFixed(1)} m` : worker?.mobile?.location.permission_state ?? "—"}{worker?.mobile?.location.zone ? ` · ${worker.mobile.location.zone}` : ""}</small></div>
+        <div><span>LAST MOBILE UPDATE</span><strong>{worker?.mobile ? duration(Math.max(0, (now - new Date(worker.mobile.last_seen).getTime()) / 1000)) + " ago" : "—"}</strong><small>{worker?.mobile?.battery_level != null ? `Battery ${Math.round(worker.mobile.battery_level)}%` : "Battery unavailable"}</small></div>
+      </div>
     </aside></div>
     <section className="timeline-panel panel"><div className="panel-title"><div><span>RECENT HISTORY</span><h2>Activity timeline</h2></div><small>Recorded backend transitions only</small></div><ol className="timeline">{timeline.map((event, index) => <li key={event.id}><time>{clock(event.timestamp)}</time><i style={{ background: activityColors[event.activity] ?? activityColors.unknown }} /><div><strong>{label(event.activity)}</strong><small>{percent(event.activity_confidence)} confidence · {event.camera_id ?? "camera unknown"}</small></div><span>{index === 0 ? "CURRENT SEGMENT" : event.segmentDuration}</span></li>)}{!timeline.length && <li className="empty-copy">No activity transitions have been recorded for this worker.</li>}</ol></section>
   </section></main>;
