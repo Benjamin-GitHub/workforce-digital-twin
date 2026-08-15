@@ -1,0 +1,19 @@
+source_hz: 30.0
+target_hz: 11.0
+window_size: 32
+window_stride: 16
+# CML z is vertical; project source x,z into deployment x,y channels.
+projection_axes: [x, z]
+confidence_for_present_joint: 1.0
+minimum_valid_frames: 8
+
+# Exact live convention from apps/digital-twin/backend/STGCN_INPUT.md.
+layout: coco_17
+channels: [x, y, confidence]
+tensor_order: N,C,T,V,M
+
+# Confirmed from the downloaded CML v3 JSON files.
+label_keys: [label]
+source_keys: [data source, data_source]
+sample_keys: [source file, source_file]
+session_keys: [session, session_id, subject, subject_id, performer]

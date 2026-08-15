@@ -1,0 +1,7 @@
+actual/predicted,walking,standing,idle,bending,carrying,material_handling
+walking,642,0,0,6,0,11
+standing,0,23,13,0,0,0
+idle,0,8,28,0,0,0
+bending,1,0,0,78,0,0
+carrying,7,0,0,0,6,0
+material_handling,7,0,0,0,0,3

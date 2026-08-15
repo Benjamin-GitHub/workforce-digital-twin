@@ -31,3 +31,6 @@ outputs/
 .DS_Store
 apps/digital-twin/backend/data/
 .pnpm-store/
+training/stgcn/.venv/
+training/stgcn/data/
+training/stgcn/runs/
