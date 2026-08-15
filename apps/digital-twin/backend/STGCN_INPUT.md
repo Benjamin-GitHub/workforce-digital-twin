@@ -15,13 +15,18 @@ is retained as the third channel.
 
 The Mac backend buffers 32 newer, unique frames independently per worker. A
 ready sequence is prepared in the conventional ST-GCN `N,C,T,V,M` layout:
-`(1, 3, 32, 17, 1)`. This milestone does not load or train a model and does not
-modify baseline or display activity.
+`(1, 3, 32, 17, 1)`. Immediately before inference, eye/ear nodes 1-4 are zeroed
+and positive confidence values are binarized, matching local-video training.
+The checkpoint is loaded once at startup on MPS when available, otherwise CPU.
+Predictions update `activity.stgcn` and `activity.stgcn_confidence`; baseline and
+display activity remain unchanged.
 
 Diagnostic endpoint:
 
 ```text
 GET /workers/{worker_id}/stgcn-sequence
+GET /stgcn/status
+GET /workers/{worker_id}/stgcn-prediction
 ```
 
 Before 32 pose updates, `ready` is false and `tensor_shape` is null. At 32,

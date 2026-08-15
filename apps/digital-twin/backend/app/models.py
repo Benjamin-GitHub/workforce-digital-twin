@@ -56,6 +56,7 @@ class PoseState(BaseModel):
 class WorkerState(BaseModel):
     worker_id: str
     timestamp: datetime = Field(default_factory=datetime.now)
+    source: Literal["live", "replay"] = "live"
 
     tracking: TrackingState = Field(default_factory=TrackingState)
     ppe: PPEState = Field(default_factory=PPEState)

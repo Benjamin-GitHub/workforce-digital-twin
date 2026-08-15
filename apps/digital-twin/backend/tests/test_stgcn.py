@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime, timezone
 
 from app.models import PoseKeypoint, PoseState
-from app.stgcn import TemporalPoseBuffer, normalize_pose
+from app.stgcn import STGCNInferenceService, TemporalPoseBuffer, normalize_pose
 
 
 def pose(frame_number: int, offset_x: float = 0.0, scale: float = 1.0) -> PoseState:
@@ -60,6 +60,45 @@ class TemporalPoseBufferTests(unittest.TestCase):
         self.assertFalse(buffer.add("worker01", pose(10)))
         self.assertFalse(buffer.add("worker01", pose(9)))
         self.assertEqual(buffer.diagnostic("worker01").frames_collected, 1)
+
+
+class InferenceServiceTests(unittest.TestCase):
+    def test_training_time_face_mask_and_binary_confidence_are_applied(self):
+        import torch
+
+        class CapturingModel:
+            def __init__(self):
+                self.received = None
+
+            def __call__(self, tensor):
+                self.received = tensor.detach().cpu()
+                return torch.tensor([[0.0, 0.0, 0.0, 4.0, 0.0, 0.0]])
+
+        service = STGCNInferenceService()
+        service.model = CapturingModel()
+        service.device = torch.device("cpu")
+        service.classes = ["walking", "standing", "idle", "bending", "carrying", "material_handling"]
+        values = torch.full((1, 3, 32, 17, 1), 0.7).tolist()
+
+        result = service.predict("worker01", values)
+
+        self.assertEqual(result.activity, "bending")
+        self.assertGreater(result.confidence, 0.9)
+        self.assertTrue(torch.all(service.model.received[:, :, :, 1:5, :] == 0))
+        self.assertTrue(torch.all(service.model.received[:, 2, :, [0, *range(5, 17)], :] == 1))
+
+    def test_inference_error_is_contained(self):
+        import torch
+
+        class FailingModel:
+            def __call__(self, _tensor):
+                raise RuntimeError("test failure")
+
+        service = STGCNInferenceService()
+        service.model = FailingModel()
+        service.device = torch.device("cpu")
+        self.assertIsNone(service.predict("worker01", torch.zeros(1, 3, 32, 17, 1).tolist()))
+        self.assertIn("test failure", service.status()["error"])
 
 
 if __name__ == "__main__":

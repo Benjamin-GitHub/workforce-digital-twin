@@ -19,7 +19,11 @@ pnpm run dev
 ```
 
 Open `http://localhost:3000`. To use another backend URL, copy `.env.example`
-to `.env.local` and update `NEXT_PUBLIC_API_URL`.
+to `.env.local` and update the API/WebSocket URLs. `NEXT_PUBLIC_STALE_SECONDS`
+controls when an online worker is visibly marked stale (10 seconds by default).
+
+The backend-created seed worker is explicitly labelled `REPLAY`; edge payloads
+that omit `source` retain the worker-state default of `LIVE`.
 
 ## Useful Commands
 

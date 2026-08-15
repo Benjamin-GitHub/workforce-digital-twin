@@ -3,172 +3,89 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type Worker = {
-  worker_id: string;
-  timestamp: string;
+  worker_id: string; timestamp: string; source?: "live" | "replay";
   tracking: { track_id: number | null; camera_id: string | null; online: boolean };
   ppe: Record<"helmet" | "vest" | "gloves" | "boots", boolean | null>;
   activity: { baseline: string; baseline_confidence: number; stgcn: string; stgcn_confidence: number; display_activity: string };
   edge: { fps: number | null; cpu_temperature: number | null; throttled: boolean };
 };
-
-type HistoryEvent = {
-  id: number; worker_id: string; timestamp: string; activity: string;
-  activity_confidence: number; track_id: number | null; camera_id: string | null;
-};
+type HistoryEvent = { id: number; worker_id: string; timestamp: string; activity: string; activity_confidence: number; track_id: number | null; camera_id: string | null };
+type ModelStatus = { loaded: boolean; device: string | null; window_size: number; error: string | null };
+type Connection = "connecting" | "connected" | "disconnected";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
-const WS_URL = API_URL.replace(/^http/, "ws") + "/ws";
-const activityColors: Record<string, string> = {
-  walking: "#0f6b50", carrying: "#b76020", material_handling: "#7b54a3",
-  bending: "#b14444", standing: "#3e6ea7", idle: "#78817d", unknown: "#9aa39f",
-};
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? API_URL.replace(/^http/, "ws") + "/ws";
+const STALE_SECONDS = Number(process.env.NEXT_PUBLIC_STALE_SECONDS ?? 10);
+const activityColors: Record<string, string> = { walking: "#35d49a", carrying: "#f5a55b", material_handling: "#a985ed", bending: "#ef7272", standing: "#65a8f5", idle: "#82908c", unknown: "#82908c" };
+const label = (value?: string) => (value ?? "unknown").replaceAll("_", " ");
+const percent = (value?: number) => `${Math.round((value ?? 0) * 100)}%`;
+const clock = (value: string) => new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(new Date(value));
+const duration = (seconds: number) => seconds < 60 ? `${Math.max(0, Math.round(seconds))}s` : `${Math.floor(seconds / 60)}m ${Math.round(seconds % 60)}s`;
 
-function confidence(worker: Worker) {
-  return Math.max(worker.activity.baseline_confidence, worker.activity.stgcn_confidence);
+function freshness(worker: Worker, now: number) {
+  const seconds = Math.max(0, (now - new Date(worker.timestamp).getTime()) / 1000);
+  if (!worker.tracking.online) return { state: "offline", text: "Offline" };
+  if (seconds > STALE_SECONDS) return { state: "stale", text: `Stale · ${duration(seconds)} ago` };
+  return { state: "online", text: seconds < 1 ? "Updated now" : `${duration(seconds)} ago` };
 }
 
-function timeLabel(value: string) {
-  return new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(new Date(value));
+function WorkerAvatar({ worker, stale }: { worker: Worker; stale: boolean }) {
+  const helmet = worker.ppe.helmet; const vest = worker.ppe.vest;
+  return <div className={`body-visual ${stale ? "is-stale" : ""}`} aria-label={`Worker schematic. Helmet ${helmet === true ? "detected" : helmet === false ? "missing" : "unknown"}; vest ${vest === true ? "detected" : vest === false ? "missing" : "unknown"}.`}>
+    <div className={`hard-hat ${helmet === true ? "detected" : helmet === false ? "missing" : "unknown"}`}><span>HELMET</span></div><div className="figure-head" />
+    <div className="figure-body"><div className={`safety-vest ${vest === true ? "detected" : vest === false ? "missing" : "unknown"}`}><i /><span>VEST</span></div></div>
+    <div className="figure-arm left" /><div className="figure-arm right" /><div className="figure-leg left" /><div className="figure-leg right" /><div className="floor-shadow" />
+  </div>;
 }
 
-function durationLabel(seconds: number) {
-  if (seconds < 60) return `${Math.max(0, Math.round(seconds))}s`;
-  return `${Math.floor(seconds / 60)}m ${Math.round(seconds % 60)}s`;
+function PPEItem({ name, value, reliable }: { name: string; value: boolean | null; reliable: boolean }) {
+  const state = value === true ? "detected" : value === false ? "missing" : "na";
+  const text = reliable ? (value === true ? "Detected" : value === false ? "Missing" : "Not assessed") : (value == null ? "N/A · experimental" : `${value ? "Detected" : "Not detected"} · low confidence`);
+  return <div className={`ppe-row ${state}`}><span className="ppe-icon">{value === true ? "✓" : value === false ? "!" : "—"}</span><div><strong>{name}</strong><small>{text}</small></div>{reliable && <b>PRIMARY</b>}</div>;
 }
 
 export default function Home() {
-  const [workers, setWorkers] = useState<Worker[]>([]);
-  const [selectedId, setSelectedId] = useState("worker01");
-  const [history, setHistory] = useState<HistoryEvent[]>([]);
-  const [connection, setConnection] = useState<"connecting" | "live" | "offline">("connecting");
-  const [error, setError] = useState<string | null>(null);
-
+  const [workers, setWorkers] = useState<Worker[]>([]); const [selectedId, setSelectedId] = useState("worker01");
+  const [history, setHistory] = useState<HistoryEvent[]>([]); const [model, setModel] = useState<ModelStatus | null>(null);
+  const [connection, setConnection] = useState<Connection>("connecting"); const [error, setError] = useState<string | null>(null); const [now, setNow] = useState(0);
   const worker = workers.find((item) => item.worker_id === selectedId) ?? workers[0];
+  const workerId = worker?.worker_id;
+  const loadHistory = useCallback(async (id: string) => { const response = await fetch(`${API_URL}/workers/${encodeURIComponent(id)}/history?limit=12`); if (!response.ok) throw new Error("History unavailable"); setHistory(await response.json()); }, []);
 
-  const loadHistory = useCallback(async (workerId: string) => {
-    const response = await fetch(`${API_URL}/workers/${encodeURIComponent(workerId)}/history?limit=12`);
-    if (!response.ok) throw new Error("History could not be loaded");
-    setHistory(await response.json());
+  useEffect(() => {
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    Promise.all([fetch(`${API_URL}/workers`), fetch(`${API_URL}/stgcn/status`)]).then(async ([workersResponse, statusResponse]) => {
+      if (!workersResponse.ok) throw new Error("Backend unavailable"); const data: Worker[] = await workersResponse.json();
+      setWorkers(data); setModel(statusResponse.ok ? await statusResponse.json() : null); setSelectedId((current) => data.length && !data.some((item) => item.worker_id === current) ? data[0].worker_id : current); setError(null);
+    }).catch(() => setError(`Backend unavailable at ${API_URL}`)); return () => clearInterval(timer);
   }, []);
-
+  useEffect(() => { if (!workerId) return; void Promise.resolve().then(() => loadHistory(workerId)).catch(() => setError("Activity history is temporarily unavailable")); }, [workerId, loadHistory]);
   useEffect(() => {
-    let active = true;
-    fetch(`${API_URL}/workers`)
-      .then((response) => { if (!response.ok) throw new Error("Backend unavailable"); return response.json(); })
-      .then((data: Worker[]) => {
-        if (!active) return;
-        setWorkers(data);
-        if (data.length && !data.some((item) => item.worker_id === selectedId)) setSelectedId(data[0].worker_id);
-        setError(null);
-      })
-      .catch(() => active && setError(`Start the Digital Twin API at ${API_URL}`));
-    return () => { active = false; };
-  }, [selectedId]);
+    let socket: WebSocket | null = null; let retry: ReturnType<typeof setTimeout> | undefined; let stopped = false;
+    const connect = () => { setConnection("connecting"); socket = new WebSocket(WS_URL); socket.onopen = () => setConnection("connected");
+      socket.onmessage = (event) => { try { const message = JSON.parse(event.data); if (message.type !== "worker_update") return; const incoming = message.worker as Worker; setWorkers((current) => [...current.filter((item) => item.worker_id !== incoming.worker_id), incoming]); setError(null); if (message.activity_changed) loadHistory(incoming.worker_id).catch(() => undefined); } catch { setError("A malformed live update was ignored"); } };
+      socket.onclose = () => { setConnection("disconnected"); if (!stopped) retry = setTimeout(connect, 2500); }; socket.onerror = () => socket?.close(); };
+    connect(); return () => { stopped = true; clearTimeout(retry); socket?.close(); };
+  }, [loadHistory]);
 
-  useEffect(() => {
-    if (!worker) return;
-    loadHistory(worker.worker_id).catch(() => setError("Activity history is temporarily unavailable"));
-  }, [worker?.worker_id, loadHistory]);
+  const fresh = worker ? freshness(worker, now) : { state: "offline", text: "No worker data" }; const source = (worker?.source ?? "live").toUpperCase();
+  const timeline = useMemo(() => history.map((event, index) => { const end = index === 0 ? worker?.timestamp : history[index - 1]?.timestamp; const seconds = end ? (new Date(end).getTime() - new Date(event.timestamp).getTime()) / 1000 : 0; return { ...event, segmentDuration: duration(seconds) }; }), [history, worker?.timestamp]);
 
-  useEffect(() => {
-    let socket: WebSocket | null = null;
-    let retry: ReturnType<typeof setTimeout> | null = null;
-    let stopped = false;
-    const connect = () => {
-      setConnection("connecting");
-      socket = new WebSocket(WS_URL);
-      socket.onopen = () => setConnection("live");
-      socket.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        if (message.type !== "worker_update") return;
-        const incoming = message.worker as Worker;
-        setWorkers((current) => [...current.filter((item) => item.worker_id !== incoming.worker_id), incoming]);
-        setError(null);
-        if (message.activity_changed && incoming.worker_id === selectedId) loadHistory(incoming.worker_id).catch(() => undefined);
-      };
-      socket.onclose = () => {
-        setConnection("offline");
-        if (!stopped) retry = setTimeout(connect, 2500);
-      };
-      socket.onerror = () => socket?.close();
-    };
-    connect();
-    return () => { stopped = true; if (retry) clearTimeout(retry); socket?.close(); };
-  }, [loadHistory, selectedId]);
-
-  const timeline = useMemo(() => history.map((event, index) => {
-    const newer = history[index - 1];
-    const seconds = newer ? (new Date(newer.timestamp).getTime() - new Date(event.timestamp).getTime()) / 1000 : worker ? (new Date(worker.timestamp).getTime() - new Date(event.timestamp).getTime()) / 1000 : 0;
-    return { ...event, duration: durationLabel(seconds) };
-  }), [history, worker]);
-
-  const conf = worker ? confidence(worker) : 0;
-  return (
-    <main className="dashboard-shell">
-      <aside className="sidebar">
-        <div className="brand-mark" aria-hidden="true">DT</div>
-        <div><p className="eyebrow">Workforce Intelligence</p><h1>Digital Twin</h1></div>
-        <nav aria-label="Dashboard navigation">
-          <a className="nav-item active" href="#overview">Overview</a>
-          <a className="nav-item" href="#timeline">Activity timeline</a>
-          <a className="nav-item" href="#edge">Edge telemetry</a>
-        </nav>
-        <div className="sidebar-foot">
-          <span className={`status-dot ${connection}`} />
-          <div><strong>{connection === "live" ? "Live system" : connection === "connecting" ? "Connecting" : "Offline"}</strong><small>{connection === "live" ? "Streaming worker state" : "Waiting for backend"}</small></div>
-        </div>
-      </aside>
-
-      <section className="workspace" id="overview">
-        <header className="topbar">
-          <div><p className="eyebrow">Operations overview</p><h2>Worker monitoring</h2><p className="subtitle">Real-time activity, compliance and edge performance.</p></div>
-          <div className={`live-pill ${connection}`}><span className={`status-dot ${connection}`} /> {connection}</div>
-        </header>
-
-        {workers.length > 1 && <div className="worker-tabs" aria-label="Select worker">{workers.map((item) => <button className={item.worker_id === worker?.worker_id ? "selected" : ""} key={item.worker_id} onClick={() => setSelectedId(item.worker_id)}>{item.worker_id}</button>)}</div>}
-        {error && <div className="notice" role="status">{error}</div>}
-
-        <div className="hero-grid">
-          <article className="worker-card">
-            <div className="worker-heading">
-              <div className="avatar">{worker?.worker_id.slice(-2).toUpperCase() ?? "--"}</div>
-              <div><p className="eyebrow">Tracked worker</p><h3>{worker?.worker_id ?? "Awaiting data"}</h3></div>
-              <span className={`online-badge ${worker?.tracking.online ? "" : "is-offline"}`}>{worker?.tracking.online ? "Online" : "Offline"}</span>
-            </div>
-            <div className="activity-panel" style={{ "--activity-color": activityColors[worker?.activity.display_activity ?? "unknown"] } as React.CSSProperties}>
-              <p>Current activity</p>
-              <strong>{worker?.activity.display_activity.replaceAll("_", " ") ?? "Unknown"}</strong>
-              <span>{Math.round(conf * 100)}% confidence</span>
-              <div className="confidence-track" aria-label={`${Math.round(conf * 100)} percent confidence`}><i style={{ width: `${conf * 100}%` }} /></div>
-            </div>
-            <div className="worker-meta">
-              <div><span>Track ID</span><strong>{worker?.tracking.track_id ?? "—"}</strong></div>
-              <div><span>Camera</span><strong>{worker?.tracking.camera_id ?? "—"}</strong></div>
-              <div><span>Last update</span><strong>{worker ? timeLabel(worker.timestamp) : "—"}</strong></div>
-            </div>
-          </article>
-
-          <article className="signal-card" id="edge">
-            <p className="eyebrow">Live edge signal</p>
-            <div className="signal-orbit"><span>{worker?.edge.fps?.toFixed(1) ?? "—"}<small>FPS</small></span></div>
-            <p>{worker?.tracking.camera_id ?? "No camera connected"}</p>
-            <div className="edge-row"><span>CPU temperature</span><strong>{worker?.edge.cpu_temperature != null ? `${worker.edge.cpu_temperature.toFixed(1)}°C` : "—"}</strong></div>
-            <div className="edge-row"><span>Throttling</span><strong className={worker?.edge.throttled ? "danger" : "good"}>{worker?.edge.throttled ? "Detected" : "Normal"}</strong></div>
-          </article>
-        </div>
-
-        <div className="detail-grid">
-          <section className="panel" aria-labelledby="ppe-heading">
-            <div className="panel-heading"><div><p className="eyebrow">Compliance</p><h3 id="ppe-heading">PPE status</h3></div><span>{worker ? Object.values(worker.ppe).filter(Boolean).length : 0}/4 detected</span></div>
-            <div className="ppe-grid">{(["helmet", "vest", "gloves", "boots"] as const).map((item) => <div className={`ppe-item ${worker?.ppe[item] === true ? "pass" : worker?.ppe[item] === false ? "fail" : "unknown"}`} key={item}><i>{worker?.ppe[item] === true ? "✓" : worker?.ppe[item] === false ? "!" : "?"}</i><span>{item}</span><small>{worker?.ppe[item] === true ? "Detected" : worker?.ppe[item] === false ? "Missing" : "Not assessed"}</small></div>)}</div>
-          </section>
-
-          <section className="panel" id="timeline" aria-labelledby="timeline-heading">
-            <div className="panel-heading"><div><p className="eyebrow">Persistent history</p><h3 id="timeline-heading">Activity timeline</h3></div><span>Latest {timeline.length}</span></div>
-            <ol className="timeline-list">{timeline.length ? timeline.map((event, index) => <li key={event.id}><i style={{ background: activityColors[event.activity] ?? activityColors.unknown }} /><div><strong>{event.activity.replaceAll("_", " ")}</strong><span>{timeLabel(event.timestamp)} · {Math.round(event.activity_confidence * 100)}% confidence</span></div><small>{index === 0 ? "current" : event.duration}</small></li>) : <li className="empty-row">No activity transitions recorded yet.</li>}</ol>
-          </section>
-        </div>
-      </section>
-    </main>
-  );
+  return <main className="dashboard"><aside className="worker-sidebar">
+    <div className="brand"><div className="brand-icon">DT</div><div><small>WORKFORCE</small><strong>DIGITAL TWIN</strong></div></div><div className="sidebar-heading"><span>WORKERS</span><b>{workers.length}</b></div>
+    <div className="worker-list">{workers.map((item) => { const itemFresh = freshness(item, now); return <button key={item.worker_id} className={`worker-list-card ${item.worker_id === worker?.worker_id ? "selected" : ""}`} onClick={() => setSelectedId(item.worker_id)}><div className="worker-initial">{item.worker_id.slice(-2).toUpperCase()}</div><div><strong>{item.worker_id}</strong><small>{item.tracking.camera_id ?? "No camera"}</small></div><span className={`source-tag ${item.source ?? "live"}`}>{(item.source ?? "live").toUpperCase()}</span><em className={itemFresh.state}>{itemFresh.text}</em></button>; })}{!workers.length && <p className="empty-copy">Waiting for worker state…</p>}</div>
+    <div className="connection-card"><span className={`connection-dot ${connection}`} /><div><strong>Backend {connection}</strong><small>WebSocket · {WS_URL.replace(/^wss?:\/\//, "")}</small></div></div>
+  </aside><section className="main-area">
+    <header className="topbar"><div><p>OPERATIONS / WORKER MONITORING</p><h1>Live worker overview</h1></div><div className="header-badges"><span className={`badge source ${source.toLowerCase()}`}>{source}</span><span className={`badge ${fresh.state}`}>{fresh.text}</span><span className={`badge model ${model?.loaded ? "ready" : "not-ready"}`}>ST-GCN {model?.loaded ? "READY" : "NOT READY"}</span></div></header>{error && <div className="notice" role="status">{error}</div>}
+    <div className="dashboard-grid"><section className="visual-panel panel"><div className="panel-title"><div><span>WORKER TWIN</span><h2>{worker?.worker_id ?? "Awaiting data"}</h2></div><div className={`pulse-label ${fresh.state}`}><i />{fresh.state}</div></div>
+      {worker ? <WorkerAvatar worker={worker} stale={fresh.state !== "online"} /> : <div className="avatar-placeholder">No current worker state</div>}<div className="display-activity"><span>DISPLAY ACTIVITY</span><strong style={{ color: activityColors[worker?.activity.display_activity ?? "unknown"] }}>{label(worker?.activity.display_activity)}</strong><small>Policy unchanged · backend-owned</small></div>
+      {worker && <div className="ppe-summary"><PPEItem name="Helmet" value={worker.ppe.helmet} reliable /><PPEItem name="Vest" value={worker.ppe.vest} reliable /><PPEItem name="Gloves" value={worker.ppe.gloves} reliable={false} /><PPEItem name="Boots" value={worker.ppe.boots} reliable={false} /></div>}
+    </section><aside className="status-panel panel"><div className="panel-title"><div><span>LIVE STATUS</span><h2>Worker detail</h2></div><span className={`connection-chip ${connection}`}>{connection}</span></div>
+      <div className="identity-grid"><div><span>WORKER ID</span><strong>{worker?.worker_id ?? "—"}</strong></div><div><span>TRACK ID</span><strong>{worker?.tracking.track_id ?? "—"}</strong></div><div><span>CAMERA ID</span><strong>{worker?.tracking.camera_id ?? "—"}</strong></div><div><span>LAST UPDATE</span><strong>{worker ? clock(worker.timestamp) : "—"}</strong></div></div>
+      <div className="recognizer-heading"><span>ACTIVITY RECOGNISERS</span>{worker && worker.activity.baseline !== worker.activity.stgcn && <b>DISAGREEMENT</b>}</div><div className="recognizer-grid"><div><span>FROZEN BASELINE</span><strong>{label(worker?.activity.baseline)}</strong><div className="meter"><i style={{ width: percent(worker?.activity.baseline_confidence) }} /></div><small>{percent(worker?.activity.baseline_confidence)} confidence</small></div><div><span>ST-GCN</span><strong>{label(worker?.activity.stgcn)}</strong><div className="meter purple"><i style={{ width: percent(worker?.activity.stgcn_confidence) }} /></div><small>{percent(worker?.activity.stgcn_confidence)} confidence</small></div></div>
+      <div className="model-row"><div><span>MODEL STATUS</span><strong>{model?.loaded ? "Loaded / ready" : "Unavailable"}</strong></div><div><span>DEVICE</span><strong>{model?.device?.toUpperCase() ?? "—"}</strong></div><div><span>WINDOW</span><strong>{model?.window_size ? `${model.window_size} frames` : "—"}</strong></div></div>
+      <div className="telemetry"><div className="telemetry-main"><span>EDGE FRAME RATE</span><strong>{worker?.edge.fps != null ? worker.edge.fps.toFixed(1) : "—"}<small> FPS</small></strong></div><div><span>CPU TEMP</span><strong>{worker?.edge.cpu_temperature != null ? `${worker.edge.cpu_temperature.toFixed(1)}°C` : "—"}</strong></div><div><span>THROTTLED</span><strong className={worker?.edge.throttled ? "bad" : "good"}>{worker ? (worker.edge.throttled ? "YES" : "NO") : "—"}</strong></div></div>
+    </aside></div>
+    <section className="timeline-panel panel"><div className="panel-title"><div><span>RECENT HISTORY</span><h2>Activity timeline</h2></div><small>Recorded backend transitions only</small></div><ol className="timeline">{timeline.map((event, index) => <li key={event.id}><time>{clock(event.timestamp)}</time><i style={{ background: activityColors[event.activity] ?? activityColors.unknown }} /><div><strong>{label(event.activity)}</strong><small>{percent(event.activity_confidence)} confidence · {event.camera_id ?? "camera unknown"}</small></div><span>{index === 0 ? "CURRENT SEGMENT" : event.segmentDuration}</span></li>)}{!timeline.length && <li className="empty-copy">No activity transitions have been recorded for this worker.</li>}</ol></section>
+  </section></main>;
 }

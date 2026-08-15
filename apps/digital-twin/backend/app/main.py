@@ -13,7 +13,7 @@ from .database import Base, engine
 from .db_models import WorkerEvent
 from .history import get_worker_history, save_worker_event
 from .websocket_manager import websocket_manager
-from .stgcn import temporal_pose_buffer
+from .stgcn import stgcn_service, temporal_pose_buffer
 
 app = FastAPI(
     title="Workforce Digital Twin API",
@@ -58,6 +58,11 @@ def health():
     }
 
 
+@app.get("/stgcn/status")
+def get_stgcn_status():
+    return stgcn_service.status()
+
+
 @app.get("/workers")
 def get_workers():
     return worker_state_manager.get_all_workers()
@@ -96,6 +101,16 @@ def get_stgcn_sequence_diagnostic(worker_id: str):
     return temporal_pose_buffer.diagnostic(worker_id)
 
 
+@app.get("/workers/{worker_id}/stgcn-prediction")
+def get_latest_stgcn_prediction(worker_id: str):
+    if worker_state_manager.get_worker(worker_id) is None:
+        raise HTTPException(status_code=404, detail=f"Worker '{worker_id}' not found")
+    prediction = stgcn_service.latest(worker_id)
+    if prediction is None:
+        raise HTTPException(status_code=404, detail=f"Worker '{worker_id}' has no ST-GCN prediction")
+    return prediction
+
+
 @app.get("/workers/{worker_id}/history")
 def worker_history(
     worker_id: str,
@@ -126,10 +141,22 @@ async def update_worker(worker: WorkerState):
         worker.worker_id
     )
 
+    # ST-GCN output is backend-owned. Keep the last good prediction while a new
+    # sequence is warming up or when a contained inference error occurs.
+    if previous_worker is not None:
+        worker.activity.stgcn = previous_worker.activity.stgcn
+        worker.activity.stgcn_confidence = previous_worker.activity.stgcn_confidence
+
     saved_worker = worker_state_manager.set_worker(worker)
 
     if saved_worker.pose is not None:
-        temporal_pose_buffer.add(saved_worker.worker_id, saved_worker.pose)
+        added = temporal_pose_buffer.add(saved_worker.worker_id, saved_worker.pose)
+        sequence = temporal_pose_buffer.tensor(saved_worker.worker_id) if added else None
+        prediction = stgcn_service.predict(saved_worker.worker_id, sequence) if sequence else None
+        if prediction is not None:
+            saved_worker.activity.stgcn = prediction.activity
+            saved_worker.activity.stgcn_confidence = prediction.confidence
+            worker_state_manager.set_worker(saved_worker)
 
     activity_changed = (
         previous_worker is None
@@ -152,9 +179,15 @@ async def update_worker(worker: WorkerState):
 
 
 @app.on_event("startup")
+def load_stgcn_model():
+    stgcn_service.load()
+
+
+@app.on_event("startup")
 def create_demo_worker():
     demo_worker = WorkerState(
         worker_id="worker01",
+        source="replay",
         tracking=TrackingState(
             track_id=1,
             camera_id="esp32_cam_01",
