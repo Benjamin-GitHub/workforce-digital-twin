@@ -807,6 +807,11 @@ def main():
                             camera_id=args.camera_id,
                             activity=display_activity,
                             confidence=activity_confidence,
+                            frame_number=frame_number,
+                            image_width=width,
+                            image_height=height,
+                            keypoints=person_keypoints,
+                            keypoint_confidences=person_keypoint_confidences,
                             fps=processing_fps,
                         )
                     )

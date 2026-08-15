@@ -13,6 +13,11 @@ class LivePublisherTests(unittest.TestCase):
             camera_id="pi_cam_01",
             activity="walking",
             confidence=0.82,
+            frame_number=42,
+            image_width=640,
+            image_height=480,
+            keypoints=[[float(i), float(i + 1)] for i in range(17)],
+            keypoint_confidences=[0.9] * 17,
             fps=10.5,
         )
 
@@ -21,6 +26,13 @@ class LivePublisherTests(unittest.TestCase):
         self.assertEqual(payload["activity"]["baseline_confidence"], 0.82)
         self.assertEqual(payload["edge"]["fps"], 10.5)
         self.assertNotIn("ppe", payload)
+        self.assertEqual(payload["pose"]["frame_number"], 42)
+        self.assertEqual(payload["pose"]["coordinate_space"], "image_pixels")
+        self.assertEqual(payload["pose"]["layout"], "coco_17")
+        self.assertEqual(len(payload["pose"]["keypoints"]), 17)
+        self.assertEqual(payload["pose"]["keypoints"][5], {
+            "x": 5.0, "y": 6.0, "confidence": 0.9
+        })
 
     def test_transport_runs_off_the_calling_thread_and_errors_are_contained(self):
         called = threading.Event()

@@ -75,6 +75,19 @@ def get_worker(worker_id: str):
     return worker
 
 
+@app.get("/workers/{worker_id}/pose")
+def get_worker_pose(worker_id: str):
+    worker = worker_state_manager.get_worker(worker_id)
+    if worker is None:
+        raise HTTPException(status_code=404, detail=f"Worker '{worker_id}' not found")
+    if worker.pose is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Worker '{worker_id}' has no live pose",
+        )
+    return worker.pose
+
+
 @app.get("/workers/{worker_id}/history")
 def worker_history(
     worker_id: str,

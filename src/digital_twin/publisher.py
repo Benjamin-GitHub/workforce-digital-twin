@@ -6,7 +6,8 @@ import json
 import threading
 import time
 from datetime import datetime
-from typing import Callable
+from math import isfinite
+from typing import Callable, Sequence
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -22,13 +23,45 @@ def build_worker_state(
     camera_id: str,
     activity: str,
     confidence: float,
+    frame_number: int,
+    image_width: int,
+    image_height: int,
+    keypoints: Sequence[Sequence[float]],
+    keypoint_confidences: Sequence[float] | None,
     fps: float | None = None,
 ) -> Payload:
-    """Map live pose output onto the backend's existing WorkerState schema."""
+    """Map one tracked COCO pose onto the backend's live WorkerState schema.
+
+    Ultralytics ``Keypoints.xy`` values are original image-space pixels in COCO's
+    17-keypoint order. Confidence comes from ``Keypoints.conf`` when available.
+    """
+
+    captured_at = datetime.now().astimezone().isoformat()
+    pose_keypoints = []
+    for index, point in enumerate(keypoints):
+        x, y = point
+        point_confidence = (
+            keypoint_confidences[index]
+            if keypoint_confidences is not None
+            and index < len(keypoint_confidences)
+            else None
+        )
+        pose_keypoints.append(
+            {
+                "x": float(x) if isfinite(float(x)) else 0.0,
+                "y": float(y) if isfinite(float(y)) else 0.0,
+                "confidence": (
+                    max(0.0, min(1.0, float(point_confidence)))
+                    if point_confidence is not None
+                    and isfinite(float(point_confidence))
+                    else None
+                ),
+            }
+        )
 
     payload: Payload = {
         "worker_id": worker_id,
-        "timestamp": datetime.now().astimezone().isoformat(),
+        "timestamp": captured_at,
         "tracking": {
             "track_id": int(track_id),
             "camera_id": camera_id,
@@ -40,6 +73,15 @@ def build_worker_state(
             "stgcn": "unknown",
             "stgcn_confidence": 0.0,
             "display_activity": activity,
+        },
+        "pose": {
+            "frame_number": int(frame_number),
+            "captured_at": captured_at,
+            "coordinate_space": "image_pixels",
+            "layout": "coco_17",
+            "image_width": int(image_width),
+            "image_height": int(image_height),
+            "keypoints": pose_keypoints,
         },
     }
     if fps is not None:
@@ -131,4 +173,3 @@ class WorkerStatePublisher:
                 if message != self._last_error:
                     print(f"Digital Twin publish warning: {message}")
                 self._last_error = message
-
