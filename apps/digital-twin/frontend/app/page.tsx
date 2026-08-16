@@ -2,10 +2,17 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+type PPEObservation = { detected: boolean | null; confidence: number | null };
+type PPEValue = PPEObservation | boolean | null | undefined;
+type PPE = {
+  helmet?: PPEValue; vest?: PPEValue; gloves?: PPEValue; boots?: PPEValue;
+  observed_at?: string | null; association_method?: string | null;
+};
+
 type Worker = {
   worker_id: string; timestamp: string; source?: "live" | "replay";
   tracking: { track_id: number | null; camera_id: string | null; online: boolean };
-  ppe: Record<"helmet" | "vest" | "gloves" | "boots", { detected: boolean | null; confidence: number | null }> & { observed_at: string | null; association_method: string | null };
+  ppe?: PPE | null;
   activity: { baseline: string; baseline_confidence: number; stgcn: string; stgcn_confidence: number; display_activity: string };
   edge: { fps: number | null; cpu_temperature: number | null; throttled: boolean };
   mobile?: {
@@ -32,6 +39,12 @@ const percent = (value?: number) => `${Math.round((value ?? 0) * 100)}%`;
 const clock = (value: string) => new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(new Date(value));
 const duration = (seconds: number) => seconds < 60 ? `${Math.max(0, Math.round(seconds))}s` : `${Math.floor(seconds / 60)}m ${Math.round(seconds % 60)}s`;
 const vector = (value?: { x: number; y: number; z: number }) => value ? `${value.x.toFixed(2)}, ${value.y.toFixed(2)}, ${value.z.toFixed(2)}` : "—";
+const ppeObservation = (value: PPEValue): PPEObservation => {
+  if (value != null && typeof value === "object") {
+    return { detected: value.detected ?? null, confidence: value.confidence ?? null };
+  }
+  return { detected: typeof value === "boolean" ? value : null, confidence: null };
+};
 
 function freshness(worker: Worker, now: number) {
   const seconds = Math.max(0, (now - new Date(worker.timestamp).getTime()) / 1000);
@@ -49,7 +62,7 @@ function mobileConnection(worker: Worker | undefined, now: number) {
 }
 
 function WorkerAvatar({ worker, stale }: { worker: Worker; stale: boolean }) {
-  const helmet = worker.ppe.helmet.detected; const vest = worker.ppe.vest.detected;
+  const helmet = ppeObservation(worker.ppe?.helmet).detected; const vest = ppeObservation(worker.ppe?.vest).detected;
   return <div className={`body-visual ${stale ? "is-stale" : ""}`} aria-label={`Worker schematic. Helmet ${helmet === true ? "detected" : helmet === false ? "missing" : "unknown"}; vest ${vest === true ? "detected" : vest === false ? "missing" : "unknown"}.`}>
     <div className={`hard-hat ${helmet === true ? "detected" : helmet === false ? "missing" : "unknown"}`}><span>HELMET</span></div><div className="figure-head" />
     <div className="figure-body"><div className={`safety-vest ${vest === true ? "detected" : vest === false ? "missing" : "unknown"}`}><i /><span>VEST</span></div></div>
@@ -70,6 +83,8 @@ export default function Home() {
   const [history, setHistory] = useState<HistoryEvent[]>([]); const [model, setModel] = useState<ModelStatus | null>(null);
   const [connection, setConnection] = useState<Connection>("connecting"); const [error, setError] = useState<string | null>(null); const [now, setNow] = useState(0);
   const worker = workers.find((item) => item.worker_id === selectedId) ?? workers[0];
+  const helmet = ppeObservation(worker?.ppe?.helmet); const vest = ppeObservation(worker?.ppe?.vest);
+  const gloves = ppeObservation(worker?.ppe?.gloves); const boots = ppeObservation(worker?.ppe?.boots);
   const workerId = worker?.worker_id;
   const loadHistory = useCallback(async (id: string) => { const response = await fetch(`${API_URL}/workers/${encodeURIComponent(id)}/history?limit=12`); if (!response.ok) throw new Error("History unavailable"); setHistory(await response.json()); }, []);
 
@@ -100,7 +115,7 @@ export default function Home() {
     <header className="topbar"><div><p>OPERATIONS / WORKER MONITORING</p><h1>Live worker overview</h1></div><div className="header-badges"><span className={`badge source ${source.toLowerCase()}`}>{source}</span><span className={`badge ${fresh.state}`}>{fresh.text}</span><span className={`badge model ${model?.loaded ? "ready" : "not-ready"}`}>ST-GCN {model?.loaded ? "READY" : "NOT READY"}</span></div></header>{error && <div className="notice" role="status">{error}</div>}
     <div className="dashboard-grid"><section className="visual-panel panel"><div className="panel-title"><div><span>WORKER TWIN</span><h2>{worker?.worker_id ?? "Awaiting data"}</h2></div><div className={`pulse-label ${fresh.state}`}><i />{fresh.state}</div></div>
       {worker ? <WorkerAvatar worker={worker} stale={fresh.state !== "online"} /> : <div className="avatar-placeholder">No current worker state</div>}<div className="display-activity"><span>DISPLAY ACTIVITY</span><strong style={{ color: activityColors[worker?.activity.display_activity ?? "unknown"] }}>{label(worker?.activity.display_activity)}</strong><small>Policy unchanged · backend-owned</small></div>
-      {worker && <div className="ppe-summary"><PPEItem name="Helmet" value={worker.ppe.helmet.detected} confidence={worker.ppe.helmet.confidence} reliable observedAt={worker.ppe.observed_at} now={now} /><PPEItem name="Vest" value={worker.ppe.vest.detected} confidence={worker.ppe.vest.confidence} reliable observedAt={worker.ppe.observed_at} now={now} /><PPEItem name="Gloves" value={worker.ppe.gloves.detected} confidence={worker.ppe.gloves.confidence} reliable={false} observedAt={worker.ppe.observed_at} now={now} /><PPEItem name="Boots" value={worker.ppe.boots.detected} confidence={worker.ppe.boots.confidence} reliable={false} observedAt={worker.ppe.observed_at} now={now} /></div>}
+      {worker && <div className="ppe-summary"><PPEItem name="Helmet" value={helmet.detected} confidence={helmet.confidence} reliable observedAt={worker.ppe?.observed_at ?? null} now={now} /><PPEItem name="Vest" value={vest.detected} confidence={vest.confidence} reliable observedAt={worker.ppe?.observed_at ?? null} now={now} /><PPEItem name="Gloves" value={gloves.detected} confidence={gloves.confidence} reliable={false} observedAt={worker.ppe?.observed_at ?? null} now={now} /><PPEItem name="Boots" value={boots.detected} confidence={boots.confidence} reliable={false} observedAt={worker.ppe?.observed_at ?? null} now={now} /></div>}
     </section><aside className="status-panel panel"><div className="panel-title"><div><span>LIVE STATUS</span><h2>Worker detail</h2></div><span className={`connection-chip ${connection}`}>{connection}</span></div>
       <div className="identity-grid"><div><span>WORKER ID</span><strong>{worker?.worker_id ?? "—"}</strong></div><div><span>TRACK ID</span><strong>{worker?.tracking.track_id ?? "—"}</strong></div><div><span>CAMERA ID</span><strong>{worker?.tracking.camera_id ?? "—"}</strong></div><div><span>LAST UPDATE</span><strong>{worker ? clock(worker.timestamp) : "—"}</strong></div></div>
       <div className="recognizer-heading"><span>ACTIVITY RECOGNISERS</span>{worker && worker.activity.baseline !== worker.activity.stgcn && <b>DISAGREEMENT</b>}</div><div className="recognizer-grid"><div><span>FROZEN BASELINE</span><strong>{label(worker?.activity.baseline)}</strong><div className="meter"><i style={{ width: percent(worker?.activity.baseline_confidence) }} /></div><small>{percent(worker?.activity.baseline_confidence)} confidence</small></div><div><span>ST-GCN</span><strong>{label(worker?.activity.stgcn)}</strong><div className="meter purple"><i style={{ width: percent(worker?.activity.stgcn_confidence) }} /></div><small>{percent(worker?.activity.stgcn_confidence)} confidence</small></div></div>
