@@ -104,3 +104,12 @@ class WorkerState(BaseModel):
     edge: EdgeState = Field(default_factory=EdgeState)
     pose: Optional[PoseState] = None
     mobile: Optional[MobileTelemetry] = None
+
+
+class SessionStartRequest(BaseModel):
+    worker_id: str = "worker01"
+    source_mode: Literal["LIVE", "REPLAY"] = "LIVE"
+    notes: Optional[str] = None
+    expected_activity: Optional[str] = None
+    cadence_hz: float = Field(default=5.0, gt=0.0, le=10.0)
+    max_samples: int = Field(default=18000, ge=1, le=100000)
