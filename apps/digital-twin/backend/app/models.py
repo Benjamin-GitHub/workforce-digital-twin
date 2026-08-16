@@ -4,11 +4,18 @@ from typing import Literal, Optional
 from pydantic import BaseModel, Field
 
 
+class PPEObservation(BaseModel):
+    detected: Optional[bool] = None
+    confidence: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+
+
 class PPEState(BaseModel):
-    helmet: Optional[bool] = None
-    vest: Optional[bool] = None
-    gloves: Optional[bool] = None
-    boots: Optional[bool] = None
+    helmet: PPEObservation = Field(default_factory=PPEObservation)
+    vest: PPEObservation = Field(default_factory=PPEObservation)
+    gloves: PPEObservation = Field(default_factory=PPEObservation)
+    boots: PPEObservation = Field(default_factory=PPEObservation)
+    observed_at: Optional[datetime] = None
+    association_method: Optional[str] = None
 
 
 class ActivityState(BaseModel):

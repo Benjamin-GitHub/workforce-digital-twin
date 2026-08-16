@@ -3,8 +3,8 @@ import unittest
 from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
-from app.main import get_stgcn_sequence_diagnostic, get_worker_pose, update_worker
-from app.models import ActivityState, PoseKeypoint, PoseState, WorkerState
+from app.main import get_stgcn_sequence_diagnostic, get_worker_pose, get_worker_ppe, update_worker
+from app.models import ActivityState, PPEObservation, PPEState, PoseKeypoint, PoseState, WorkerState
 from app.state import worker_state_manager
 from app.stgcn import STGCNPrediction, stgcn_service, temporal_pose_buffer
 
@@ -73,6 +73,22 @@ class WorkerUpdateTests(unittest.TestCase):
 
         self.assertEqual(saved.activity.stgcn, "carrying")
         self.assertAlmostEqual(saved.activity.stgcn_confidence, 0.91)
+
+    @patch("app.main.websocket_manager.broadcast", new_callable=AsyncMock)
+    @patch("app.main.save_worker_event")
+    def test_real_ppe_is_available_without_creating_history(self, save_event, _broadcast):
+        worker = self.worker("standing")
+        worker.ppe = PPEState(
+            helmet=PPEObservation(detected=True, confidence=0.84),
+            vest=PPEObservation(detected=True, confidence=0.72),
+            observed_at=datetime.now(timezone.utc),
+            association_method="ppe_box_within_pose_person",
+        )
+        asyncio.run(update_worker(worker))
+        ppe = get_worker_ppe("transition-test")
+        self.assertTrue(ppe.helmet.detected)
+        self.assertAlmostEqual(ppe.vest.confidence, 0.72)
+        self.assertEqual(save_event.call_count, 1)
 
     @patch("app.main.websocket_manager.broadcast", new_callable=AsyncMock)
     @patch("app.main.save_worker_event")

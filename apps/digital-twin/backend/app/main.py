@@ -1,6 +1,7 @@
 import asyncio
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from .models import (
     ActivityState,
@@ -8,6 +9,7 @@ from .models import (
     PPEState,
     TrackingState,
     WorkerState,
+    SessionStartRequest,
 )
 from .state import worker_state_manager
 from .database import Base, engine
@@ -16,6 +18,7 @@ from .history import get_worker_history, save_worker_event
 from .websocket_manager import websocket_manager
 from .stgcn import stgcn_service, temporal_pose_buffer
 from .mqtt_mobile import MobileMqttSubscriber
+from .sessions import session_recorder
 
 app = FastAPI(
     title="Workforce Digital Twin API",
@@ -233,12 +236,7 @@ def create_demo_worker():
             camera_id="esp32_cam_01",
             online=True,
         ),
-        ppe=PPEState(
-            helmet=True,
-            vest=True,
-            gloves=None,
-            boots=None,
-        ),
+        ppe=PPEState(),
         activity=ActivityState(
             baseline="walking",
             baseline_confidence=0.71,
