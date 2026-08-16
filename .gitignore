@@ -11,6 +11,7 @@ __pycache__/
 # Environment variables and secrets
 .env
 .env.*
+secret.h
 secrets/
 credentials/
 *.pem
