@@ -1,0 +1,28 @@
+seed: 42
+split: [0.70, 0.15, 0.15]
+
+# The current archive is ~11 Hz. Taking every second pose produces ~5.5 Hz,
+# closely matching the measured 5.43 Hz deployment cadence.
+source_pose_hz: 11.0
+temporal_stride: 2
+
+hidden_size: 128
+num_layers: 2
+dropout: 0.30
+
+epochs: 50
+batch_size: 64
+num_workers: 0
+learning_rate: 0.001
+weight_decay: 0.0001
+gradient_clip_norm: 1.0
+class_weights: sqrt_balanced
+
+lr_scheduler:
+  factor: 0.5
+  patience: 5
+  minimum_lr: 0.00001
+
+early_stopping_patience: 12
+early_stopping_min_delta: 0.0001
+
