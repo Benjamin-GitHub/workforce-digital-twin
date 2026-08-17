@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 
@@ -27,4 +27,30 @@ SessionLocal = sessionmaker(
 
 class Base(DeclarativeBase):
     pass
+
+
+def ensure_session_vision_gru_columns() -> None:
+    """Add GRU result columns to an existing SQLite database in place."""
+    inspector = inspect(engine)
+    if not inspector.has_table("session_vision_samples"):
+        return
+    columns = {
+        column["name"]
+        for column in inspector.get_columns("session_vision_samples")
+    }
+    statements = []
+    if "gru_activity" not in columns:
+        statements.append(
+            "ALTER TABLE session_vision_samples "
+            "ADD COLUMN gru_activity VARCHAR NOT NULL DEFAULT 'unknown'"
+        )
+    if "gru_confidence" not in columns:
+        statements.append(
+            "ALTER TABLE session_vision_samples "
+            "ADD COLUMN gru_confidence FLOAT NOT NULL DEFAULT 0.0"
+        )
+    if statements:
+        with engine.begin() as connection:
+            for statement in statements:
+                connection.execute(text(statement))
 

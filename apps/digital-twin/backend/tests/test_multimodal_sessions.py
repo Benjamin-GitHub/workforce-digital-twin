@@ -40,7 +40,9 @@ class MultimodalSessionTests(unittest.TestCase):
             tracking=TrackingState(track_id=7, camera_id="esp32_cam_01", online=True),
             activity=ActivityState(
                 baseline="walking", baseline_confidence=.71,
-                stgcn="standing", stgcn_confidence=.62, display_activity="walking",
+                stgcn="standing", stgcn_confidence=.62,
+                gru="carrying", gru_confidence=.81,
+                display_activity="walking",
             ),
         )
 
@@ -69,6 +71,8 @@ class MultimodalSessionTests(unittest.TestCase):
         self.assertEqual(row["camera_track_id"], 7)
         self.assertEqual(row["baseline_activity"], "walking")
         self.assertEqual(row["stgcn_activity"], "standing")
+        self.assertEqual(row["gru_activity"], "carrying")
+        self.assertEqual(row["gru_confidence"], .81)
         self.assertEqual(row["source_time_delta_ms"], -80.0)
         self.assertEqual(row["vision_age_ms"], 25.0)
         self.assertFalse(row["mobile_missing"])

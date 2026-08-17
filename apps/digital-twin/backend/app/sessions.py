@@ -13,12 +13,15 @@ from pathlib import Path
 
 from sqlalchemy import select
 
-from .database import DATA_DIR, SessionLocal
+from .database import DATA_DIR, SessionLocal, ensure_session_vision_gru_columns
 from .db_models import MultimodalSession, SessionMobileSample, SessionVisionSample
 from .models import MobileTelemetry, WorkerState
 
 
 EXPORT_DIR = DATA_DIR / "session_exports"
+
+# Preserve existing evidence while extending the live recorder schema.
+ensure_session_vision_gru_columns()
 
 
 def _utc(value: datetime) -> datetime:
@@ -125,6 +128,8 @@ class SessionRecorder:
                 baseline_confidence=worker.activity.baseline_confidence,
                 stgcn_activity=worker.activity.stgcn,
                 stgcn_confidence=worker.activity.stgcn_confidence,
+                gru_activity=worker.activity.gru,
+                gru_confidence=worker.activity.gru_confidence,
             ))
             db.commit()
         self._last_vision_received, self._last_vision_source = received, worker.timestamp
@@ -183,6 +188,7 @@ class SessionRecorder:
                 "camera_track_id": vision.camera_track_id, "camera_id": vision.camera_id,
                 "baseline_activity": vision.baseline_activity, "baseline_confidence": vision.baseline_confidence,
                 "stgcn_activity": vision.stgcn_activity, "stgcn_confidence": vision.stgcn_confidence,
+                "gru_activity": vision.gru_activity, "gru_confidence": vision.gru_confidence,
                 "vision_timestamp": _iso(vision.vision_timestamp),
                 "android_timestamp": _iso(mobile.mobile_timestamp) if mobile else None,
                 "backend_receive_time": _iso(vision.backend_receive_time),

@@ -77,6 +77,8 @@ class SessionVisionSample(Base):
     baseline_confidence: Mapped[float] = mapped_column(Float)
     stgcn_activity: Mapped[str] = mapped_column(String)
     stgcn_confidence: Mapped[float] = mapped_column(Float)
+    gru_activity: Mapped[str] = mapped_column(String, default="unknown")
+    gru_confidence: Mapped[float] = mapped_column(Float, default=0.0)
 
 
 class SessionMobileSample(Base):
