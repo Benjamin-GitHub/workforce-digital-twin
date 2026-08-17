@@ -1,0 +1,1 @@
+timestamp,frame,video_time_sec,track_id,raw_activity,smoothed_activity,semantic_activity,material_handling,material_confidence,confidence,velocity,ankle_motion,wrist_motion,wrist_hip_distance,torso_angle,knee_angle,mh_bending_ratio,mh_walking_ratio,mh_active_ratio,mh_wrist_motion,mh_pickup,mh_stationary,mh_standing_idle_ratio,mh_wrist_hip_distance
