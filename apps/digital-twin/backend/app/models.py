@@ -25,6 +25,9 @@ class ActivityState(BaseModel):
     stgcn: str = "unknown"
     stgcn_confidence: float = 0.0
 
+    gru: str = "unknown"
+    gru_confidence: float = 0.0
+
     display_activity: str = "unknown"
 
 

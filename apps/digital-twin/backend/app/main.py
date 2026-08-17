@@ -17,6 +17,7 @@ from .db_models import WorkerEvent
 from .history import get_worker_history, save_worker_event
 from .websocket_manager import websocket_manager
 from .stgcn import stgcn_service, temporal_pose_buffer
+from .gru import gru_service
 from .mqtt_mobile import MobileMqttSubscriber
 from .sessions import session_recorder
 
@@ -84,6 +85,11 @@ def health():
 @app.get("/stgcn/status")
 def get_stgcn_status():
     return stgcn_service.status()
+
+
+@app.get("/gru/status")
+def get_gru_status():
+    return gru_service.status()
 
 
 @app.post("/sessions/start")
@@ -193,6 +199,18 @@ def get_latest_stgcn_prediction(worker_id: str):
     return prediction
 
 
+@app.get("/workers/{worker_id}/gru-prediction")
+def get_latest_gru_prediction(worker_id: str):
+    if worker_state_manager.get_worker(worker_id) is None:
+        raise HTTPException(status_code=404, detail=f"Worker '{worker_id}' not found")
+    prediction = gru_service.latest(worker_id)
+    if prediction is None:
+        raise HTTPException(
+            status_code=404, detail=f"Worker '{worker_id}' has no GRU prediction"
+        )
+    return prediction
+
+
 @app.get("/workers/{worker_id}/history")
 def worker_history(
     worker_id: str,
@@ -228,6 +246,8 @@ async def update_worker(worker: WorkerState):
     if previous_worker is not None:
         worker.activity.stgcn = previous_worker.activity.stgcn
         worker.activity.stgcn_confidence = previous_worker.activity.stgcn_confidence
+        worker.activity.gru = previous_worker.activity.gru
+        worker.activity.gru_confidence = previous_worker.activity.gru_confidence
         worker.mobile = previous_worker.mobile
 
     saved_worker = worker_state_manager.set_worker(worker)
@@ -236,9 +256,16 @@ async def update_worker(worker: WorkerState):
         added = temporal_pose_buffer.add(saved_worker.worker_id, saved_worker.pose)
         sequence = temporal_pose_buffer.tensor(saved_worker.worker_id) if added else None
         prediction = stgcn_service.predict(saved_worker.worker_id, sequence) if sequence else None
+        gru_prediction = (
+            gru_service.predict(saved_worker.worker_id, saved_worker.pose) if added else None
+        )
         if prediction is not None:
             saved_worker.activity.stgcn = prediction.activity
             saved_worker.activity.stgcn_confidence = prediction.confidence
+        if gru_prediction is not None:
+            saved_worker.activity.gru = gru_prediction.activity
+            saved_worker.activity.gru_confidence = gru_prediction.confidence
+        if prediction is not None or gru_prediction is not None:
             worker_state_manager.set_worker(saved_worker)
 
     session_recorder.record_vision(saved_worker)
@@ -264,8 +291,9 @@ async def update_worker(worker: WorkerState):
 
 
 @app.on_event("startup")
-def load_stgcn_model():
+def load_activity_models():
     stgcn_service.load()
+    gru_service.load()
 
 
 @app.on_event("startup")
@@ -296,6 +324,8 @@ def create_demo_worker():
             baseline_confidence=0.71,
             stgcn="unknown",
             stgcn_confidence=0.0,
+            gru="unknown",
+            gru_confidence=0.0,
             display_activity="walking",
         ),
         edge=EdgeState(
