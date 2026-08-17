@@ -32,10 +32,13 @@ test("server-renders the Workforce Digital Twin dashboard", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Workforce Digital Twin<\/title>/i);
-  assert.match(html, /Workforce Intelligence/);
-  assert.match(html, /Worker monitoring/);
+  assert.match(html, /DIGITAL TWIN/);
+  assert.match(html, /Live worker overview/);
   assert.match(html, /Activity timeline/);
-  assert.match(html, /PPE status/);
+  assert.match(html, /ACTIVITY RECOGNISERS/);
+  assert.match(html, /FROZEN BASELINE/);
+  assert.match(html, /ST-GCN/);
+  assert.match(html, /Recorded backend transitions only/);
   assert.doesNotMatch(html, developmentPreviewMeta);
   assert.doesNotMatch(html, /react-loading-skeleton/);
 });

@@ -29,6 +29,7 @@ def build_worker_state(
     keypoints: Sequence[Sequence[float]],
     keypoint_confidences: Sequence[float] | None,
     fps: float | None = None,
+    ppe: Payload | None = None,
 ) -> Payload:
     """Map one tracked COCO pose onto the backend's live WorkerState schema.
 
@@ -86,6 +87,8 @@ def build_worker_state(
     }
     if fps is not None:
         payload["edge"] = {"fps": max(0.0, float(fps))}
+    if ppe is not None:
+        payload["ppe"] = ppe
     return payload
 
 

@@ -34,6 +34,24 @@ class LivePublisherTests(unittest.TestCase):
             "x": 5.0, "y": 6.0, "confidence": 0.9
         })
 
+    def test_payload_includes_model_ppe_when_supplied(self):
+        ppe = {
+            "helmet": {"detected": True, "confidence": 0.84},
+            "vest": {"detected": None, "confidence": None},
+            "gloves": {"detected": None, "confidence": None},
+            "boots": {"detected": None, "confidence": None},
+            "observed_at": "2026-08-16T12:00:00+00:00",
+            "association_method": "ppe_box_within_pose_person",
+        }
+        payload = build_worker_state(
+            worker_id="worker01", track_id=7, camera_id="pi_cam_01",
+            activity="standing", confidence=0.7, frame_number=1,
+            image_width=640, image_height=480,
+            keypoints=[[0.0, 0.0]] * 17,
+            keypoint_confidences=[0.9] * 17, ppe=ppe,
+        )
+        self.assertEqual(payload["ppe"], ppe)
+
     def test_transport_runs_off_the_calling_thread_and_errors_are_contained(self):
         called = threading.Event()
         transport_thread = []

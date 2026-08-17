@@ -17,6 +17,7 @@ from src.activity.material_handling_detector import (
     MaterialHandlingDetector,
 )
 from src.digital_twin.publisher import WorkerStatePublisher, build_worker_state
+from src.vision.ppe import associate_ppe, result_detections
 
 
 def load_config(path):
@@ -115,11 +116,33 @@ def main():
         default=1.0,
         help="Minimum seconds between queued worker updates (default: %(default)s)",
     )
+    parser.add_argument(
+        "--enable-ppe",
+        action="store_true",
+        help="Run a separate PPE detector (disabled by default)",
+    )
+    parser.add_argument(
+        "--ppe-model",
+        default="models/ncnn/yolo26n_ppe_best_ncnn_model",
+        help="Path to the fine-tuned PPE detection model",
+    )
+    parser.add_argument("--ppe-conf", type=float, default=0.25)
+    parser.add_argument("--ppe-imgsz", type=int, default=320)
+    parser.add_argument(
+        "--ppe-stride",
+        type=int,
+        default=3,
+        help="Run PPE inference every N input frames (default: %(default)s)",
+    )
 
     args = parser.parse_args()
 
     if args.digital_twin_publish_interval <= 0:
         parser.error("--digital-twin-publish-interval must be positive")
+    if not 0.0 <= args.ppe_conf <= 1.0:
+        parser.error("--ppe-conf must be between 0 and 1")
+    if args.ppe_stride <= 0:
+        parser.error("--ppe-stride must be positive")
 
     # --------------------------------------------------
     # Load configuration
@@ -166,6 +189,18 @@ def main():
         args.model,
         task="pose",
     )
+
+    ppe_model = None
+    if args.enable_ppe:
+        ppe_model_path = Path(args.ppe_model)
+        if not ppe_model_path.exists():
+            raise FileNotFoundError(f"PPE model not found: {ppe_model_path}")
+        print(f"Loading separate PPE model: {ppe_model_path}")
+        print(
+            f"PPE settings: conf={args.ppe_conf:.2f}, "
+            f"imgsz={args.ppe_imgsz}, stride={args.ppe_stride}"
+        )
+        ppe_model = YOLO(str(ppe_model_path), task="detect")
 
     # --------------------------------------------------
     # Temporal buffer
@@ -443,6 +478,7 @@ def main():
     frame_number = 0
     start_time = time.time()
     digital_twin_publisher = None
+    latest_ppe_by_track = {}
     if args.publish_digital_twin:
         digital_twin_publisher = WorkerStatePublisher(
             api_url=args.digital_twin_api_url,
@@ -563,6 +599,19 @@ def main():
                 .numpy()
                 .astype(int)
             )
+
+            if ppe_model is not None and (frame_number - 1) % args.ppe_stride == 0:
+                ppe_results = ppe_model.predict(
+                    frame,
+                    imgsz=args.ppe_imgsz,
+                    conf=args.ppe_conf,
+                    device="cpu",
+                    verbose=False,
+                )
+                detections = result_detections(ppe_results[0]) if ppe_results else []
+                associated_states = associate_ppe(boxes, detections)
+                for associated_track_id, ppe_state in zip(track_ids, associated_states):
+                    latest_ppe_by_track[int(associated_track_id)] = ppe_state
 
             # ------------------------------------------
             # Process every tracked person
@@ -813,6 +862,7 @@ def main():
                             keypoints=person_keypoints,
                             keypoint_confidences=person_keypoint_confidences,
                             fps=processing_fps,
+                            ppe=latest_ppe_by_track.get(track_id),
                         )
                     )
                 

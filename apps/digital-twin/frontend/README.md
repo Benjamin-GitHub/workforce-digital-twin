@@ -13,13 +13,42 @@ WebSocket connection.
 
 ## Quick Start
 
+From the repository root, start the Mac backend and frontend together with:
+
+```bash
+./scripts/run_digital_twin_mac.sh
+```
+
+The launcher reuses an MQTT broker already listening on port 1883 or starts the
+installed Mosquitto broker, binds the backend to port 8000 for LAN publishing,
+and serves the dashboard on port 3000. Press `Ctrl+C` once to stop the backend,
+frontend, and any broker started by the launcher. A pre-existing broker is left
+running.
+
+For an authenticated MQTT broker, copy `secret.h.example` to `secret.h`, enter
+the Mosquitto username and password, and restrict the file to your user:
+
+```bash
+cp secret.h.example secret.h
+chmod 600 secret.h
+```
+
+`secret.h` is ignored by Git and is loaded automatically by the launcher. Only
+the placeholder `secret.h.example` is intended to be committed.
+
+To run only the frontend:
+
 ```bash
 pnpm install
 pnpm run dev
 ```
 
 Open `http://localhost:3000`. To use another backend URL, copy `.env.example`
-to `.env.local` and update `NEXT_PUBLIC_API_URL`.
+to `.env.local` and update the API/WebSocket URLs. `NEXT_PUBLIC_STALE_SECONDS`
+controls when an online worker is visibly marked stale (10 seconds by default).
+
+The backend-created seed worker is explicitly labelled `REPLAY`; edge payloads
+that omit `source` retain the worker-state default of `LIVE`.
 
 ## Useful Commands
 
