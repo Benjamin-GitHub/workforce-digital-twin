@@ -35,3 +35,7 @@ apps/digital-twin/backend/data/
 training/stgcn/.venv/
 training/stgcn/data/
 training/stgcn/runs/
+
+# Private local Raspberry Pi activity recordings and temporary config backup
+activity-dataset/
+config/activity.yaml.before-imgsz256
