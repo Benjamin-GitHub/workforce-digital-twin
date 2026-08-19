@@ -4,17 +4,22 @@ import argparse
 import csv
 import json
 import random
+import sys
 from pathlib import Path
 
 import numpy as np
 import torch
 import yaml
 from sklearn.metrics import classification_report, confusion_matrix, f1_score
-from sklearn.model_selection import GroupShuffleSplit
 from torch import nn
 from torch.utils.data import DataLoader, TensorDataset
 
 from stgcn_model import STGCN
+
+TRAINING_ROOT = Path(__file__).resolve().parents[1]
+if str(TRAINING_ROOT) not in sys.path:
+    sys.path.insert(0, str(TRAINING_ROOT))
+from split_utils import split_dataset
 
 
 def seed_everything(seed: int) -> None:
@@ -23,13 +28,10 @@ def seed_everything(seed: int) -> None:
     torch.use_deterministic_algorithms(True, warn_only=True)
 
 
-def split_groups(y, groups, fractions, seed):
-    train_split = GroupShuffleSplit(1, train_size=fractions[0], random_state=seed)
-    train, remainder = next(train_split.split(y, y, groups))
-    relative_val = fractions[1] / (fractions[1] + fractions[2])
-    second = GroupShuffleSplit(1, train_size=relative_val, random_state=seed + 1)
-    val_rel, test_rel = next(second.split(y[remainder], y[remainder], groups[remainder]))
-    return train, remainder[val_rel], remainder[test_rel]
+def split_groups(y, groups, fractions, seed, attempts=500, strategy=None):
+    return split_dataset(
+        y, groups, fractions, seed, strategy=strategy, attempts=attempts
+    )
 
 
 def loader(x, y, indices, batch_size, shuffle, workers):
@@ -50,18 +52,30 @@ def main() -> None:
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--config", type=Path, default=Path(__file__).parent / "configs/train.yaml")
-    parser.add_argument("--device", default="auto", help="auto, cpu, cuda, or cuda:0")
+    parser.add_argument("--device", default="auto", help="auto, cpu, cuda, cuda:0, or mps")
     parser.add_argument("--epochs", type=int)
     args = parser.parse_args()
     cfg = yaml.safe_load(args.config.read_text(encoding="utf-8")); seed_everything(cfg["seed"])
-    archive = np.load(args.data); x, y, groups = archive["x"], archive["y"], archive["groups"]
+    archive = np.load(args.data); x, y, groups, sample_ids = archive["x"], archive["y"], archive["groups"], archive["sample_ids"]
     classes = archive["classes"].tolist()
-    if x.ndim != 5 or tuple(x.shape[1:]) != (3, 32, 17, 1):
-        raise ValueError(f"Expected samples shaped (3,32,17,1), found {x.shape}")
-    if len(np.unique(groups)) < 3:
-        raise ValueError("At least three source sample/session groups are required for leakage-safe train/val/test splits")
-    train_i, val_i, test_i = split_groups(y, groups, cfg["split"], cfg["seed"])
-    device_name = "cuda" if args.device == "auto" and torch.cuda.is_available() else ("cpu" if args.device == "auto" else args.device)
+    if x.ndim != 5 or x.shape[1] != 3 or x.shape[2] <= 0 or x.shape[3] != 17 or x.shape[4] != 1:
+        raise ValueError(f"Expected archive x shaped (N,3,T,17,1) with T > 0, found {x.shape}")
+    if not (len(x) == len(y) == len(groups) == len(sample_ids)):
+        raise ValueError("x, y, groups, and sample_ids lengths differ")
+    if not classes or np.any(y < 0) or np.any(y >= len(classes)):
+        raise ValueError("y labels must index the classes array")
+    train_i, val_i, test_i = split_groups(
+        y, groups, cfg["split"], cfg["seed"], strategy=cfg.get("split_strategy")
+    )
+    if args.device == "auto":
+        if torch.cuda.is_available():
+            device_name = "cuda"
+        elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+            device_name = "mps"
+        else:
+            device_name = "cpu"
+    else:
+        device_name = args.device
     device = torch.device(device_name); print(f"device={device}; cuda_available={torch.cuda.is_available()}")
     train_loader = loader(x, y, train_i, cfg["batch_size"], True, cfg["num_workers"])
     val_loader = loader(x, y, val_i, cfg["batch_size"], False, cfg["num_workers"])
@@ -91,7 +105,16 @@ def main() -> None:
         patience=scheduler_cfg.get("patience", 5),
         min_lr=scheduler_cfg.get("minimum_lr", 1e-5),
     )
-    args.output.mkdir(parents=True, exist_ok=True); best_f1 = -1.0
+    args.output.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(args.output / "splits.npz", train=train_i, val=val_i, test=test_i)
+    split_manifest = {
+        name: sample_ids[index].tolist()
+        for name, index in (("train", train_i), ("val", val_i), ("test", test_i))
+    }
+    (args.output / "split_manifest.json").write_text(
+        json.dumps(split_manifest, indent=2), encoding="utf-8"
+    )
+    best_f1 = -1.0
     history = []
     for epoch in range(1, (args.epochs or cfg["epochs"]) + 1):
         model.train(); losses = []
@@ -103,7 +126,7 @@ def main() -> None:
         print(f"epoch={epoch} loss={np.mean(losses):.5f} val_macro_f1={score:.5f} lr={learning_rate:.7f}")
         if score > best_f1:
             best_f1 = score
-            torch.save({"model_state": model.state_dict(), "classes": classes, "input_shape": [3, 32, 17, 1], "epoch": epoch, "val_macro_f1": score, "config": cfg}, args.output / "best.pt")
+            torch.save({"model_state": model.state_dict(), "classes": classes, "input_shape": [int(value) for value in x.shape[1:]], "epoch": epoch, "val_macro_f1": score, "config": cfg}, args.output / "best.pt")
         scheduler.step(score)
     checkpoint = torch.load(args.output / "best.pt", map_location=device, weights_only=False); model.load_state_dict(checkpoint["model_state"])
     test_y, test_pred = predict(model, test_loader, device)

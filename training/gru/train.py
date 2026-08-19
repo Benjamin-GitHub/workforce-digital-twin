@@ -13,7 +13,7 @@ from sklearn.metrics import classification_report, confusion_matrix, f1_score
 from torch import nn
 from torch.utils.data import DataLoader, TensorDataset
 
-from gru_data import group_safe_split, load_pose_archive
+from gru_data import load_pose_archive, split_dataset
 from gru_model import StreamingGRU
 
 
@@ -97,8 +97,9 @@ def main() -> None:
     cfg = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     seed_everything(int(cfg["seed"]))
     data = load_pose_archive(args.data, int(cfg["temporal_stride"]))
-    train_i, val_i, test_i = group_safe_split(
-        data.y, data.groups, cfg["split"], int(cfg["seed"])
+    train_i, val_i, test_i = split_dataset(
+        data.y, data.groups, cfg["split"], int(cfg["seed"]),
+        strategy=cfg.get("split_strategy"),
     )
     device = choose_device(args.device)
     print(f"device={device}; input_shape={data.x.shape}; source={args.data}")

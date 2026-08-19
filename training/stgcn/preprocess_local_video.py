@@ -126,8 +126,8 @@ def main() -> None:
     diagnostics = []
     for path in videos:
         label = path.parent.name.lower()
-        if label not in {"standing", "idle"}:
-            print(f"SKIP {path}: parent folder must be standing or idle")
+        if label not in classes:
+            print(f"SKIP {path}: parent folder must be one of: {', '.join(classes)}")
             continue
         try:
             frames, diagnostic = extract_video(

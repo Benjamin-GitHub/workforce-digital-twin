@@ -2,8 +2,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import sys
 
 import numpy as np
+
+TRAINING_ROOT = Path(__file__).resolve().parents[1]
+if str(TRAINING_ROOT) not in sys.path:
+    sys.path.insert(0, str(TRAINING_ROOT))
+from split_utils import group_safe_split, split_dataset, stratified_group_split
 
 
 EXPECTED_CLASSES = (
@@ -14,6 +20,7 @@ EXPECTED_CLASSES = (
     "carrying",
     "material_handling",
 )
+LIVE_KEYPOINT_CONFIDENCE = 0.30
 
 
 def _as_text(value) -> str:
@@ -74,40 +81,6 @@ def load_pose_archive(path: Path, temporal_stride: int = 2) -> PoseArchive:
     )
 
 
-def group_safe_split(
-    y: np.ndarray,
-    groups: np.ndarray,
-    fractions: list[float],
-    seed: int,
-    attempts: int = 500,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    # Required only for training-time dataset splitting.
-    from sklearn.model_selection import GroupShuffleSplit
-
-    if len(fractions) != 3 or not np.isclose(sum(fractions), 1.0):
-        raise ValueError("split fractions must contain train/val/test values summing to 1")
-    labels = set(np.unique(y).tolist())
-    if len(np.unique(groups)) < 3:
-        raise ValueError("At least three independent groups are required")
-
-    for attempt in range(attempts):
-        current_seed = seed + attempt
-        first = GroupShuffleSplit(1, train_size=fractions[0], random_state=current_seed)
-        train, remainder = next(first.split(y, y, groups))
-        relative_val = fractions[1] / (fractions[1] + fractions[2])
-        second = GroupShuffleSplit(1, train_size=relative_val, random_state=current_seed + 10_000)
-        val_rel, test_rel = next(
-            second.split(y[remainder], y[remainder], groups[remainder])
-        )
-        val, test = remainder[val_rel], remainder[test_rel]
-        if all(set(np.unique(y[index]).tolist()) == labels for index in (train, val, test)):
-            return train, val, test
-    raise ValueError(
-        "Could not create grouped train/val/test splits containing every class. "
-        "Add independent groups for rare classes or supply a pre-defined split."
-    )
-
-
 def normalize_live_coco17(frame: np.ndarray) -> np.ndarray:
     """Apply the CML-aligned live preprocessing and return 51 channel-major features."""
     pose = np.asarray(frame, dtype=np.float32).copy()
@@ -116,6 +89,7 @@ def normalize_live_coco17(frame: np.ndarray) -> np.ndarray:
     if not np.isfinite(pose).all():
         raise ValueError("Live pose contains NaN or infinite values")
 
+    pose[pose[:, 2] < LIVE_KEYPOINT_CONFIDENCE] = 0.0
     pose[1:5] = 0.0  # CML has no separate eye/ear nodes.
     visible = pose[:, 2] > 0
     pose[:, 2] = visible.astype(np.float32)  # Match CML binary presence.
