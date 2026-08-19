@@ -18,6 +18,7 @@ from .history import get_worker_history, save_worker_event
 from .websocket_manager import websocket_manager
 from .stgcn import stgcn_service, temporal_pose_buffer
 from .gru import gru_service
+from .model_input import model_input_coordinator
 from .mqtt_mobile import MobileMqttSubscriber
 from .sessions import session_recorder
 
@@ -95,11 +96,13 @@ def get_gru_status():
 @app.post("/sessions/start")
 def start_session(request: SessionStartRequest):
     try:
-        return session_recorder.start(
+        result = session_recorder.start(
             worker_id=request.worker_id, source_mode=request.source_mode,
             notes=request.notes, expected_activity=request.expected_activity,
             cadence_hz=request.cadence_hz, max_samples=request.max_samples,
         )
+        reset_worker_models(request.worker_id, "session_start")
+        return result
     except ValueError as error:
         raise HTTPException(status_code=409, detail=str(error)) from error
 
@@ -189,6 +192,13 @@ def get_stgcn_sequence_diagnostic(worker_id: str):
     return temporal_pose_buffer.diagnostic(worker_id)
 
 
+@app.get("/workers/{worker_id}/model-input")
+def get_model_input_diagnostic(worker_id: str):
+    if worker_state_manager.get_worker(worker_id) is None:
+        raise HTTPException(status_code=404, detail=f"Worker '{worker_id}' not found")
+    return model_input_coordinator.diagnostic(worker_id)
+
+
 @app.get("/workers/{worker_id}/stgcn-prediction")
 def get_latest_stgcn_prediction(worker_id: str):
     if worker_state_manager.get_worker(worker_id) is None:
@@ -241,7 +251,9 @@ async def update_worker(worker: WorkerState):
         worker.worker_id
     )
 
-    # ST-GCN output is backend-owned. Keep the last good prediction while a new
+    decision = model_input_coordinator.evaluate(worker) if worker.pose is not None else None
+
+    # Model output is backend-owned. Keep the last good prediction while a new
     # sequence is warming up or when a contained inference error occurs.
     if previous_worker is not None:
         worker.activity.stgcn = previous_worker.activity.stgcn
@@ -250,15 +262,20 @@ async def update_worker(worker: WorkerState):
         worker.activity.gru_confidence = previous_worker.activity.gru_confidence
         worker.mobile = previous_worker.mobile
 
+    if decision is not None and decision.reset_required:
+        reset_worker_models(worker.worker_id, decision.reason, reset_coordinator=False)
+        worker.activity.stgcn = "unknown"
+        worker.activity.stgcn_confidence = 0.0
+        worker.activity.gru = "unknown"
+        worker.activity.gru_confidence = 0.0
+
     saved_worker = worker_state_manager.set_worker(worker)
 
-    if saved_worker.pose is not None:
+    if saved_worker.pose is not None and decision is not None and decision.accepted:
         added = temporal_pose_buffer.add(saved_worker.worker_id, saved_worker.pose)
         sequence = temporal_pose_buffer.tensor(saved_worker.worker_id) if added else None
         prediction = stgcn_service.predict(saved_worker.worker_id, sequence) if sequence else None
-        gru_prediction = (
-            gru_service.predict(saved_worker.worker_id, saved_worker.pose) if added else None
-        )
+        gru_prediction = gru_service.predict(saved_worker.worker_id, saved_worker.pose)
         if prediction is not None:
             saved_worker.activity.stgcn = prediction.activity
             saved_worker.activity.stgcn_confidence = prediction.confidence
@@ -290,9 +307,30 @@ async def update_worker(worker: WorkerState):
     return saved_worker
 
 
+def reset_worker_models(
+    worker_id: str,
+    reason: str,
+    *,
+    reset_coordinator: bool = True,
+) -> None:
+    temporal_pose_buffer.clear(worker_id)
+    stgcn_service.clear_predictions(worker_id)
+    gru_service.clear_predictions(worker_id)
+    if reset_coordinator:
+        model_input_coordinator.reset(worker_id, reason)
+    worker = worker_state_manager.get_worker(worker_id)
+    if worker is not None:
+        worker.activity.stgcn = "unknown"
+        worker.activity.stgcn_confidence = 0.0
+        worker.activity.gru = "unknown"
+        worker.activity.gru_confidence = 0.0
+        worker_state_manager.set_worker(worker)
+
+
 @app.on_event("startup")
 def load_activity_models():
     stgcn_service.load()
+    temporal_pose_buffer.configure(stgcn_service.window_size)
     gru_service.load()
 
 

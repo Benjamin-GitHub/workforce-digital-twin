@@ -1,8 +1,16 @@
 import unittest
 from datetime import datetime, timezone
+import os
+from pathlib import Path
+from unittest.mock import patch
 
 from app.gru import EXPECTED_CLASSES, GRUInferenceService
 from app.models import PoseKeypoint, PoseState
+
+
+REPO_ROOT = Path(__file__).resolve().parents[4]
+OLD_CHECKPOINT = REPO_ROOT / "training/gru/runs/cml_plus_local_sqrt/best.pt"
+NEW_CHECKPOINT = REPO_ROOT / "training/gru/runs/cml_plus_local_5hz_w16_sqrt/best.pt"
 
 
 def pose(frame_number: int = 1) -> PoseState:
@@ -23,13 +31,18 @@ class FakePredictor:
     device = "cpu"
     minimum_observations = 5
     reset_gap_seconds = 2.0
+    sequence_length = 16
+    source_pose_hz = 5.0
+    effective_pose_hz = 5.0
+    temporal_stride = 1
 
     def __init__(self):
         self.received = None
         self.reset_called = False
+        self.reset_worker_id = None
 
-    def update(self, worker_id, values):
-        self.received = (worker_id, values.copy())
+    def update(self, worker_id, values, now=None):
+        self.received = (worker_id, values.copy(), now)
         return {
             "label": "carrying",
             "confidence": 0.87,
@@ -41,16 +54,69 @@ class FakePredictor:
             },
         }
 
-    def reset(self):
+    def reset(self, worker_id=None):
         self.reset_called = True
+        self.reset_worker_id = worker_id
 
 
 class GRUInferenceServiceTests(unittest.TestCase):
+    def test_old_and_new_checkpoint_metadata_is_exposed(self):
+        cases = (
+            (OLD_CHECKPOINT, 11.0, 5.5, 2),
+            (NEW_CHECKPOINT, 5.0, 5.0, 1),
+        )
+        for checkpoint, source_hz, effective_hz, stride in cases:
+            with self.subTest(checkpoint=checkpoint.name, source_hz=source_hz):
+                service = GRUInferenceService(checkpoint)
+                service.load()
+                status = service.status()
+
+                self.assertTrue(status["loaded"], status["error"])
+                self.assertEqual(status["checkpoint"], str(checkpoint.resolve()))
+                self.assertEqual(status["sequence_length"], 16)
+                self.assertEqual(status["minimum_observations"], 16)
+                self.assertEqual(status["source_pose_hz"], source_hz)
+                self.assertEqual(status["effective_pose_hz"], effective_hz)
+                self.assertEqual(status["temporal_stride"], stride)
+
+    def test_environment_checkpoint_override_is_resolved(self):
+        relative = NEW_CHECKPOINT.relative_to(REPO_ROOT)
+        with patch.dict(os.environ, {"GRU_CHECKPOINT": str(relative)}):
+            service = GRUInferenceService()
+
+        self.assertEqual(service.checkpoint_path, NEW_CHECKPOINT.resolve())
+        self.assertEqual(service.status()["checkpoint"], str(NEW_CHECKPOINT.resolve()))
+
+    def test_new_checkpoint_becomes_ready_at_sequence_length(self):
+        service = GRUInferenceService(NEW_CHECKPOINT)
+        service.load()
+        self.assertIsNotNone(service.predictor, service.error)
+
+        prediction = None
+        for frame_number in range(15):
+            prediction = service.predict("worker01", pose(frame_number))
+        self.assertFalse(prediction.ready)
+        self.assertEqual(prediction.observations, 15)
+
+        prediction = service.predict("worker01", pose(15))
+        self.assertTrue(prediction.ready)
+        self.assertEqual(prediction.observations, 16)
+
+    def test_explicit_minimum_observations_override_is_preserved(self):
+        service = GRUInferenceService(NEW_CHECKPOINT)
+        service.load()
+        predictor_type = type(service.predictor)
+        predictor = predictor_type(NEW_CHECKPOINT, minimum_observations=3)
+
+        self.assertEqual(predictor.sequence_length, 16)
+        self.assertEqual(predictor.minimum_observations, 3)
+
     def test_pose_is_forwarded_and_prediction_is_retained(self):
         service = GRUInferenceService()
         service.predictor = FakePredictor()
+        sample = pose()
 
-        result = service.predict("worker01", pose())
+        result = service.predict("worker01", sample)
 
         self.assertEqual(result.activity, "carrying")
         self.assertAlmostEqual(result.confidence, 0.87)
@@ -58,6 +124,7 @@ class GRUInferenceServiceTests(unittest.TestCase):
         self.assertEqual(result.observations, 5)
         self.assertEqual(service.predictor.received[0], "worker01")
         self.assertEqual(service.predictor.received[1].shape, (17, 3))
+        self.assertEqual(service.predictor.received[2], sample.captured_at.timestamp())
         self.assertEqual(service.latest("worker01")["activity"], "carrying")
 
     def test_status_describes_streaming_configuration(self):
@@ -69,11 +136,15 @@ class GRUInferenceServiceTests(unittest.TestCase):
         self.assertTrue(status["loaded"])
         self.assertEqual(status["device"], "cpu")
         self.assertEqual(status["minimum_observations"], 5)
+        self.assertEqual(status["sequence_length"], 16)
+        self.assertEqual(status["source_pose_hz"], 5.0)
+        self.assertEqual(status["effective_pose_hz"], 5.0)
+        self.assertEqual(status["temporal_stride"], 1)
         self.assertEqual(status["reset_gap_seconds"], 2.0)
 
     def test_inference_error_is_contained(self):
         class FailingPredictor(FakePredictor):
-            def update(self, _worker_id, _values):
+            def update(self, _worker_id, _values, now=None):
                 raise RuntimeError("test failure")
 
         service = GRUInferenceService()
@@ -91,6 +162,17 @@ class GRUInferenceServiceTests(unittest.TestCase):
 
         self.assertIsNone(service.latest("worker01"))
         self.assertTrue(service.predictor.reset_called)
+        self.assertIsNone(service.predictor.reset_worker_id)
+
+    def test_clear_one_worker_resets_only_that_worker(self):
+        service = GRUInferenceService()
+        service.predictor = FakePredictor()
+        service.predict("worker01", pose())
+
+        service.clear_predictions("worker01")
+
+        self.assertIsNone(service.latest("worker01"))
+        self.assertEqual(service.predictor.reset_worker_id, "worker01")
 
 
 if __name__ == "__main__":

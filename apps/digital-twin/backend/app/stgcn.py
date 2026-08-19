@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import os
 import sys
 from collections import deque
 from dataclasses import asdict, dataclass
@@ -20,11 +21,20 @@ COCO_17_KEYPOINTS = (
 )
 DEFAULT_WINDOW_SIZE = 32
 CHANNELS = ("x", "y", "confidence")
+LIVE_KEYPOINT_CONFIDENCE = 0.30
 REPO_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_CHECKPOINT = REPO_ROOT / "training/stgcn/runs/cml_plus_local_sqrt/best.pt"
 EXPECTED_CLASSES = [
     "walking", "standing", "idle", "bending", "carrying", "material_handling",
 ]
+
+
+def _checkpoint_path(path: Path | str | None) -> Path:
+    selected = path if path is not None else os.getenv("STGCN_CHECKPOINT", str(DEFAULT_CHECKPOINT))
+    resolved = Path(selected).expanduser()
+    if not resolved.is_absolute():
+        resolved = REPO_ROOT / resolved
+    return resolved.resolve()
 
 
 def _midpoint(points: list[list[float]], left: int, right: int) -> tuple[float, float] | None:
@@ -38,6 +48,13 @@ def normalize_pose(pose: PoseState) -> list[list[float]]:
     """Return COCO-17 [x, y, confidence], body-centred and scale-normalized."""
     points = [[point.x, point.y, point.confidence if point.confidence is not None else 0.0]
               for point in pose.keypoints]
+    for point in points:
+        if point[2] < LIVE_KEYPOINT_CONFIDENCE:
+            point[:] = [0.0, 0.0, 0.0]
+    for index in range(1, 5):
+        points[index] = [0.0, 0.0, 0.0]
+    for point in points:
+        point[2] = 1.0 if point[2] > 0.0 else 0.0
     visible = [point for point in points if point[2] > 0.0]
     if not visible:
         return [[0.0, 0.0, 0.0] for _ in points]
@@ -56,7 +73,7 @@ def normalize_pose(pose: PoseState) -> list[list[float]]:
         height = max(point[1] for point in visible) - min(point[1] for point in visible)
         scale = (width * width + height * height) ** 0.5
     if scale <= 1e-6:
-        scale = float(max(pose.image_width, pose.image_height))
+        scale = 1.0
     return [[(x - centre[0]) / scale, (y - centre[1]) / scale, confidence]
             if confidence > 0.0 else [0.0, 0.0, 0.0]
             for x, y, confidence in points]
@@ -96,6 +113,14 @@ class TemporalPoseBuffer:
         self._last_frame: dict[str, int] = {}
         self._lock = Lock()
 
+    def configure(self, window_size: int) -> None:
+        if not isinstance(window_size, int) or isinstance(window_size, bool) or window_size <= 0:
+            raise ValueError("window_size must be positive")
+        with self._lock:
+            self.window_size = window_size
+            self._frames.clear()
+            self._last_frame.clear()
+
     def add(self, worker_id: str, pose: PoseState) -> bool:
         with self._lock:
             if pose.frame_number <= self._last_frame.get(worker_id, -1):
@@ -116,21 +141,26 @@ class TemporalPoseBuffer:
             frames = list(self._frames.get(worker_id, ()))
         return to_stgcn_tensor(frames) if len(frames) == self.window_size else None
 
-    def clear(self) -> None:
+    def clear(self, worker_id: str | None = None) -> None:
         with self._lock:
-            self._frames.clear()
-            self._last_frame.clear()
+            if worker_id is None:
+                self._frames.clear()
+                self._last_frame.clear()
+            else:
+                self._frames.pop(worker_id, None)
+                self._last_frame.pop(worker_id, None)
 
 
 class STGCNInferenceService:
     """Own the single model instance and contain all load/inference failures."""
 
-    def __init__(self, checkpoint_path: Path = DEFAULT_CHECKPOINT):
-        self.checkpoint_path = checkpoint_path
+    def __init__(self, checkpoint_path: Path | str | None = None):
+        self.checkpoint_path = _checkpoint_path(checkpoint_path)
         self.model = None
         self.device = None
         self.classes: list[str] = []
         self.window_size = DEFAULT_WINDOW_SIZE
+        self.source_pose_hz: float | None = None
         self.error: str | None = None
         self._latest: dict[str, STGCNPrediction] = {}
         self._lock = Lock()
@@ -150,7 +180,9 @@ class STGCNInferenceService:
                                             checkpoint["config"])
             if classes != EXPECTED_CLASSES:
                 raise ValueError(f"Unexpected checkpoint class order: {classes}")
-            if input_shape != [3, DEFAULT_WINDOW_SIZE, 17, 1]:
+            if (len(input_shape) != 4 or input_shape[0] != 3
+                    or not isinstance(input_shape[1], int) or input_shape[1] <= 0
+                    or input_shape[2:] != [17, 1]):
                 raise ValueError(f"Unexpected checkpoint input shape: {input_shape}")
             device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
             model = STGCN(len(classes), tuple(config["hidden_channels"]), float(config["dropout"]))
@@ -158,6 +190,8 @@ class STGCNInferenceService:
             model.eval().to(device)
             self.model, self.device, self.classes = model, device, classes
             self.window_size, self.error = input_shape[1], None
+            source_pose_hz = config.get("source_pose_hz")
+            self.source_pose_hz = float(source_pose_hz) if source_pose_hz is not None else None
             LOGGER.info("ST-GCN loaded from %s on %s", self.checkpoint_path, device)
         except Exception as exc:
             self.model = None
@@ -192,14 +226,18 @@ class STGCNInferenceService:
         return {"loaded": self.model is not None,
                 "device": str(self.device) if self.device is not None else None,
                 "checkpoint": str(self.checkpoint_path), "classes": self.classes,
-                "window_size": self.window_size, "error": self.error}
+                "window_size": self.window_size, "source_pose_hz": self.source_pose_hz,
+                "error": self.error}
 
     def latest(self, worker_id: str) -> dict | None:
         prediction = self._latest.get(worker_id)
         return asdict(prediction) if prediction is not None else None
 
-    def clear_predictions(self) -> None:
-        self._latest.clear()
+    def clear_predictions(self, worker_id: str | None = None) -> None:
+        if worker_id is None:
+            self._latest.clear()
+        else:
+            self._latest.pop(worker_id, None)
 
 
 temporal_pose_buffer = TemporalPoseBuffer()

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import os
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -11,6 +12,7 @@ from threading import Lock
 import numpy as np
 
 from .models import PoseState
+from .model_input import model_input_coordinator
 
 LOGGER = logging.getLogger(__name__)
 REPO_ROOT = Path(__file__).resolve().parents[4]
@@ -19,6 +21,14 @@ DEFAULT_CHECKPOINT = TRAINING_DIR / "runs/cml_plus_local_sqrt/best.pt"
 EXPECTED_CLASSES = [
     "walking", "standing", "idle", "bending", "carrying", "material_handling",
 ]
+
+
+def _checkpoint_path(path: Path | str | None) -> Path:
+    selected = path if path is not None else os.getenv("GRU_CHECKPOINT", str(DEFAULT_CHECKPOINT))
+    resolved = Path(selected).expanduser()
+    if not resolved.is_absolute():
+        resolved = REPO_ROOT / resolved
+    return resolved.resolve()
 
 
 @dataclass(frozen=True)
@@ -34,8 +44,8 @@ class GRUPrediction:
 class GRUInferenceService:
     """Own one streaming predictor and contain load/inference failures."""
 
-    def __init__(self, checkpoint_path: Path = DEFAULT_CHECKPOINT):
-        self.checkpoint_path = checkpoint_path
+    def __init__(self, checkpoint_path: Path | str | None = None):
+        self.checkpoint_path = _checkpoint_path(checkpoint_path)
         self.predictor = None
         self.error: str | None = None
         self._latest: dict[str, GRUPrediction] = {}
@@ -49,7 +59,11 @@ class GRUInferenceService:
                 sys.path.insert(0, str(TRAINING_DIR))
             from streaming_inference import StreamingGRUPredictor
 
-            predictor = StreamingGRUPredictor(self.checkpoint_path, device="auto")
+            predictor = StreamingGRUPredictor(
+                self.checkpoint_path,
+                device="auto",
+                reset_gap_seconds=model_input_coordinator.reset_gap_seconds,
+            )
             if predictor.classes != EXPECTED_CLASSES:
                 raise ValueError(
                     f"Unexpected checkpoint class order: {predictor.classes}"
@@ -82,7 +96,9 @@ class GRUInferenceService:
                 dtype=np.float32,
             )
             with self._lock:
-                result = self.predictor.update(worker_id, values)
+                result = self.predictor.update(
+                    worker_id, values, now=pose.captured_at.timestamp()
+                )
             prediction = GRUPrediction(
                 worker_id=worker_id,
                 activity=result["label"],
@@ -112,6 +128,18 @@ class GRUInferenceService:
             "minimum_observations": (
                 predictor.minimum_observations if predictor is not None else None
             ),
+            "sequence_length": (
+                predictor.sequence_length if predictor is not None else None
+            ),
+            "source_pose_hz": (
+                predictor.source_pose_hz if predictor is not None else None
+            ),
+            "effective_pose_hz": (
+                predictor.effective_pose_hz if predictor is not None else None
+            ),
+            "temporal_stride": (
+                predictor.temporal_stride if predictor is not None else None
+            ),
             "reset_gap_seconds": (
                 predictor.reset_gap_seconds if predictor is not None else None
             ),
@@ -122,10 +150,13 @@ class GRUInferenceService:
         prediction = self._latest.get(worker_id)
         return asdict(prediction) if prediction is not None else None
 
-    def clear_predictions(self) -> None:
-        self._latest.clear()
+    def clear_predictions(self, worker_id: str | None = None) -> None:
+        if worker_id is None:
+            self._latest.clear()
+        else:
+            self._latest.pop(worker_id, None)
         if self.predictor is not None:
-            self.predictor.reset()
+            self.predictor.reset(worker_id)
 
 
 gru_service = GRUInferenceService()

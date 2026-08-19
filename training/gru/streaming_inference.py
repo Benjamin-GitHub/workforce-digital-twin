@@ -30,16 +30,29 @@ class StreamingGRUPredictor:
         self,
         checkpoint_path: Path | str,
         device: str = "auto",
-        minimum_observations: int = 5,
+        minimum_observations: int | None = None,
         reset_gap_seconds: float = 2.0,
     ) -> None:
         self.device = select_device(device)
         checkpoint = torch.load(checkpoint_path, map_location=self.device, weights_only=False)
+        input_shape = checkpoint.get("input_shape")
+        if (not isinstance(input_shape, (list, tuple)) or len(input_shape) != 3
+                or input_shape[0] is not None or not isinstance(input_shape[1], int)
+                or input_shape[1] <= 0 or input_shape[2] != 51):
+            raise ValueError(f"Unexpected checkpoint input shape: {input_shape}")
+        self.sequence_length = int(input_shape[1])
+        self.source_pose_hz = float(checkpoint["source_pose_hz"])
+        self.effective_pose_hz = float(checkpoint["effective_pose_hz"])
+        self.temporal_stride = int(checkpoint["temporal_stride"])
         self.classes = list(checkpoint["classes"])
         self.model = StreamingGRU(**checkpoint["model_config"]).to(self.device)
         self.model.load_state_dict(checkpoint["model_state"])
         self.model.eval()
-        self.minimum_observations = minimum_observations
+        self.minimum_observations = (
+            self.sequence_length if minimum_observations is None else int(minimum_observations)
+        )
+        if self.minimum_observations <= 0:
+            raise ValueError("minimum_observations must be positive")
         self.reset_gap_seconds = reset_gap_seconds
         self.states: dict[str, WorkerState] = {}
 
@@ -65,8 +78,9 @@ class StreamingGRUPredictor:
         pose = np.asarray(coco17_pose, dtype=np.float32)
         if pose.shape != (17, 3):
             raise ValueError(f"Expected a (17,3) x/y/confidence pose; received {pose.shape}")
+        features = normalize_live_coco17(pose)
         body_indices = np.asarray([0, *range(5, 17)])
-        if not np.any(pose[body_indices, 2] > 0):
+        if not np.any(features.reshape(3, 17)[2, body_indices] > 0):
             return {
                 "label": "unknown",
                 "confidence": 0.0,
@@ -75,7 +89,6 @@ class StreamingGRUPredictor:
                 "probabilities": {name: 0.0 for name in self.classes},
             }
 
-        features = normalize_live_coco17(pose)
         tensor = torch.from_numpy(features).to(self.device).view(1, 51)
         logits, hidden = self.model.step(tensor, state.hidden)
         state.hidden = hidden.detach()

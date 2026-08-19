@@ -1,8 +1,16 @@
 import unittest
 from datetime import datetime, timezone
+import os
+from pathlib import Path
+from unittest.mock import patch
 
 from app.models import PoseKeypoint, PoseState
 from app.stgcn import STGCNInferenceService, TemporalPoseBuffer, normalize_pose
+
+
+REPO_ROOT = Path(__file__).resolve().parents[4]
+OLD_CHECKPOINT = REPO_ROOT / "training/stgcn/runs/cml_plus_local_sqrt/best.pt"
+NEW_CHECKPOINT = REPO_ROOT / "training/stgcn/runs/cml_plus_local_5hz_w16_sqrt/best.pt"
 
 
 def pose(frame_number: int, offset_x: float = 0.0, scale: float = 1.0) -> PoseState:
@@ -31,28 +39,30 @@ class NormalizationTests(unittest.TestCase):
         self.assertEqual(first[11][:2], [-0.5, 0.0])
         self.assertEqual(first[12][:2], [0.5, 0.0])
 
-    def test_missing_joint_is_zeroed_and_confidence_is_retained(self):
+    def test_missing_joint_is_zeroed_and_present_confidence_is_binary(self):
         sample = pose(1)
         sample.keypoints[0] = PoseKeypoint(x=999.0, y=999.0, confidence=None)
         normalized = normalize_pose(sample)
         self.assertEqual(normalized[0], [0.0, 0.0, 0.0])
-        self.assertEqual(normalized[5][2], 0.9)
+        self.assertEqual(normalized[5][2], 1.0)
 
 
 class TemporalPoseBufferTests(unittest.TestCase):
     def test_ready_at_fixed_window_and_tensor_has_nctvm_shape(self):
-        buffer = TemporalPoseBuffer(window_size=3)
-        for frame_number in range(3):
-            self.assertTrue(buffer.add("worker01", pose(frame_number)))
-        diagnostic = buffer.diagnostic("worker01")
-        self.assertTrue(diagnostic.ready)
-        self.assertEqual(diagnostic.tensor_shape, [1, 3, 3, 17, 1])
-        tensor = buffer.tensor("worker01")
-        self.assertEqual(len(tensor), 1)
-        self.assertEqual(len(tensor[0]), 3)
-        self.assertEqual(len(tensor[0][0]), 3)
-        self.assertEqual(len(tensor[0][0][0]), 17)
-        self.assertEqual(len(tensor[0][0][0][0]), 1)
+        for window_size in (16, 32):
+            with self.subTest(window_size=window_size):
+                buffer = TemporalPoseBuffer(window_size=window_size)
+                for frame_number in range(window_size):
+                    self.assertTrue(buffer.add("worker01", pose(frame_number)))
+                diagnostic = buffer.diagnostic("worker01")
+                self.assertTrue(diagnostic.ready)
+                self.assertEqual(diagnostic.tensor_shape, [1, 3, window_size, 17, 1])
+                tensor = buffer.tensor("worker01")
+                self.assertEqual(len(tensor), 1)
+                self.assertEqual(len(tensor[0]), 3)
+                self.assertEqual(len(tensor[0][0]), window_size)
+                self.assertEqual(len(tensor[0][0][0]), 17)
+                self.assertEqual(len(tensor[0][0][0][0]), 1)
 
     def test_duplicate_or_older_frame_is_ignored(self):
         buffer = TemporalPoseBuffer(window_size=2)
@@ -61,8 +71,60 @@ class TemporalPoseBufferTests(unittest.TestCase):
         self.assertFalse(buffer.add("worker01", pose(9)))
         self.assertEqual(buffer.diagnostic("worker01").frames_collected, 1)
 
+    def test_reconfigure_clears_frames_and_last_frame_tracking(self):
+        buffer = TemporalPoseBuffer(window_size=32)
+        self.assertTrue(buffer.add("worker01", pose(10)))
+
+        buffer.configure(16)
+
+        self.assertEqual(buffer.window_size, 16)
+        self.assertEqual(buffer.diagnostic("worker01").frames_collected, 0)
+        self.assertTrue(buffer.add("worker01", pose(1)))
+
+        buffer.configure(16)
+        self.assertEqual(buffer.diagnostic("worker01").frames_collected, 0)
+        self.assertTrue(buffer.add("worker01", pose(0)))
+
+    def test_reconfigure_requires_positive_window_size(self):
+        buffer = TemporalPoseBuffer()
+        with self.assertRaisesRegex(ValueError, "window_size must be positive"):
+            buffer.configure(0)
+
+    def test_clear_one_worker_preserves_other_workers(self):
+        buffer = TemporalPoseBuffer(window_size=2)
+        buffer.add("worker01", pose(1))
+        buffer.add("worker02", pose(1))
+
+        buffer.clear("worker01")
+
+        self.assertEqual(buffer.diagnostic("worker01").frames_collected, 0)
+        self.assertEqual(buffer.diagnostic("worker02").frames_collected, 1)
+
 
 class InferenceServiceTests(unittest.TestCase):
+    def test_old_and_new_checkpoints_define_window_size(self):
+        cases = (
+            (OLD_CHECKPOINT, 32, None),
+            (NEW_CHECKPOINT, 16, 5.0),
+        )
+        for checkpoint, window_size, source_pose_hz in cases:
+            with self.subTest(checkpoint=checkpoint.name, window_size=window_size):
+                service = STGCNInferenceService(checkpoint)
+                service.load()
+
+                self.assertIsNotNone(service.model, service.error)
+                self.assertEqual(service.window_size, window_size)
+                self.assertEqual(service.source_pose_hz, source_pose_hz)
+                self.assertEqual(service.status()["checkpoint"], str(checkpoint.resolve()))
+
+    def test_environment_checkpoint_override_is_resolved(self):
+        relative = NEW_CHECKPOINT.relative_to(REPO_ROOT)
+        with patch.dict(os.environ, {"STGCN_CHECKPOINT": str(relative)}):
+            service = STGCNInferenceService()
+
+        self.assertEqual(service.checkpoint_path, NEW_CHECKPOINT.resolve())
+        self.assertEqual(service.status()["checkpoint"], str(NEW_CHECKPOINT.resolve()))
+
     def test_training_time_face_mask_and_binary_confidence_are_applied(self):
         import torch
 
@@ -74,18 +136,21 @@ class InferenceServiceTests(unittest.TestCase):
                 self.received = tensor.detach().cpu()
                 return torch.tensor([[0.0, 0.0, 0.0, 4.0, 0.0, 0.0]])
 
-        service = STGCNInferenceService()
-        service.model = CapturingModel()
-        service.device = torch.device("cpu")
-        service.classes = ["walking", "standing", "idle", "bending", "carrying", "material_handling"]
-        values = torch.full((1, 3, 32, 17, 1), 0.7).tolist()
+        for window_size in (16, 32):
+            with self.subTest(window_size=window_size):
+                service = STGCNInferenceService()
+                service.model = CapturingModel()
+                service.device = torch.device("cpu")
+                service.classes = ["walking", "standing", "idle", "bending", "carrying", "material_handling"]
+                service.window_size = window_size
+                values = torch.full((1, 3, window_size, 17, 1), 0.7).tolist()
 
-        result = service.predict("worker01", values)
+                result = service.predict("worker01", values)
 
-        self.assertEqual(result.activity, "bending")
-        self.assertGreater(result.confidence, 0.9)
-        self.assertTrue(torch.all(service.model.received[:, :, :, 1:5, :] == 0))
-        self.assertTrue(torch.all(service.model.received[:, 2, :, [0, *range(5, 17)], :] == 1))
+                self.assertEqual(result.activity, "bending")
+                self.assertGreater(result.confidence, 0.9)
+                self.assertTrue(torch.all(service.model.received[:, :, :, 1:5, :] == 0))
+                self.assertTrue(torch.all(service.model.received[:, 2, :, [0, *range(5, 17)], :] == 1))
 
     def test_inference_error_is_contained(self):
         import torch
