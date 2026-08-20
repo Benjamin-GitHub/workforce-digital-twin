@@ -8,6 +8,8 @@ BACKEND_DIR="${REPO_ROOT}/apps/digital-twin/backend"
 FRONTEND_DIR="${REPO_ROOT}/apps/digital-twin/frontend"
 UVICORN="${REPO_ROOT}/.venv/bin/uvicorn"
 SECRETS_FILE="${REPO_ROOT}/secret.h"
+export STGCN_CHECKPOINT="${STGCN_CHECKPOINT:-${REPO_ROOT}/training/stgcn/runs/local_six_cfr5_5hz_w16_stratified/best.pt}"
+export GRU_CHECKPOINT="${GRU_CHECKPOINT:-${REPO_ROOT}/training/gru/runs/local_six_cfr5_5hz_w16_stratified/best.pt}"
 
 MQTT_PID=""
 MQTT_OWNED=0
@@ -88,6 +90,8 @@ else
 fi
 
 echo "[launcher] Starting backend at http://0.0.0.0:8000"
+echo "[launcher] ST-GCN checkpoint: ${STGCN_CHECKPOINT}"
+echo "[launcher] GRU checkpoint: ${GRU_CHECKPOINT}"
 (
   cd "${REPO_ROOT}" || exit 1
   exec "${UVICORN}" app.main:app \

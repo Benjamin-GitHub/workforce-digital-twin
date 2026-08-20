@@ -35,9 +35,12 @@ test("server-renders the Workforce Digital Twin dashboard", async () => {
   assert.match(html, /DIGITAL TWIN/);
   assert.match(html, /Live worker overview/);
   assert.match(html, /Activity timeline/);
-  assert.match(html, /ACTIVITY RECOGNISERS/);
-  assert.match(html, /FROZEN BASELINE/);
+  assert.match(html, /Model comparison/);
+  assert.match(html, /YOLO Pose Baseline/);
   assert.match(html, /ST-GCN/);
+  assert.match(html, />GRU</);
+  assert.match(html, /Unknown/);
+  assert.doesNotMatch(html, /FROZEN BASELINE/);
   assert.match(html, /Recorded backend transitions only/);
   assert.doesNotMatch(html, developmentPreviewMeta);
   assert.doesNotMatch(html, /react-loading-skeleton/);
