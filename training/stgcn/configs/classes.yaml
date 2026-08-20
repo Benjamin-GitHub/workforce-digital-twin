@@ -1,0 +1,22 @@
+classes:
+  - walking
+  - standing
+  - idle
+  - bending
+  - carrying
+  - material_handling
+
+# Keys are exact values from the downloaded CML `label` metadata field.
+cml_label_mapping:
+  walking: walking
+  bending: bending
+  carry suitcase: carrying
+  moving object: material_handling
+  picking up: material_handling
+  weight lifting: material_handling
+
+  # Standing and idle are intentionally supplied only by the deployment-matched
+  # Raspberry Pi recordings. CML `standing` has original label `still`, and CML
+  # has no separate `idle` label, so using it would blur the project distinction.
+
+ignored_labels: []

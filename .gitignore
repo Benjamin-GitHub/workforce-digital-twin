@@ -11,6 +11,7 @@ __pycache__/
 # Environment variables and secrets
 .env
 .env.*
+secret.h
 secrets/
 credentials/
 *.pem
@@ -29,3 +30,12 @@ outputs/
 
 # Operating system files
 .DS_Store
+apps/digital-twin/backend/data/
+.pnpm-store/
+training/stgcn/.venv/
+training/stgcn/data/
+training/stgcn/runs/
+
+# Private local Raspberry Pi activity recordings and temporary config backup
+activity-dataset/
+config/activity.yaml.before-imgsz256

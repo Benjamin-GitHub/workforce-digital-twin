@@ -1,0 +1,7 @@
+trial_id,activity,start_utc,end_utc,valid,notes
+walking_pilot_01,walking,2026-08-16T13:30:43Z,2026-08-16T13:30:53Z,true,
+standing_pilot_01,standing,2026-08-16T13:31:10Z,2026-08-16T13:31:21Z,true,
+idle_pilot_01,idle,2026-08-16T13:31:37Z,2026-08-16T13:31:48Z,true,
+bending_pilot_01,bending,2026-08-16T13:32:04Z,2026-08-16T13:32:15Z,true,
+carrying_pilot_01,carrying,2026-08-16T13:32:32Z,2026-08-16T13:32:42Z,true,
+material_handling_pilot_01,material_handling,2026-08-16T13:33:00Z,2026-08-16T13:33:10Z,true,

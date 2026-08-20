@@ -16,6 +16,8 @@ from src.activity.state_smoother import StateSmoother
 from src.activity.material_handling_detector import (
     MaterialHandlingDetector,
 )
+from src.digital_twin.publisher import WorkerStatePublisher, build_worker_state
+from src.vision.ppe import associate_ppe, result_detections
 
 
 def load_config(path):
@@ -94,7 +96,53 @@ def main():
         help="Show live OpenCV window",
     )
 
+    parser.add_argument(
+        "--publish-digital-twin",
+        action="store_true",
+        help="Publish live activity states to the Digital Twin API (disabled by default)",
+    )
+
+    parser.add_argument(
+        "--digital-twin-api-url",
+        default="http://127.0.0.1:8000",
+        help="Digital Twin FastAPI base URL (default: %(default)s)",
+    )
+
+    parser.add_argument("--worker-id", default="worker01")
+    parser.add_argument("--camera-id", default="raspberry_pi_pose_01")
+    parser.add_argument(
+        "--digital-twin-publish-interval",
+        type=float,
+        default=1.0,
+        help="Minimum seconds between queued worker updates (default: %(default)s)",
+    )
+    parser.add_argument(
+        "--enable-ppe",
+        action="store_true",
+        help="Run a separate PPE detector (disabled by default)",
+    )
+    parser.add_argument(
+        "--ppe-model",
+        default="models/ncnn/yolo26n_ppe_best_ncnn_model",
+        help="Path to the fine-tuned PPE detection model",
+    )
+    parser.add_argument("--ppe-conf", type=float, default=0.25)
+    parser.add_argument("--ppe-imgsz", type=int, default=320)
+    parser.add_argument(
+        "--ppe-stride",
+        type=int,
+        default=3,
+        help="Run PPE inference every N input frames (default: %(default)s)",
+    )
+
     args = parser.parse_args()
+
+    if args.digital_twin_publish_interval <= 0:
+        parser.error("--digital-twin-publish-interval must be positive")
+    if not 0.0 <= args.ppe_conf <= 1.0:
+        parser.error("--ppe-conf must be between 0 and 1")
+    if args.ppe_stride <= 0:
+        parser.error("--ppe-stride must be positive")
 
     # --------------------------------------------------
     # Load configuration
@@ -141,6 +189,18 @@ def main():
         args.model,
         task="pose",
     )
+
+    ppe_model = None
+    if args.enable_ppe:
+        ppe_model_path = Path(args.ppe_model)
+        if not ppe_model_path.exists():
+            raise FileNotFoundError(f"PPE model not found: {ppe_model_path}")
+        print(f"Loading separate PPE model: {ppe_model_path}")
+        print(
+            f"PPE settings: conf={args.ppe_conf:.2f}, "
+            f"imgsz={args.ppe_imgsz}, stride={args.ppe_stride}"
+        )
+        ppe_model = YOLO(str(ppe_model_path), task="detect")
 
     # --------------------------------------------------
     # Temporal buffer
@@ -417,6 +477,17 @@ def main():
     last_seen = {}
     frame_number = 0
     start_time = time.time()
+    digital_twin_publisher = None
+    latest_ppe_by_track = {}
+    if args.publish_digital_twin:
+        digital_twin_publisher = WorkerStatePublisher(
+            api_url=args.digital_twin_api_url,
+            interval=args.digital_twin_publish_interval,
+        )
+        print(
+            "Digital Twin publishing enabled: "
+            f"{args.digital_twin_api_url.rstrip('/')}/workers"
+        )
     
     def cleanup_stale_tracks():
         stale_track_ids = []
@@ -528,6 +599,19 @@ def main():
                 .numpy()
                 .astype(int)
             )
+
+            if ppe_model is not None and (frame_number - 1) % args.ppe_stride == 0:
+                ppe_results = ppe_model.predict(
+                    frame,
+                    imgsz=args.ppe_imgsz,
+                    conf=args.ppe_conf,
+                    device="cpu",
+                    verbose=False,
+                )
+                detections = result_detections(ppe_results[0]) if ppe_results else []
+                associated_states = associate_ppe(boxes, detections)
+                for associated_track_id, ppe_state in zip(track_ids, associated_states):
+                    latest_ppe_by_track[int(associated_track_id)] = ppe_state
 
             # ------------------------------------------
             # Process every tracked person
@@ -751,6 +835,36 @@ def main():
                     material_state["standing_idle_ratio"],
                     material_state["mean_wrist_hip_distance"],
                 ])
+
+                # Queue only the newest state; HTTP runs outside the inference loop.
+                if digital_twin_publisher is not None:
+                    activity_confidence = (
+                        material_confidence
+                        if material_handling
+                        else confidence
+                    )
+                    runtime_seconds = time.time() - start_time
+                    processing_fps = (
+                        frame_number / runtime_seconds
+                        if runtime_seconds > 0
+                        else None
+                    )
+                    digital_twin_publisher.submit(
+                        build_worker_state(
+                            worker_id=args.worker_id,
+                            track_id=track_id,
+                            camera_id=args.camera_id,
+                            activity=display_activity,
+                            confidence=activity_confidence,
+                            frame_number=frame_number,
+                            image_width=width,
+                            image_height=height,
+                            keypoints=person_keypoints,
+                            keypoint_confidences=person_keypoint_confidences,
+                            fps=processing_fps,
+                            ppe=latest_ppe_by_track.get(track_id),
+                        )
+                    )
                 
             # ------------------------------------------
             # Remove stale track histories
@@ -796,6 +910,8 @@ def main():
         cap.release()
         writer.release()
         csv_file.close()
+        if digital_twin_publisher is not None:
+            digital_twin_publisher.close()
         cv2.destroyAllWindows()
 
     # --------------------------------------------------

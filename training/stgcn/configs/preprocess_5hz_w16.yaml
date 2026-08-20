@@ -1,0 +1,29 @@
+source_hz: 30.0
+target_hz: 5.0
+window_size: 16
+window_stride: 8
+projection_axes:
+- x
+- z
+confidence_for_present_joint: 1.0
+minimum_valid_frames: 8
+layout: coco_17
+channels:
+- x
+- y
+- confidence
+tensor_order: N,C,T,V,M
+label_keys:
+- label
+source_keys:
+- data source
+- data_source
+sample_keys:
+- source file
+- source_file
+session_keys:
+- session
+- session_id
+- subject
+- subject_id
+- performer
