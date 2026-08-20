@@ -26,9 +26,14 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
-          cache-dependency-path: apps/digital-twin/backend/requirements.txt
+          cache-dependency-path: |
+            apps/digital-twin/backend/requirements.txt
+            training/gru/requirements.txt
       - name: Install Python dependencies
-        run: python -m pip install -r apps/digital-twin/backend/requirements.txt
+        run: |
+          python -m pip install \
+            -r apps/digital-twin/backend/requirements.txt \
+            -r training/gru/requirements.txt
       - name: Check Python and shell syntax
         run: |
           python -m compileall -q apps/digital-twin/backend src training
