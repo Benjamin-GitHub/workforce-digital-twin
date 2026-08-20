@@ -23,25 +23,26 @@ from training.split_utils import group_safe_split, split_dataset  # noqa: E402
 from training.stgcn import train as stgcn_train  # noqa: E402
 
 
-ARCHIVE_PATH = (
-    ROOT
-    / "training"
-    / "stgcn"
-    / "data"
-    / "local"
-    / "processed"
-    / "local_six_cfr5_5hz_w16.npz"
-)
 FRACTIONS = (0.60, 0.20, 0.20)
 
 
 class StratifiedGroupSplitTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        with np.load(ARCHIVE_PATH, allow_pickle=False) as archive:
-            cls.y = archive["y"].copy()
-            cls.groups = archive["groups"].copy()
-            cls.classes = archive["classes"].copy()
+        # Reproduce the private archive's balanced grouping without requiring
+        # ignored training data: 6 classes, 15 source groups per class, and
+        # 11 windows per group.
+        cls.classes = np.asarray(
+            ["walking", "standing", "idle", "bending", "carrying", "material_handling"]
+        )
+        labels: list[int] = []
+        groups: list[str] = []
+        for class_index, class_name in enumerate(cls.classes):
+            for group_index in range(15):
+                labels.extend([class_index] * 11)
+                groups.extend([f"{class_name}-{group_index:02d}"] * 11)
+        cls.y = np.asarray(labels)
+        cls.groups = np.asarray(groups)
 
     def split(self, seed: int = 42):
         return split_dataset(

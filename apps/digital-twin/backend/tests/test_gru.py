@@ -2,6 +2,7 @@ import unittest
 from datetime import datetime, timezone
 import os
 from pathlib import Path
+import tempfile
 from unittest.mock import patch
 
 from app.gru import EXPECTED_CLASSES, GRUInferenceService
@@ -10,7 +11,6 @@ from app.models import PoseKeypoint, PoseState
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
 OLD_CHECKPOINT = REPO_ROOT / "training/gru/runs/cml_plus_local_sqrt/best.pt"
-NEW_CHECKPOINT = REPO_ROOT / "training/gru/runs/cml_plus_local_5hz_w16_sqrt/best.pt"
 
 
 def pose(frame_number: int = 1) -> PoseState:
@@ -60,10 +60,26 @@ class FakePredictor:
 
 
 class GRUInferenceServiceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import torch
+
+        cls._temporary_directory = tempfile.TemporaryDirectory()
+        cls.new_checkpoint = Path(cls._temporary_directory.name) / "gru_5hz_w16.pt"
+        checkpoint = torch.load(OLD_CHECKPOINT, map_location="cpu", weights_only=False)
+        checkpoint["source_pose_hz"] = 5.0
+        checkpoint["effective_pose_hz"] = 5.0
+        checkpoint["temporal_stride"] = 1
+        torch.save(checkpoint, cls.new_checkpoint)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._temporary_directory.cleanup()
+
     def test_old_and_new_checkpoint_metadata_is_exposed(self):
         cases = (
             (OLD_CHECKPOINT, 11.0, 5.5, 2),
-            (NEW_CHECKPOINT, 5.0, 5.0, 1),
+            (self.new_checkpoint, 5.0, 5.0, 1),
         )
         for checkpoint, source_hz, effective_hz, stride in cases:
             with self.subTest(checkpoint=checkpoint.name, source_hz=source_hz):
@@ -80,15 +96,14 @@ class GRUInferenceServiceTests(unittest.TestCase):
                 self.assertEqual(status["temporal_stride"], stride)
 
     def test_environment_checkpoint_override_is_resolved(self):
-        relative = NEW_CHECKPOINT.relative_to(REPO_ROOT)
-        with patch.dict(os.environ, {"GRU_CHECKPOINT": str(relative)}):
+        with patch.dict(os.environ, {"GRU_CHECKPOINT": str(self.new_checkpoint)}):
             service = GRUInferenceService()
 
-        self.assertEqual(service.checkpoint_path, NEW_CHECKPOINT.resolve())
-        self.assertEqual(service.status()["checkpoint"], str(NEW_CHECKPOINT.resolve()))
+        self.assertEqual(service.checkpoint_path, self.new_checkpoint.resolve())
+        self.assertEqual(service.status()["checkpoint"], str(self.new_checkpoint.resolve()))
 
     def test_new_checkpoint_becomes_ready_at_sequence_length(self):
-        service = GRUInferenceService(NEW_CHECKPOINT)
+        service = GRUInferenceService(self.new_checkpoint)
         service.load()
         self.assertIsNotNone(service.predictor, service.error)
 
@@ -103,10 +118,10 @@ class GRUInferenceServiceTests(unittest.TestCase):
         self.assertEqual(prediction.observations, 16)
 
     def test_explicit_minimum_observations_override_is_preserved(self):
-        service = GRUInferenceService(NEW_CHECKPOINT)
+        service = GRUInferenceService(self.new_checkpoint)
         service.load()
         predictor_type = type(service.predictor)
-        predictor = predictor_type(NEW_CHECKPOINT, minimum_observations=3)
+        predictor = predictor_type(self.new_checkpoint, minimum_observations=3)
 
         self.assertEqual(predictor.sequence_length, 16)
         self.assertEqual(predictor.minimum_observations, 3)

@@ -2,6 +2,7 @@ import unittest
 from datetime import datetime, timezone
 import os
 from pathlib import Path
+import tempfile
 from unittest.mock import patch
 
 from app.models import PoseKeypoint, PoseState
@@ -10,7 +11,6 @@ from app.stgcn import STGCNInferenceService, TemporalPoseBuffer, normalize_pose
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
 OLD_CHECKPOINT = REPO_ROOT / "training/stgcn/runs/cml_plus_local_sqrt/best.pt"
-NEW_CHECKPOINT = REPO_ROOT / "training/stgcn/runs/cml_plus_local_5hz_w16_sqrt/best.pt"
 
 
 def pose(frame_number: int, offset_x: float = 0.0, scale: float = 1.0) -> PoseState:
@@ -102,10 +102,25 @@ class TemporalPoseBufferTests(unittest.TestCase):
 
 
 class InferenceServiceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import torch
+
+        cls._temporary_directory = tempfile.TemporaryDirectory()
+        cls.new_checkpoint = Path(cls._temporary_directory.name) / "stgcn_5hz_w16.pt"
+        checkpoint = torch.load(OLD_CHECKPOINT, map_location="cpu", weights_only=False)
+        checkpoint["input_shape"] = [3, 16, 17, 1]
+        checkpoint["config"] = {**checkpoint["config"], "source_pose_hz": 5.0}
+        torch.save(checkpoint, cls.new_checkpoint)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._temporary_directory.cleanup()
+
     def test_old_and_new_checkpoints_define_window_size(self):
         cases = (
             (OLD_CHECKPOINT, 32, None),
-            (NEW_CHECKPOINT, 16, 5.0),
+            (self.new_checkpoint, 16, 5.0),
         )
         for checkpoint, window_size, source_pose_hz in cases:
             with self.subTest(checkpoint=checkpoint.name, window_size=window_size):
@@ -118,12 +133,11 @@ class InferenceServiceTests(unittest.TestCase):
                 self.assertEqual(service.status()["checkpoint"], str(checkpoint.resolve()))
 
     def test_environment_checkpoint_override_is_resolved(self):
-        relative = NEW_CHECKPOINT.relative_to(REPO_ROOT)
-        with patch.dict(os.environ, {"STGCN_CHECKPOINT": str(relative)}):
+        with patch.dict(os.environ, {"STGCN_CHECKPOINT": str(self.new_checkpoint)}):
             service = STGCNInferenceService()
 
-        self.assertEqual(service.checkpoint_path, NEW_CHECKPOINT.resolve())
-        self.assertEqual(service.status()["checkpoint"], str(NEW_CHECKPOINT.resolve()))
+        self.assertEqual(service.checkpoint_path, self.new_checkpoint.resolve())
+        self.assertEqual(service.status()["checkpoint"], str(self.new_checkpoint.resolve()))
 
     def test_training_time_face_mask_and_binary_confidence_are_applied(self):
         import torch

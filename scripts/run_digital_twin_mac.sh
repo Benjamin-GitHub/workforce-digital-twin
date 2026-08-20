@@ -8,8 +8,26 @@ BACKEND_DIR="${REPO_ROOT}/apps/digital-twin/backend"
 FRONTEND_DIR="${REPO_ROOT}/apps/digital-twin/frontend"
 UVICORN="${REPO_ROOT}/.venv/bin/uvicorn"
 SECRETS_FILE="${REPO_ROOT}/secret.h"
-export STGCN_CHECKPOINT="${STGCN_CHECKPOINT:-${REPO_ROOT}/training/stgcn/runs/local_six_cfr5_5hz_w16_stratified/best.pt}"
-export GRU_CHECKPOINT="${GRU_CHECKPOINT:-${REPO_ROOT}/training/gru/runs/local_six_cfr5_5hz_w16_stratified/best.pt}"
+LOCAL_STGCN_CHECKPOINT="${REPO_ROOT}/training/stgcn/runs/local_six_cfr5_5hz_w16_stratified/best.pt"
+LOCAL_GRU_CHECKPOINT="${REPO_ROOT}/training/gru/runs/local_six_cfr5_5hz_w16_stratified/best.pt"
+TRACKED_STGCN_CHECKPOINT="${REPO_ROOT}/training/stgcn/runs/cml_plus_local_sqrt/best.pt"
+TRACKED_GRU_CHECKPOINT="${REPO_ROOT}/training/gru/runs/cml_plus_local_sqrt/best.pt"
+
+if [[ -z "${STGCN_CHECKPOINT:-}" ]]; then
+  if [[ -f "${LOCAL_STGCN_CHECKPOINT}" ]]; then
+    STGCN_CHECKPOINT="${LOCAL_STGCN_CHECKPOINT}"
+  else
+    STGCN_CHECKPOINT="${TRACKED_STGCN_CHECKPOINT}"
+  fi
+fi
+if [[ -z "${GRU_CHECKPOINT:-}" ]]; then
+  if [[ -f "${LOCAL_GRU_CHECKPOINT}" ]]; then
+    GRU_CHECKPOINT="${LOCAL_GRU_CHECKPOINT}"
+  else
+    GRU_CHECKPOINT="${TRACKED_GRU_CHECKPOINT}"
+  fi
+fi
+export STGCN_CHECKPOINT GRU_CHECKPOINT
 
 MQTT_PID=""
 MQTT_OWNED=0

@@ -33,9 +33,11 @@ GET /workers/{worker_id}/stgcn-prediction
 Before `T` pose updates, `ready` is false and `tensor_shape` is null. At `T`,
 `ready` is true and `tensor_shape` is `[1,3,T,17,1]`.
 
-Checkpoint paths default to the existing 32-frame ST-GCN and GRU runs. Set
-`STGCN_CHECKPOINT` and `GRU_CHECKPOINT` to select alternate checkpoints, such as
-the 5 Hz, 16-frame runs, without replacing the defaults.
+The backend defaults to the tracked ST-GCN and GRU checkpoints, so inference
+works in a clean clone. The Mac launcher prefers the locally trained 5 Hz
+checkpoints when they exist and falls back to the tracked checkpoints when they
+do not. Set `STGCN_CHECKPOINT` and `GRU_CHECKPOINT` to select explicit alternate
+checkpoints without replacing either default.
 
 Model input cadence is disabled by default. Set `MODEL_INPUT_HZ=5` to accept at
 most one pose in each source-timestamp 5 Hz bucket. Duplicate or non-increasing
