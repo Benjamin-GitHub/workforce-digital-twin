@@ -24,6 +24,12 @@ outputs/
 *.onnx
 *_ncnn_model/
 
+# Keep the two canonical Raspberry Pi deployment exports reproducible.
+!models/ncnn/yolo26n_ppe_best_ncnn_model/
+!models/ncnn/yolo26n_ppe_best_ncnn_model/**
+!models/ncnn/yolo26n-pose_ncnn_model/
+!models/ncnn/yolo26n-pose_ncnn_model/**
+
 # IDE files
 .vscode/
 .idea/
