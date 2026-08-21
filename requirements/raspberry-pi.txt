@@ -1,0 +1,8 @@
+# Raspberry Pi 5 vision runtime
+# Verified against the restored deployment environment on 21 Aug 2026.
+ultralytics==8.4.126
+opencv-python>=4.14,<4.15
+numpy>=2.5,<2.6
+PyYAML==6.0.3
+paho-mqtt>=2.1,<3
+requests>=2.32,<3
