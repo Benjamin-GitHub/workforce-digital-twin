@@ -52,6 +52,74 @@ def draw_activity(
     )
 
 
+def draw_ppe_state(frame, box, ppe_state):
+    """Draw the latest PPE association beneath a tracked worker."""
+    if not ppe_state:
+        return
+
+    labels = []
+    observed = []
+    for short_name, item_name in (
+        ("H", "helmet"),
+        ("V", "vest"),
+        ("G", "gloves"),
+        ("B", "boots"),
+    ):
+        detected = ppe_state.get(item_name, {}).get("detected")
+        observed.append(detected)
+        if detected is True:
+            status = "OK"
+        elif detected is False:
+            status = "MISS"
+        else:
+            status = "?"
+        labels.append(f"{short_name}:{status}")
+
+    if any(value is False for value in observed):
+        colour = (0, 0, 255)
+    elif any(value is True for value in observed):
+        colour = (0, 200, 0)
+    else:
+        colour = (0, 200, 255)
+
+    x1, y1, _x2, y2 = map(int, box)
+    text = "PPE " + " ".join(labels)
+    text_size, baseline = cv2.getTextSize(
+        text,
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.5,
+        2,
+    )
+    text_x = max(0, min(x1, frame.shape[1] - text_size[0] - 8))
+    text_y = y2 + text_size[1] + 8
+    if text_y + baseline >= frame.shape[0]:
+        text_y = max(text_size[1] + 6, y1 - 34)
+
+    cv2.rectangle(
+        frame,
+        (text_x - 3, text_y - text_size[1] - 4),
+        (text_x + text_size[0] + 3, text_y + baseline + 3),
+        (20, 20, 20),
+        -1,
+    )
+    cv2.putText(
+        frame,
+        text,
+        (text_x, text_y),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.5,
+        colour,
+        2,
+        cv2.LINE_AA,
+    )
+
+
+def show_live_frame(frame):
+    """Display an annotated frame and return True when the user presses q."""
+    cv2.imshow("Digital Twin Edge Demo", frame)
+    return cv2.waitKey(1) & 0xFF == ord("q")
+
+
 def main():
 
     # --------------------------------------------------
@@ -546,6 +614,9 @@ def main():
             if not results:
                 cleanup_stale_tracks()
                 writer.write(frame)
+                if args.show and show_live_frame(frame):
+                    print("User requested stop.")
+                    break
                 continue
 
             result = results[0]
@@ -556,16 +627,25 @@ def main():
             if result.boxes is None:
                 cleanup_stale_tracks()
                 writer.write(annotated)
+                if args.show and show_live_frame(annotated):
+                    print("User requested stop.")
+                    break
                 continue
 
             if result.keypoints is None:
                 cleanup_stale_tracks()
                 writer.write(annotated)
+                if args.show and show_live_frame(annotated):
+                    print("User requested stop.")
+                    break
                 continue
 
             if result.boxes.id is None:
                 cleanup_stale_tracks()
                 writer.write(annotated)
+                if args.show and show_live_frame(annotated):
+                    print("User requested stop.")
+                    break
                 continue
 
             # ------------------------------------------
@@ -772,6 +852,12 @@ def main():
                     ),
                 )
 
+                draw_ppe_state(
+                    annotated,
+                    box,
+                    latest_ppe_by_track.get(track_id),
+                )
+
                 # --------------------------------------
                 # Terminal debug output
                 # --------------------------------------
@@ -885,16 +971,7 @@ def main():
             # ------------------------------------------
 
             if args.show:
-
-                cv2.imshow(
-                    "Pose Activity Recognition",
-                    annotated,
-                )
-
-                if (
-                    cv2.waitKey(1) & 0xFF
-                    == ord("q")
-                ):
+                if show_live_frame(annotated):
                     print(
                         "User requested stop."
                     )
