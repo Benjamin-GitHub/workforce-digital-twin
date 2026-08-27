@@ -5,7 +5,13 @@ set -Eeuo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-PYTHON_BIN="${PYTHON_BIN:-${REPO_ROOT}/.venv/bin/python}"
+if [[ -n "${PYTHON_BIN:-}" ]]; then
+  : # Keep the explicit caller-provided interpreter.
+elif [[ -n "${VIRTUAL_ENV:-}" ]]; then
+  PYTHON_BIN="${VIRTUAL_ENV}/bin/python"
+else
+  PYTHON_BIN="${REPO_ROOT}/.venv/bin/python"
+fi
 STREAM_URL="${STREAM_URL:-http://192.168.1.171:81/stream}"
 POSE_MODEL="${POSE_MODEL:-${REPO_ROOT}/models/ncnn/yolo26n-pose_ncnn_model}"
 PPE_MODEL="${PPE_MODEL:-${REPO_ROOT}/models/ncnn/yolo26n_ppe_best_ncnn_model}"
