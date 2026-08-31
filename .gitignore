@@ -30,6 +30,24 @@ outputs/
 
 # Operating system files
 .DS_Store
+
+# Local video recordings and generated video outputs
+*.mp4
+*.m4v
+*.mov
+*.mkv
+*.avi
+*.webm
+*.wmv
+*.flv
+*.mpeg
+*.mpg
+*.3gp
+*.mts
+*.m2ts
+*.vob
+*.ogv
+
 apps/digital-twin/backend/data/
 .pnpm-store/
 training/stgcn/.venv/
